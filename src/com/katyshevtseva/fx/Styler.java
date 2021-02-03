@@ -1,4 +1,4 @@
-package com.katyshevtseva.kikilib.fx;
+package com.katyshevtseva.fx;
 
 public class Styler {
 

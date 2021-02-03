@@ -1,4 +1,4 @@
-package com.katyshevtseva.kikilib.fx;
+package com.katyshevtseva.fx;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;

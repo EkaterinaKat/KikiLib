@@ -1,4 +1,4 @@
-package com.katyshevtseva.kikilib.fx;
+package com.katyshevtseva.fx;
 
 import javafx.scene.Node;
 import javafx.scene.control.*;
