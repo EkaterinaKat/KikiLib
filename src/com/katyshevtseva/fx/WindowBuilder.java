@@ -22,6 +22,7 @@ public class WindowBuilder {
     private String iconImagePath;
     private boolean stretchable = false;
     private EventHandler<WindowEvent> eventHandler;
+    private String cssPath;
 
     public WindowBuilder(String fxmlName) {
         this.fxmlName = fxmlName;
@@ -54,6 +55,11 @@ public class WindowBuilder {
 
     public WindowBuilder setIconImagePath(String iconImagePath) {
         this.iconImagePath = iconImagePath;
+        return this;
+    }
+
+    public WindowBuilder setCssPath(String cssPath) {
+        this.cssPath = cssPath;
         return this;
     }
 
@@ -103,6 +109,10 @@ public class WindowBuilder {
             parent = fxmlLoader.load();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        if (cssPath != null) {
+            String stylesheet = getClass().getResource(cssPath).toExternalForm();
+            parent.getStylesheets().add(stylesheet);
         }
         return parent;
     }
