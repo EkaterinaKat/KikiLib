@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.*?>
+<GridPane alignment="CENTER" xmlns="http://javafx.com/javafx" vgap="20" hgap="20"
+          xmlns:fx="http://javafx.com/fxml">
+
+    <Pane fx:id="pane" prefWidth="800" prefHeight="800" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+    <Button text="Press me" fx:id="button" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+</GridPane>
