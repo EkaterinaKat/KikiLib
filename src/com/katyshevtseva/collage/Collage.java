@@ -2,7 +2,6 @@ package com.katyshevtseva.collage;
 
 import com.katyshevtseva.fx.Styler;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
@@ -32,18 +31,13 @@ public class Collage {
         pane.setMinHeight(height);
         pane.setStyle(Styler.getColorfullStyle(Styler.ThingToColor.BACKGROUND, "#023648"));
         for (CollageImage image : images) {
-            pane.getChildren().addAll(image.getImageView());
+            pane.getChildren().addAll(image.getImageView(), image.getSizeAdjuster());
         }
         collagePane = pane;
     }
 
     public Pane getCollagePane() {
         return collagePane;
-    }
-
-    private boolean imageContainsPoint(CollageImage image, double x, double y) {
-        return ((x > image.getX()) && (x < (image.getX() + image.getHeight()))) &&
-                ((y > image.getY()) && (y < (image.getY() + image.getWidth())));
     }
 
     private void tune() {
@@ -55,15 +49,16 @@ public class Collage {
             db.setContent(content);
             event.consume();
             for (CollageImage image : images)
-                if (imageContainsPoint(image, event.getX(), event.getY()))
+                if (image.containsPoint(event.getX(), event.getY())) {
+                    System.out.println("imageContainsPoint");
                     changingImage = image;
+                    break;
+                }
         });
 
         collagePane.setOnDragOver(event -> {
             if (changingImage != null) {
-                if (allowableRelocationEvent(event, changingImage)) {
-                    changingImage.setCoordinates(event.getX(), event.getY());
-                }
+                changingImage.reportDragEvent(event);
             }
         });
 
@@ -72,9 +67,5 @@ public class Collage {
             event.consume();
         });
 
-    }
-
-    private boolean allowableRelocationEvent(DragEvent event, CollageImage collageImage) {
-        return event.getX() + collageImage.getHeight() < height && event.getY() + collageImage.getWidth() < width;
     }
 }
