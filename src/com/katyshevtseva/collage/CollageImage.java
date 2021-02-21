@@ -83,7 +83,7 @@ public class CollageImage {
     }
 
     private ImageView getSizeAdjusterImageView() {
-        ImageView imageView = new ImageView(new Image("/arrow.png"));
+        ImageView imageView = new ImageView(new Image("/resizing_arrow.png"));
         imageView.setFitWidth(sizeAdjusterSize);
         imageView.setFitHeight(sizeAdjusterSize);
         return imageView;

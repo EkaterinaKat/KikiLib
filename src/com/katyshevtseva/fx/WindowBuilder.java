@@ -2,6 +2,7 @@ package com.katyshevtseva.fx;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.ImageCursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -23,6 +24,7 @@ public class WindowBuilder {
     private boolean stretchable = false;
     private EventHandler<WindowEvent> eventHandler;
     private String cssPath;
+    private String cursorImagePath;
 
     public WindowBuilder(String fxmlName) {
         this.fxmlName = fxmlName;
@@ -73,6 +75,11 @@ public class WindowBuilder {
         return this;
     }
 
+    public WindowBuilder setCursorImagePath(String path) {
+        this.cursorImagePath = path;
+        return this;
+    }
+
     public void showWindow() {
         getStage().show();
     }
@@ -90,7 +97,10 @@ public class WindowBuilder {
             stage.setMinWidth(width);
             stage.setMaxWidth(width);
         }
-        stage.setScene(new Scene(getNodeByFxmlAndController(), width, height));
+        Scene scene = new Scene(getNodeByFxmlAndController(), width, height);
+        if (cursorImagePath != null)
+            scene.setCursor(new ImageCursor(new Image(cursorImagePath), 19, 19));
+        stage.setScene(scene);
         if (iconImagePath != null)
             stage.getIcons().add(new Image(iconImagePath));
         if (isModal)
