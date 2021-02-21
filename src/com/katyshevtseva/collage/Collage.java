@@ -51,7 +51,7 @@ public class Collage {
             db.setContent(content);
             event.consume();
             for (CollageImage image : collageImages)
-                if (image.reportStartOfDragEvent(event.getX(), event.getY())) {
+                if (image.reportStartOfDragEvent(event)) {
                     changingImage = image;
                     moveImageToFirstPlan(changingImage);
                     break;

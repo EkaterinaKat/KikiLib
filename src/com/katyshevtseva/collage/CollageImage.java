@@ -4,6 +4,7 @@ package com.katyshevtseva.collage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseEvent;
 
 import static com.katyshevtseva.collage.CollageImage.CurrentModificationType.MOVING;
 import static com.katyshevtseva.collage.CollageImage.CurrentModificationType.RESIZING;
@@ -20,6 +21,10 @@ public class CollageImage {
     private double collageWidth;
     private double sizeAdjusterSize;
     private CurrentModificationType currentModificationType;
+    private double dragCursorStartX;
+    private double dragCursorStartY;
+    private double dragImageStartX;
+    private double dragImageStartY;
 
     public CollageImage(ImageView imageView, double relativeHeight, double relativeWidth,
                         double relativeX, double relativeY, double collageHeight, double collageWidth, int z) {
@@ -92,19 +97,28 @@ public class CollageImage {
         return x + newWidth < collageWidth && y + newHeight < collageHeight && newWidth > collageWidth * 0.1;
     }
 
-    boolean reportStartOfDragEvent(double pointX, double pointY) {
-        boolean sizeAdjusterContainPoint = ((pointX > sizeAdjuster.getX()) && (pointX < (sizeAdjuster.getX() + sizeAdjusterSize))) &&
-                ((pointY > sizeAdjuster.getY()) && (pointY < (sizeAdjuster.getY() + sizeAdjusterSize)));
+    boolean reportStartOfDragEvent(MouseEvent event) {
+        boolean sizeAdjusterContainPoint = ((event.getX() > sizeAdjuster.getX()) && (event.getX() < (sizeAdjuster.getX() + sizeAdjusterSize))) &&
+                ((event.getY() > sizeAdjuster.getY()) && (event.getY() < (sizeAdjuster.getY() + sizeAdjusterSize)));
         if (sizeAdjusterContainPoint) {
             currentModificationType = RESIZING;
+            saveDragStartCoordinates(event.getX(), event.getY());
             return true;
         }
-        boolean imageContainsPoint = ((pointX > x) && (pointX < (x + height))) && ((pointY > y) && (pointY < (y + width)));
+        boolean imageContainsPoint = ((event.getX() > x) && (event.getX() < (x + height))) && ((event.getY() > y) && (event.getY() < (y + width)));
         if (imageContainsPoint) {
             currentModificationType = MOVING;
+            saveDragStartCoordinates(event.getX(), event.getY());
             return true;
         }
         return false;
+    }
+
+    private void saveDragStartCoordinates(double cursorX, double cursorY) {
+        dragCursorStartX = cursorX;
+        dragCursorStartY = cursorY;
+        dragImageStartX = this.x;
+        dragImageStartY = this.y;
     }
 
     void reportDragEvent(DragEvent event) {
@@ -116,12 +130,14 @@ public class CollageImage {
     }
 
     private void relocateIfAllowable(DragEvent event) {
-        if (allowableRelocationEvent(event)) {
-            setCoordinates(event.getX(), event.getY());
+        double newX = event.getX() - dragCursorStartX + dragImageStartX;
+        double newY = event.getY() - dragCursorStartY + dragImageStartY;
+        if (newX > 0 && newY > 0 && allowableRelocationEvent(newX, newY)) {
+            setCoordinates(newX, newY);
         }
     }
 
-    private boolean allowableRelocationEvent(DragEvent event) {
-        return event.getX() + height < collageHeight && event.getY() + width < collageWidth;
+    private boolean allowableRelocationEvent(double newX, double newY) {
+        return newX + height < collageHeight && newY + width < collageWidth;
     }
 }
