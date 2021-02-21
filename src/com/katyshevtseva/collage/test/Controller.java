@@ -9,33 +9,56 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 
 class Controller implements WindowBuilder.FxController {
-    private final int COLLAGE_HEIGHT = 800;
-    private final int COLLAGE_WIDTH = 800;
+    private Deque<String> imageUrls;
     @FXML
     private Button button;
     @FXML
     private Pane pane;
 
+    {
+        imageUrls = new ArrayDeque<>();
+        imageUrls.addFirst("/com/katyshevtseva/collage/test/image1.png");
+        imageUrls.addFirst("/com/katyshevtseva/collage/test/image2.png");
+        imageUrls.addFirst("/com/katyshevtseva/collage/test/image3.png");
+        imageUrls.addFirst("/com/katyshevtseva/collage/test/image4.png");
+        imageUrls.addFirst("/com/katyshevtseva/collage/test/image5.png");
+        imageUrls.addFirst("/com/katyshevtseva/collage/test/image6.jpg");
+        imageUrls.addFirst("/com/katyshevtseva/collage/test/image7.jpg");
+    }
+
     @FXML
     private void initialize() {
+        Collage collage = new Collage(800, 800);
         List<CollageImage> collageImages = new ArrayList<>();
 
-        ImageView imageView1 = new ImageView(new Image("/com/katyshevtseva/collage/test/image1.png"));
-        collageImages.add(new CollageImage(imageView1, 0.25, 0.25, 0.5, 0.5, COLLAGE_HEIGHT, COLLAGE_WIDTH, 1));
-        ImageView imageView2 = new ImageView(new Image("/com/katyshevtseva/collage/test/image2.png"));
-        collageImages.add(new CollageImage(imageView2, 0.25, 0.25, 0, 0, COLLAGE_HEIGHT, COLLAGE_WIDTH, 2));
-        ImageView imageView3 = new ImageView(new Image("/com/katyshevtseva/collage/test/image3.png"));
-        collageImages.add(new CollageImage(imageView3, 0.25, 0.25, 0.7, 0.3, COLLAGE_HEIGHT, COLLAGE_WIDTH, 3));
-        ImageView imageView4 = new ImageView(new Image("/com/katyshevtseva/collage/test/image4.png"));
-        collageImages.add(new CollageImage(imageView4, 0.25, 0.25, 0.3, 0.7, COLLAGE_HEIGHT, COLLAGE_WIDTH, 4));
-        ImageView imageView5 = new ImageView(new Image("/com/katyshevtseva/collage/test/image5.png"));
-        collageImages.add(new CollageImage(imageView5, 0.25, 0.25, 0.1, 0.2, COLLAGE_HEIGHT, COLLAGE_WIDTH, 5));
+        // Тестируем  первую статическую фабрику
+//        ImageView imageView1 = new ImageView(new Image(imageUrls.pollFirst()));
+//        collageImages.add(CollageImage.formExistingImage(imageView1, 0.25, 0.25, 0.5, 0.5, collage, 1));
+//        ImageView imageView2 = new ImageView(new Image(imageUrls.pollFirst()));
+//        collageImages.add(CollageImage.formExistingImage(imageView2, 0.25, 0.25, 0, 0, collage, 2));
+//        ImageView imageView3 = new ImageView(new Image(imageUrls.pollFirst()));
+//        collageImages.add(CollageImage.formExistingImage(imageView3, 0.25, 0.25, 0.7, 0.3, collage, 3));
+//        ImageView imageView4 = new ImageView(new Image(imageUrls.pollFirst()));
+//        collageImages.add(CollageImage.formExistingImage(imageView4, 0.25, 0.25, 0.3, 0.7, collage, 4));
+//        ImageView imageView5 = new ImageView(new Image(imageUrls.pollFirst()));
+//        collageImages.add(CollageImage.formExistingImage(imageView5, 0.25, 0.25, 0.1, 0.2, collage, 5));
 
-        Collage collage = new Collage(collageImages, COLLAGE_HEIGHT, COLLAGE_WIDTH);
+        // Тестируем вторую статическую фабрику
+        button.setOnAction(event -> {
+            String imageUrl = imageUrls.pollFirst();
+            if (imageUrl != null) {
+                ImageView imageView = new ImageView(new Image(imageUrl));
+                collage.addImage(CollageImage.createNewImage(imageView, collage));
+            }
+        });
+
+        collage.setImages(collageImages);
         pane.getChildren().add(collage.getCollagePane());
     }
 }
