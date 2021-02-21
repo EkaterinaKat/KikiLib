@@ -38,6 +38,14 @@ public class Collage {
         moveImageToFirstPlan(collageImage);
     }
 
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
     /////////////////////////////   END OF API  ///////////////////////////////////////////////////
 
     private void initializeCollagePane() {
@@ -108,13 +116,5 @@ public class Collage {
         for (int i = 0; i < images.size(); i++) {
             images.get(i).setZ(i + 1);
         }
-    }
-
-    int getHeight() {
-        return height;
-    }
-
-    int getWidth() {
-        return width;
     }
 }

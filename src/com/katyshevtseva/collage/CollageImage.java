@@ -14,8 +14,6 @@ public class CollageImage {
     private ImageView sizeAdjuster;
     private double height;
     private double width;
-    private double x; //todo может эти поля и не нужны
-    private double y;
     private int z;
     private Collage collage;
     private double sizeAdjusterSize;
@@ -47,11 +45,19 @@ public class CollageImage {
     }
 
     public double getRelativeX() {
-        return x / collage.getWidth();
+        return imageView.getX() / collage.getWidth();
     }
 
     public double getRelativeY() {
-        return y / collage.getHeight();
+        return imageView.getY() / collage.getHeight();
+    }
+
+    public ImageView getImageView() {
+        return imageView;
+    }
+
+    public int getZ() {
+        return z;
     }
 
     /////////////////////////////   END OF API  ///////////////////////////////////////////////////
@@ -81,16 +87,8 @@ public class CollageImage {
         return imageView;
     }
 
-    ImageView getImageView() {
-        return imageView;
-    }
-
     ImageView getSizeAdjuster() {
         return sizeAdjuster;
-    }
-
-    int getZ() {
-        return z;
     }
 
     void setZ(int z) {
@@ -99,19 +97,17 @@ public class CollageImage {
 
     private void setCoordinates(double x, double y) {
         imageView.setX(x);
-        this.x = x;
         imageView.setY(y);
-        this.y = y;
         setSizeAdjusterCoordinates();
     }
 
     private void setSizeAdjusterCoordinates() {
-        sizeAdjuster.setX(x + width - sizeAdjuster.getFitWidth() / 2);
-        sizeAdjuster.setY(y + height - sizeAdjuster.getFitHeight() / 2);
+        sizeAdjuster.setX(imageView.getX() + width - sizeAdjuster.getFitWidth() / 2);
+        sizeAdjuster.setY(imageView.getY() + height - sizeAdjuster.getFitHeight() / 2);
     }
 
     private void resizeIfAllowable(DragEvent event) {
-        double newWidth = event.getX() - x;
+        double newWidth = event.getX() - imageView.getX();
         double newHeight = height * (newWidth / width);
         if (resizeAllowable(newWidth, newHeight)) {
             imageView.setFitWidth(newWidth);
@@ -123,7 +119,8 @@ public class CollageImage {
     }
 
     private boolean resizeAllowable(double newWidth, double newHeight) {
-        return x + newWidth < collage.getWidth() && y + newHeight < collage.getHeight() && newWidth > collage.getWidth() * 0.1;
+        return imageView.getX() + newWidth < collage.getWidth()
+                && imageView.getY() + newHeight < collage.getHeight() && newWidth > collage.getWidth() * 0.1;
     }
 
     boolean reportStartOfDragEvent(MouseEvent event) {
@@ -134,7 +131,8 @@ public class CollageImage {
             saveDragStartCoordinates(event.getX(), event.getY());
             return true;
         }
-        boolean imageContainsPoint = ((event.getX() > x) && (event.getX() < (x + width))) && ((event.getY() > y) && (event.getY() < (y + height)));
+        boolean imageContainsPoint = ((event.getX() > imageView.getX()) && (event.getX() < (imageView.getX() + width)))
+                && ((event.getY() > imageView.getY()) && (event.getY() < (imageView.getY() + height)));
         if (imageContainsPoint) {
             currentModificationType = MOVING;
             saveDragStartCoordinates(event.getX(), event.getY());
@@ -146,8 +144,8 @@ public class CollageImage {
     private void saveDragStartCoordinates(double cursorX, double cursorY) {
         dragCursorStartX = cursorX;
         dragCursorStartY = cursorY;
-        dragImageStartX = this.x;
-        dragImageStartY = this.y;
+        dragImageStartX = imageView.getX();
+        dragImageStartY = imageView.getY();
     }
 
     void reportDragEvent(DragEvent event) {
@@ -162,10 +160,8 @@ public class CollageImage {
         double newX = event.getX() - dragCursorStartX + dragImageStartX;
         double newY = event.getY() - dragCursorStartY + dragImageStartY;
         if (newX > 0 && newY > 0 && allowableRelocationEvent(newX, newY)) {
-            System.out.println("allowable");
             setCoordinates(newX, newY);
-        } else
-            System.out.println("not allowable");
+        }
     }
 
     private boolean allowableRelocationEvent(double newX, double newY) {
