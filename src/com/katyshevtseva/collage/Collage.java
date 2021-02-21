@@ -6,17 +6,18 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class Collage {
-    private List<CollageImage> images;
+    private List<CollageImage> collageImages;
     private int height;
     private int width;
     private Pane collagePane;
     private CollageImage changingImage;
 
-    public Collage(List<CollageImage> images, int height, int width) {
-        this.images = images;
+    public Collage(List<CollageImage> collageImages, int height, int width) {
+        this.collageImages = collageImages;
         this.height = height;
         this.width = width;
         initializeCollagePane();
@@ -30,7 +31,8 @@ public class Collage {
         pane.setMaxHeight(height);
         pane.setMinHeight(height);
         pane.setStyle(Styler.getColorfullStyle(Styler.ThingToColor.BACKGROUND, "#023648"));
-        for (CollageImage image : images) {
+        collageImages.sort(Comparator.comparing(CollageImage::getZ));
+        for (CollageImage image : collageImages) {
             pane.getChildren().addAll(image.getImageView(), image.getSizeAdjuster());
         }
         collagePane = pane;
@@ -48,10 +50,10 @@ public class Collage {
             content.putString("");
             db.setContent(content);
             event.consume();
-            for (CollageImage image : images)
-                if (image.containsPoint(event.getX(), event.getY())) {
-                    System.out.println("imageContainsPoint");
+            for (CollageImage image : collageImages)
+                if (image.reportStartOfDragEvent(event.getX(), event.getY())) {
                     changingImage = image;
+                    moveImageToFirstPlan(changingImage);
                     break;
                 }
         });
@@ -67,5 +69,20 @@ public class Collage {
             event.consume();
         });
 
+    }
+
+    private void moveImageToFirstPlan(CollageImage collageImage) {
+        collagePane.getChildren().removeAll(collageImage.getImageView(), collageImage.getSizeAdjuster());
+        collagePane.getChildren().addAll(collageImage.getImageView(), collageImage.getSizeAdjuster());
+        collageImage.setZ(getImagesMaxZ() + 1);
+        collageImages.sort(Comparator.comparing(CollageImage::getZ).reversed());
+    }
+
+    private int getImagesMaxZ() {
+        int result = 0;
+        for (CollageImage collageImage : collageImages)
+            if (collageImage.getZ() > result)
+                result = collageImage.getZ();
+        return result;
     }
 }

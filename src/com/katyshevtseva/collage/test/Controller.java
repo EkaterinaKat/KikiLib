@@ -25,15 +25,15 @@ class Controller implements WindowBuilder.FxController {
         List<CollageImage> collageImages = new ArrayList<>();
 
         ImageView imageView1 = new ImageView(new Image("/com/katyshevtseva/collage/test/image1.png"));
-        collageImages.add(new CollageImage(imageView1, 0.25, 0.25, 0.5, 0.5, COLLAGE_HEIGHT, COLLAGE_WIDTH));
+        collageImages.add(new CollageImage(imageView1, 0.25, 0.25, 0.5, 0.5, COLLAGE_HEIGHT, COLLAGE_WIDTH, 1));
         ImageView imageView2 = new ImageView(new Image("/com/katyshevtseva/collage/test/image2.png"));
-        collageImages.add(new CollageImage(imageView2, 0.25, 0.25, 0, 0, COLLAGE_HEIGHT, COLLAGE_WIDTH));
+        collageImages.add(new CollageImage(imageView2, 0.25, 0.25, 0, 0, COLLAGE_HEIGHT, COLLAGE_WIDTH, 2));
         ImageView imageView3 = new ImageView(new Image("/com/katyshevtseva/collage/test/image3.png"));
-        collageImages.add(new CollageImage(imageView3, 0.25, 0.25, 0.7, 0.3, COLLAGE_HEIGHT, COLLAGE_WIDTH));
+        collageImages.add(new CollageImage(imageView3, 0.25, 0.25, 0.7, 0.3, COLLAGE_HEIGHT, COLLAGE_WIDTH, 3));
         ImageView imageView4 = new ImageView(new Image("/com/katyshevtseva/collage/test/image4.png"));
-        collageImages.add(new CollageImage(imageView4, 0.25, 0.25, 0.3, 0.7, COLLAGE_HEIGHT, COLLAGE_WIDTH));
+        collageImages.add(new CollageImage(imageView4, 0.25, 0.25, 0.3, 0.7, COLLAGE_HEIGHT, COLLAGE_WIDTH, 4));
         ImageView imageView5 = new ImageView(new Image("/com/katyshevtseva/collage/test/image5.png"));
-        collageImages.add(new CollageImage(imageView5, 0.25, 0.25, 0.1, 0.2, COLLAGE_HEIGHT, COLLAGE_WIDTH));
+        collageImages.add(new CollageImage(imageView5, 0.25, 0.25, 0.1, 0.2, COLLAGE_HEIGHT, COLLAGE_WIDTH, 5));
 
         Collage collage = new Collage(collageImages, COLLAGE_HEIGHT, COLLAGE_WIDTH);
         pane.getChildren().add(collage.getCollagePane());

@@ -15,13 +15,15 @@ public class CollageImage {
     private double width;
     private double x;
     private double y;
+    private int z;
     private double collageHeight;
     private double collageWidth;
     private double sizeAdjusterSize;
     private CurrentModificationType currentModificationType;
 
     public CollageImage(ImageView imageView, double relativeHeight, double relativeWidth,
-                        double relativeX, double relativeY, double collageHeight, double collageWidth) {
+                        double relativeX, double relativeY, double collageHeight, double collageWidth, int z) {
+        this.z = z;
         sizeAdjusterSize = collageWidth * 0.03;
         this.collageHeight = collageHeight;
         this.collageWidth = collageWidth;
@@ -49,26 +51,17 @@ public class CollageImage {
         return imageView;
     }
 
-    double getHeight() {
-        return height;
-    }
-
-    double getWidth() {
-        return width;
-    }
-
-    double getX() {
-        return x;
-    }
-
-    double getY() {
-        return y;
-    }
-
     ImageView getSizeAdjuster() {
         return sizeAdjuster;
     }
 
+    int getZ() {
+        return z;
+    }
+
+    void setZ(int z) {
+        this.z = z;
+    }
 
     private void setCoordinates(double x, double y) {
         imageView.setX(x);
@@ -83,41 +76,23 @@ public class CollageImage {
         sizeAdjuster.setY(y + height - sizeAdjuster.getFitHeight() / 2);
     }
 
-    private void resize(DragEvent event) {
+    private void resizeIfAllowable(DragEvent event) {
         double newWidth = event.getX() - x;
         double newHeight = height * (newWidth / width);
-        System.out.println("height = " + height);
-        System.out.println("width = " + width);
-        System.out.println("newWidth = " + newWidth);
-        System.out.println("newHeight = " + newHeight);
         if (resizeAllowable(newWidth, newHeight)) {
-            System.out.println("allowable");
             imageView.setFitWidth(newWidth);
             imageView.setFitHeight(newHeight);
             height = newHeight;
             width = newWidth;
-        } else
-            System.out.println("not allowable");
+        }
         setSizeAdjusterCoordinates();
     }
 
     private boolean resizeAllowable(double newWidth, double newHeight) {
-        System.out.println("x = " + x);
-        System.out.println("newWidth = " + newWidth);
-        System.out.println("collageWidth = " + collageWidth);
-        System.out.println("y = " + y);
-        System.out.println("newHeight = " + newHeight);
-        System.out.println("collageHeight = " + collageHeight);
-        System.out.println("x + newWidth < collageWidth = " + (x + newWidth < collageWidth));
-        System.out.println("y + newHeight < collageHeight = " + (y + newHeight < collageHeight));
         return x + newWidth < collageWidth && y + newHeight < collageHeight && newWidth > collageWidth * 0.1;
     }
 
-    private boolean allowableRelocationEvent(DragEvent event) {
-        return event.getX() + height < collageHeight && event.getY() + width < collageWidth;
-    }
-
-    boolean containsPoint(double pointX, double pointY) {  //todo некорректное название
+    boolean reportStartOfDragEvent(double pointX, double pointY) {
         boolean sizeAdjusterContainPoint = ((pointX > sizeAdjuster.getX()) && (pointX < (sizeAdjuster.getX() + sizeAdjusterSize))) &&
                 ((pointY > sizeAdjuster.getY()) && (pointY < (sizeAdjuster.getY() + sizeAdjusterSize)));
         if (sizeAdjusterContainPoint) {
@@ -134,14 +109,19 @@ public class CollageImage {
 
     void reportDragEvent(DragEvent event) {
         if (currentModificationType == MOVING) {
-            System.out.println("moving");
-            if (allowableRelocationEvent(event)) {
-                System.out.println("allowable");
-                setCoordinates(event.getX(), event.getY());
-            }
+            relocateIfAllowable(event);
         } else if (currentModificationType == RESIZING) {
-            System.out.println("resize");
-            resize(event);
+            resizeIfAllowable(event);
         }
+    }
+
+    private void relocateIfAllowable(DragEvent event) {
+        if (allowableRelocationEvent(event)) {
+            setCoordinates(event.getX(), event.getY());
+        }
+    }
+
+    private boolean allowableRelocationEvent(DragEvent event) {
+        return event.getX() + height < collageHeight && event.getY() + width < collageWidth;
     }
 }
