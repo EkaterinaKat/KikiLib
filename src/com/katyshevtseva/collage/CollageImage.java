@@ -1,29 +1,18 @@
 package com.katyshevtseva.collage;
 
 
+import com.katyshevtseva.fx.Point;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.MouseEvent;
-
-import static com.katyshevtseva.collage.CollageImage.CurrentModificationType.MOVING;
-import static com.katyshevtseva.collage.CollageImage.CurrentModificationType.RESIZING;
 
 public class CollageImage {
     private ImageView imageView;
     private ImageView sizeAdjuster;
-    private double height;
-    private double width;
     private int z;
     private Collage collage;
     private double sizeAdjusterSize;
-    private CurrentModificationType currentModificationType;
-    private double dragCursorStartX;
-    private double dragCursorStartY;
-    private double dragImageStartX;
-    private double dragImageStartY;
 
     public static CollageImage formExistingImage(ImageView imageView, double relativeHeight, double relativeWidth,
                                                  double relativeX, double relativeY, Collage collage, int z) {
@@ -39,11 +28,11 @@ public class CollageImage {
     }
 
     public double getRelativeWidth() {
-        return width / collage.getWidth();
+        return imageView.getFitWidth() / collage.getWidth();
     }
 
     public double getRelativeHeight() {
-        return height / collage.getHeight();
+        return imageView.getFitHeight() / collage.getHeight();
     }
 
     public double getRelativeX() {
@@ -70,12 +59,10 @@ public class CollageImage {
         this.z = z;
         sizeAdjusterSize = collage.getWidth() * 0.03;
         this.imageView = imageView;
-        height = collage.getHeight() * relativeHeight;
-        width = collage.getWidth() * relativeWidth;
-        imageView.setFitHeight(height);
-        imageView.setFitWidth(width);
+        imageView.setFitHeight(collage.getHeight() * relativeHeight);
+        imageView.setFitWidth(collage.getWidth() * relativeWidth);
         sizeAdjuster = getSizeAdjusterImageView();
-        setCoordinates(collage.getWidth() * relativeX, collage.getHeight() * relativeY);
+        setCoordinates(new Point(collage.getWidth() * relativeX, collage.getHeight() * relativeY));
         adjustContextMenu();
     }
 
@@ -95,10 +82,6 @@ public class CollageImage {
         );
     }
 
-    enum CurrentModificationType {
-        RESIZING, MOVING
-    }
-
     private ImageView getSizeAdjusterImageView() {
         ImageView imageView = new ImageView(new Image("/arrow.png"));
         imageView.setFitWidth(sizeAdjusterSize);
@@ -114,76 +97,53 @@ public class CollageImage {
         this.z = z;
     }
 
-    private void setCoordinates(double x, double y) {
-        imageView.setX(x);
-        imageView.setY(y);
+    void setCoordinates(Point newCoord) {
+        imageView.setX(newCoord.getX());
+        imageView.setY(newCoord.getY());
         setSizeAdjusterCoordinates();
     }
 
     private void setSizeAdjusterCoordinates() {
-        sizeAdjuster.setX(imageView.getX() + width - sizeAdjuster.getFitWidth() / 2);
-        sizeAdjuster.setY(imageView.getY() + height - sizeAdjuster.getFitHeight() / 2);
+        sizeAdjuster.setX(imageView.getX() + imageView.getFitWidth() - sizeAdjuster.getFitWidth() / 2);
+        sizeAdjuster.setY(imageView.getY() + imageView.getFitHeight() - sizeAdjuster.getFitHeight() / 2);
     }
 
-    private void resizeIfAllowable(DragEvent event) {
-        double newWidth = event.getX() - imageView.getX();
-        double newHeight = height * (newWidth / width);
-        if (resizeAllowable(newWidth, newHeight)) {
-            imageView.setFitWidth(newWidth);
-            imageView.setFitHeight(newHeight);
-            height = newHeight;
-            width = newWidth;
-        }
-        setSizeAdjusterCoordinates();
+    boolean sizeAdjusterContainsPoint(Point point) {
+        return ((point.getX() > sizeAdjuster.getX()) && (point.getX() < (sizeAdjuster.getX() + sizeAdjusterSize))) &&
+                ((point.getY() > sizeAdjuster.getY()) && (point.getY() < (sizeAdjuster.getY() + sizeAdjusterSize)));
     }
 
-    private boolean resizeAllowable(double newWidth, double newHeight) {
+    boolean imageContainsPoint(Point point) {
+        return ((point.getX() > imageView.getX()) && (point.getX() < (imageView.getX() + imageView.getFitWidth())))
+                && ((point.getY() > imageView.getY()) && (point.getY() < (imageView.getY() + imageView.getFitHeight())));
+    }
+
+    double getX() {
+        return imageView.getX();
+    }
+
+    double getY() {
+        return imageView.getY();
+    }
+
+    boolean relocationAllowable(Point newCoord) {
+        return newCoord.getX() + imageView.getFitWidth() < collage.getWidth()
+                && newCoord.getY() + imageView.getFitHeight() < collage.getHeight();
+    }
+
+    boolean resizeAllowable(double newWidth, double newHeight) {
         return imageView.getX() + newWidth < collage.getWidth()
                 && imageView.getY() + newHeight < collage.getHeight() && newWidth > collage.getWidth() * 0.1;
     }
 
-    boolean reportStartOfDragEvent(MouseEvent event) {
-        boolean sizeAdjusterContainPoint = ((event.getX() > sizeAdjuster.getX()) && (event.getX() < (sizeAdjuster.getX() + sizeAdjusterSize))) &&
-                ((event.getY() > sizeAdjuster.getY()) && (event.getY() < (sizeAdjuster.getY() + sizeAdjusterSize)));
-        if (sizeAdjusterContainPoint) {
-            currentModificationType = RESIZING;
-            saveDragStartCoordinates(event.getX(), event.getY());
-            return true;
-        }
-        boolean imageContainsPoint = ((event.getX() > imageView.getX()) && (event.getX() < (imageView.getX() + width)))
-                && ((event.getY() > imageView.getY()) && (event.getY() < (imageView.getY() + height)));
-        if (imageContainsPoint) {
-            currentModificationType = MOVING;
-            saveDragStartCoordinates(event.getX(), event.getY());
-            return true;
-        }
-        return false;
+    double getNewHeightByNewWidth(double newWidth) {
+        return imageView.getFitHeight() * (newWidth / imageView.getFitWidth());
     }
 
-    private void saveDragStartCoordinates(double cursorX, double cursorY) {
-        dragCursorStartX = cursorX;
-        dragCursorStartY = cursorY;
-        dragImageStartX = imageView.getX();
-        dragImageStartY = imageView.getY();
-    }
+    void setNewSize(double newWidth, double newHeight) {
+        imageView.setFitWidth(newWidth);
+        imageView.setFitHeight(newHeight);
 
-    void reportDragEvent(DragEvent event) {
-        if (currentModificationType == MOVING) {
-            relocateIfAllowable(event);
-        } else if (currentModificationType == RESIZING) {
-            resizeIfAllowable(event);
-        }
-    }
-
-    private void relocateIfAllowable(DragEvent event) {
-        double newX = event.getX() - dragCursorStartX + dragImageStartX;
-        double newY = event.getY() - dragCursorStartY + dragImageStartY;
-        if (newX > 0 && newY > 0 && allowableRelocationEvent(newX, newY)) {
-            setCoordinates(newX, newY);
-        }
-    }
-
-    private boolean allowableRelocationEvent(double newX, double newY) {
-        return newX + width < collage.getWidth() && newY + height < collage.getHeight();
+        setSizeAdjusterCoordinates();
     }
 }

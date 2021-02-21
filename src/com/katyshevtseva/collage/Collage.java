@@ -15,7 +15,7 @@ public class Collage {
     private int height;
     private int width;
     private Pane collagePane;
-    private CollageImage changingImage;
+    private ImageModification currentModification;
     private boolean editingMode;
 
     public Collage(int height, int width, boolean editingMode) {
@@ -85,23 +85,24 @@ public class Collage {
                 content.putString("");
                 db.setContent(content);
                 event.consume();
-                for (CollageImage image : images)
-                    if (image.reportStartOfDragEvent(event)) {
-                        changingImage = image;
-                        moveImageToFirstPlan(changingImage);
+                for (CollageImage image : images) {
+                    currentModification = ImageModification.getModificationIfNeededOrNull(image, event);
+                    if (currentModification != null) {
+                        moveImageToFirstPlan(image);
                         break;
                     }
+                }
             }
         });
 
         collagePane.setOnDragOver(event -> {
-            if (changingImage != null) {
-                changingImage.reportDragEvent(event);
+            if (currentModification != null) {
+                currentModification.reportDragEvent(event);
             }
         });
 
         collagePane.setOnDragDone(event -> {
-            changingImage = null;
+            currentModification = null;
             event.consume();
         });
 
