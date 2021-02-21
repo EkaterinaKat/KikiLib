@@ -95,12 +95,17 @@ public class Collage {
 
     }
 
-    private void moveImageToFirstPlan(CollageImage collageImage) {
+    void moveImageToFirstPlan(CollageImage collageImage) {
         collagePane.getChildren().removeAll(collageImage.getImageView(), collageImage.getSizeAdjuster());
         collagePane.getChildren().addAll(collageImage.getImageView(), collageImage.getSizeAdjuster());
         collageImage.setZ(getImagesMaxZ() + 1);
         normalizeZCoordinates();
         images.sort(Comparator.comparing(CollageImage::getZ).reversed());
+    }
+
+    void deleteImage(CollageImage collageImage) {
+        images.remove(collageImage);
+        collagePane.getChildren().removeAll(collageImage.getImageView(), collageImage.getSizeAdjuster());
     }
 
     private int getImagesMaxZ() {

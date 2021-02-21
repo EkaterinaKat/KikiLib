@@ -1,6 +1,8 @@
 package com.katyshevtseva.collage;
 
 
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
@@ -74,6 +76,20 @@ public class CollageImage {
         imageView.setFitWidth(width);
         sizeAdjuster = getSizeAdjusterImageView();
         setCoordinates(collage.getWidth() * relativeX, collage.getHeight() * relativeY);
+        adjustContextMenu();
+    }
+
+    private void adjustContextMenu() {
+        MenuItem bringToFrontItem = new MenuItem("Bring to front");
+        bringToFrontItem.setOnAction(event -> collage.moveImageToFirstPlan(this));
+
+        MenuItem deleteItem = new MenuItem("Delete");
+        deleteItem.setOnAction(event -> collage.deleteImage(this));
+
+        ContextMenu contextMenu = new ContextMenu();
+        contextMenu.getItems().addAll(bringToFrontItem, deleteItem);
+        imageView.setOnContextMenuRequested(e ->
+                contextMenu.show(imageView, e.getScreenX(), e.getScreenY()));
     }
 
     enum CurrentModificationType {
