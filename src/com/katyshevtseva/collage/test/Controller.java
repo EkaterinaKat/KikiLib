@@ -20,6 +20,10 @@ class Controller implements WindowBuilder.FxController {
     private Button button;
     @FXML
     private Pane pane;
+    @FXML
+    private Button editingModeOn;
+    @FXML
+    private Button editingModeOff;
 
     {
         imageUrls = new ArrayDeque<>();
@@ -34,7 +38,7 @@ class Controller implements WindowBuilder.FxController {
 
     @FXML
     private void initialize() {
-        Collage collage = new Collage(800, 800);
+        Collage collage = new Collage(800, 800, true);
         List<CollageImage> collageImages = new ArrayList<>();
 
         // Тестируем  первую статическую фабрику
@@ -57,6 +61,9 @@ class Controller implements WindowBuilder.FxController {
                 collage.addImage(CollageImage.createNewImage(imageView, collage));
             }
         });
+
+        editingModeOn.setOnAction(event -> collage.setEditingMode(true));
+        editingModeOff.setOnAction(event -> collage.setEditingMode(false));
 
         collage.setImages(collageImages);
         pane.getChildren().add(collage.getCollagePane());

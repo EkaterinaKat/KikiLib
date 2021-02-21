@@ -16,8 +16,10 @@ public class Collage {
     private int width;
     private Pane collagePane;
     private CollageImage changingImage;
+    private boolean editingMode;
 
-    public Collage(int height, int width) {
+    public Collage(int height, int width, boolean editingMode) {
+        this.editingMode = editingMode;
         this.height = height;
         this.width = width;
         initializeCollagePane();
@@ -46,6 +48,11 @@ public class Collage {
         return width;
     }
 
+    public void setEditingMode(boolean editingMode) {
+        this.editingMode = editingMode;
+        addImagesOnPane();
+    }
+
     /////////////////////////////   END OF API  ///////////////////////////////////////////////////
 
     private void initializeCollagePane() {
@@ -62,24 +69,29 @@ public class Collage {
         collagePane.getChildren().clear();
         images.sort(Comparator.comparing(CollageImage::getZ));
         for (CollageImage image : images) {
-            collagePane.getChildren().addAll(image.getImageView(), image.getSizeAdjuster());
+            if (editingMode)
+                collagePane.getChildren().addAll(image.getImageView(), image.getSizeAdjuster());
+            else
+                collagePane.getChildren().add(image.getImageView());
         }
     }
 
     private void tune() {
 
         collagePane.setOnDragDetected(event -> {
-            Dragboard db = collagePane.startDragAndDrop(TransferMode.ANY);
-            ClipboardContent content = new ClipboardContent();
-            content.putString("");
-            db.setContent(content);
-            event.consume();
-            for (CollageImage image : images)
-                if (image.reportStartOfDragEvent(event)) {
-                    changingImage = image;
-                    moveImageToFirstPlan(changingImage);
-                    break;
-                }
+            if (editingMode) {
+                Dragboard db = collagePane.startDragAndDrop(TransferMode.ANY);
+                ClipboardContent content = new ClipboardContent();
+                content.putString("");
+                db.setContent(content);
+                event.consume();
+                for (CollageImage image : images)
+                    if (image.reportStartOfDragEvent(event)) {
+                        changingImage = image;
+                        moveImageToFirstPlan(changingImage);
+                        break;
+                    }
+            }
         });
 
         collagePane.setOnDragOver(event -> {
@@ -121,5 +133,9 @@ public class Collage {
         for (int i = 0; i < images.size(); i++) {
             images.get(i).setZ(i + 1);
         }
+    }
+
+    boolean isEditingMode() {
+        return editingMode;
     }
 }

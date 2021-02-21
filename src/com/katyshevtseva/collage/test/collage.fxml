@@ -6,6 +6,12 @@
           xmlns:fx="http://javafx.com/fxml">
 
     <Pane fx:id="pane" prefWidth="800" prefHeight="800" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-    <Button text="Press me" fx:id="button" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+    <HBox GridPane.rowIndex="2" GridPane.columnIndex="1">
+        <Button text="Press me" fx:id="button"/>
+        <Pane prefWidth="20"/>
+        <Button text="On editing mode" fx:id="editingModeOn"/>
+        <Pane prefWidth="20"/>
+        <Button text="Off editing mode" fx:id="editingModeOff"/>
+    </HBox>
 
 </GridPane>

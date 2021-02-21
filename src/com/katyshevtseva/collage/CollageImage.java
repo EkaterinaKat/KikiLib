@@ -88,8 +88,11 @@ public class CollageImage {
 
         ContextMenu contextMenu = new ContextMenu();
         contextMenu.getItems().addAll(bringToFrontItem, deleteItem);
-        imageView.setOnContextMenuRequested(e ->
-                contextMenu.show(imageView, e.getScreenX(), e.getScreenY()));
+        imageView.setOnContextMenuRequested(e -> {
+                    if (collage.isEditingMode())
+                        contextMenu.show(imageView, e.getScreenX(), e.getScreenY());
+                }
+        );
     }
 
     enum CurrentModificationType {
