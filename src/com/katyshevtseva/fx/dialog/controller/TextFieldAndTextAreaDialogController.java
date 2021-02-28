@@ -8,7 +8,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 
-public class TwoFieldsEditDialogController implements WindowBuilder.FxController {
+public class TextFieldAndTextAreaDialogController implements WindowBuilder.FxController {
     @FXML
     private TextField textField;
     @FXML
@@ -19,7 +19,7 @@ public class TwoFieldsEditDialogController implements WindowBuilder.FxController
     private String initFirstText;
     private String initSecondText;
 
-    public TwoFieldsEditDialogController(String initFirstText, String initSecondText, OkButtonHandler okButtonHandler) {
+    public TextFieldAndTextAreaDialogController(String initFirstText, String initSecondText, OkButtonHandler okButtonHandler) {
         this.okButtonHandler = okButtonHandler;
         this.initFirstText = initFirstText;
         this.initSecondText = initSecondText;

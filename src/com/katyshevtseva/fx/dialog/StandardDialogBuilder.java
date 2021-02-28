@@ -4,8 +4,8 @@ import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.dialog.controller.InfoDialogController;
 import com.katyshevtseva.fx.dialog.controller.QuestionDialogController;
 import com.katyshevtseva.fx.dialog.controller.QuestionDialogController.AnswerHandler;
-import com.katyshevtseva.fx.dialog.controller.TwoFieldsEditDialogController;
-import com.katyshevtseva.fx.dialog.controller.TwoFieldsEditDialogController.OkButtonHandler;
+import com.katyshevtseva.fx.dialog.controller.TextFieldAndTextAreaDialogController;
+import com.katyshevtseva.fx.dialog.controller.TextFieldAndTextAreaDialogController.OkButtonHandler;
 
 public class StandardDialogBuilder {
     private final String DIALOG_FXML_LOCATION = "/com/katyshevtseva/fx/dialog/fxml/";
@@ -60,14 +60,14 @@ public class StandardDialogBuilder {
         windowBuilder.setController(new InfoDialogController(info)).showWindow();
     }
 
-    public void openTwoFieldsEditDialog(String initFirstText, String initSecondText, OkButtonHandler okButtonHandler) {
-        WindowBuilder windowBuilder = new WindowBuilder(DIALOG_FXML_LOCATION + "two_fields_edit_dialog.fxml")
+    public void openTextFieldAndTextAreaDialog(String initFirstText, String initSecondText, OkButtonHandler okButtonHandler) {
+        WindowBuilder windowBuilder = new WindowBuilder(DIALOG_FXML_LOCATION + "text_field_and_text_area_dialog.fxml")
                 .setHeight(dialogHeight).setWidth(dialogWidth).setTitle(title);
         if (iconPath != null)
             windowBuilder.setIconImagePath(iconPath);
         if (cssPath != null)
             windowBuilder.setCssPath(cssPath);
-        windowBuilder.setController(new TwoFieldsEditDialogController(initFirstText, initSecondText, okButtonHandler)).showWindow();
+        windowBuilder.setController(new TextFieldAndTextAreaDialogController(initFirstText, initSecondText, okButtonHandler)).showWindow();
     }
 
 
