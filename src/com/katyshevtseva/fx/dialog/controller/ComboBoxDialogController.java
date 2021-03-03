@@ -6,45 +6,38 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
 
 import java.util.List;
 
-public class TextFieldAndComboBoxDialogController<T> implements FxController {
-    @FXML
-    private TextField textField;
+public class ComboBoxDialogController<T> implements FxController {
     @FXML
     private ComboBox<T> comboBox;
     @FXML
     private Button okButton;
     private OkButtonHandler<T> okButtonHandler;
-    private String initText;
     private List<T> comboBoxItems;
     private T initComboBoxSelectedItem;
 
-    public TextFieldAndComboBoxDialogController(String initText, List<T> comboBoxItems,
-                                                T initComboBoxSelectedItem, OkButtonHandler<T> okButtonHandler) {
+    public ComboBoxDialogController(List<T> comboBoxItems, T initComboBoxSelectedItem, OkButtonHandler<T> okButtonHandler) {
         this.okButtonHandler = okButtonHandler;
-        this.initText = initText;
         this.comboBoxItems = comboBoxItems;
         this.initComboBoxSelectedItem = initComboBoxSelectedItem;
     }
 
     @FXML
     private void initialize() {
-        Utils.associateButtonWithControls(okButton, comboBox, textField);
-        textField.setText(initText);
+        Utils.associateButtonWithControls(okButton, comboBox);
         comboBox.setItems(FXCollections.observableArrayList(comboBoxItems));
         if (initComboBoxSelectedItem != null)
             comboBox.setValue(initComboBoxSelectedItem);
         okButton.setOnAction(event -> {
-            okButtonHandler.execute(textField.getText(), comboBox.getValue());
-            Utils.closeWindowThatContains(textField);
+            okButtonHandler.execute(comboBox.getValue());
+            Utils.closeWindowThatContains(comboBox);
         });
     }
 
     @FunctionalInterface
     public interface OkButtonHandler<T> {
-        void execute(String text, T comboBoxItem);
+        void execute(T comboBoxItem);
     }
 }

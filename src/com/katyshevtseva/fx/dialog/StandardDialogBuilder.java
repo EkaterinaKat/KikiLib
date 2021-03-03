@@ -1,11 +1,8 @@
 package com.katyshevtseva.fx.dialog;
 
 import com.katyshevtseva.fx.WindowBuilder;
-import com.katyshevtseva.fx.dialog.controller.InfoDialogController;
-import com.katyshevtseva.fx.dialog.controller.QuestionDialogController;
+import com.katyshevtseva.fx.dialog.controller.*;
 import com.katyshevtseva.fx.dialog.controller.QuestionDialogController.AnswerHandler;
-import com.katyshevtseva.fx.dialog.controller.TextFieldAndComboBoxDialogController;
-import com.katyshevtseva.fx.dialog.controller.TextFieldAndTextAreaDialogController;
 
 import java.util.List;
 
@@ -68,5 +65,12 @@ public class StandardDialogBuilder {
                 .setHeight(dialogHeight).setWidth(dialogWidth).setTitle(title).setIconImagePath(iconPath).setCssPath(cssPath)
                 .setController(new TextFieldAndComboBoxDialogController<T>(
                         initText, comboBoxItems, initComboBoxItem, okButtonHandler)).showWindow();
+    }
+
+    public <T> void openComboBoxDialog(List<T> comboBoxItems, T initComboBoxItem,
+                                       ComboBoxDialogController.OkButtonHandler<T> okButtonHandler) {
+        new WindowBuilder(DIALOG_FXML_LOCATION + "combobox_dialog.fxml")
+                .setHeight(dialogHeight).setWidth(dialogWidth).setTitle(title).setIconImagePath(iconPath).setCssPath(cssPath)
+                .setController(new ComboBoxDialogController<T>(comboBoxItems, initComboBoxItem, okButtonHandler)).showWindow();
     }
 }
