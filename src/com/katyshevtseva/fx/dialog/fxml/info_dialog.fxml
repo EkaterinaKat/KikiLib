@@ -10,7 +10,7 @@
         <GridPane alignment="CENTER">
             <HBox>
                 <Pane maxWidth="10" minWidth="10"/>
-                <Label fx:id="infoLabel" wrapText="true" maxWidth="320"/>
+                <Label fx:id="infoLabel" wrapText="true" maxWidth="320" textAlignment="CENTER"/>
                 <Pane maxWidth="10" minWidth="10"/>
             </HBox>
         </GridPane>

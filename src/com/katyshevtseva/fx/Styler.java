@@ -39,4 +39,8 @@ public class Styler {
     public static String getNotItalicTextStyle() {
         return " -fx-font-style: normal; ";
     }
+
+    public static String getTextSizeStyle(int size) {
+        return " -fx-font-size: "+size+"; ";
+    }
 }
