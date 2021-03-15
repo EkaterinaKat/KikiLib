@@ -73,4 +73,10 @@ public class StandardDialogBuilder {
                 .setHeight(dialogHeight).setWidth(dialogWidth).setTitle(title).setIconImagePath(iconPath).setCssPath(cssPath)
                 .setController(new ComboBoxDialogController<T>(comboBoxItems, initComboBoxItem, okButtonHandler)).showWindow();
     }
+
+    public void openTextFieldDialog(String initFirstText, TextFieldDialogController.OkButtonHandler okButtonHandler) {
+        new WindowBuilder(DIALOG_FXML_LOCATION + "text_field_dialog.fxml")
+                .setHeight(dialogHeight).setWidth(dialogWidth).setTitle(title).setIconImagePath(iconPath).setCssPath(cssPath)
+                .setController(new TextFieldDialogController(initFirstText, okButtonHandler)).showWindow();
+    }
 }
