@@ -42,6 +42,11 @@ public class TwoTextFieldsDialogController implements WindowBuilder.FxController
         okButtonHandler.execute(textField1.getText(), textField2.getText());
         if (closeAfterOk)
             Utils.closeWindowThatContains(textField1);
+        else {
+            textField1.clear();
+            textField2.clear();
+            textField1.requestFocus();
+        }
     }
 
     @FunctionalInterface

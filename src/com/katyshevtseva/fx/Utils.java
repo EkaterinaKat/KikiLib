@@ -28,6 +28,10 @@ public class Utils {
         });
     }
 
+    public static void setImageOnButton(String imageName, Button button, int size) {
+        setImageOnButton(imageName, button, size, size);
+    }
+
     public static void setImageOnButton(String imageName, Button button, int height, int width) {
         Image image = new Image(imageName);
         ImageView imageView = new ImageView(image);
