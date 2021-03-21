@@ -58,14 +58,13 @@ class Controller implements WindowBuilder.FxController {
             String imageUrl = imageUrls.pollFirst();
             if (imageUrl != null) {
                 ImageView imageView = new ImageView(new Image(imageUrl));
-                collage.addImage(CollageImage.createNewImage(imageView, collage));
+                collage.addComponent(CollageImage.createNewImage(imageView, collage));
             }
         });
 
         editingModeOn.setOnAction(event -> collage.setEditingMode(true));
         editingModeOff.setOnAction(event -> collage.setEditingMode(false));
 
-        collage.setImages(collageImages);
         pane.getChildren().add(collage.getCollagePane());
     }
 }

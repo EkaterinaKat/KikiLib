@@ -2,19 +2,16 @@ package com.katyshevtseva.collage;
 
 
 import com.katyshevtseva.fx.Point;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class CollageImage {
+public class CollageImage extends CollageComponent {
     private ImageView imageView;
     private ImageView sizeAdjuster;
     private int z;
-    private Collage collage;
     private double sizeAdjusterSize;
 
-    public static CollageImage formExistingImage(ImageView imageView, double relativeHeight, double relativeWidth,
+    public static CollageImage fromExistingImage(ImageView imageView, double relativeHeight, double relativeWidth,
                                                  double relativeX, double relativeY, Collage collage, int z) {
         return new CollageImage(imageView, relativeHeight, relativeWidth, relativeX, relativeY, collage, z);
     }
@@ -55,31 +52,18 @@ public class CollageImage {
 
     private CollageImage(ImageView imageView, double relativeHeight, double relativeWidth,
                          double relativeX, double relativeY, Collage collage, int z) {
+        super(imageView);
         this.collage = collage;
         this.z = z;
         sizeAdjusterSize = collage.getWidth() * 0.03;
-        this.imageView = imageView;
         imageView.setFitHeight(collage.getHeight() * relativeHeight);
         imageView.setFitWidth(collage.getWidth() * relativeWidth);
         sizeAdjuster = getSizeAdjusterImageView();
         setCoordinates(new Point(collage.getWidth() * relativeX, collage.getHeight() * relativeY));
-        adjustContextMenu();
     }
 
-    private void adjustContextMenu() {
-        MenuItem bringToFrontItem = new MenuItem("Bring to front");
-        bringToFrontItem.setOnAction(event -> collage.moveImageToFirstPlan(this));
-
-        MenuItem deleteItem = new MenuItem("Delete");
-        deleteItem.setOnAction(event -> collage.deleteImage(this));
-
-        ContextMenu contextMenu = new ContextMenu();
-        contextMenu.getItems().addAll(bringToFrontItem, deleteItem);
-        imageView.setOnContextMenuRequested(e -> {
-                    if (collage.isEditingMode())
-                        contextMenu.show(imageView, e.getScreenX(), e.getScreenY());
-                }
-        );
+    void initializeImageView(ImageView imageView) {
+        this.imageView = imageView;
     }
 
     private ImageView getSizeAdjusterImageView() {

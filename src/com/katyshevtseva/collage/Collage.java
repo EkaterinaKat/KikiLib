@@ -11,7 +11,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Collage {
-    private List<CollageImage> images = new ArrayList<>();
+    private List<CollageComponent> components = new ArrayList<>();
     private int height;
     private int width;
     private Pane collagePane;
@@ -30,14 +30,9 @@ public class Collage {
         return collagePane;
     }
 
-    public void setImages(List<CollageImage> collageImages) {
-        this.images = collageImages;
-        addImagesOnPane();
-    }
-
-    public void addImage(CollageImage collageImage) {
-        images.add(collageImage);
-        moveImageToFirstPlan(collageImage);
+    public void addComponent(CollageComponent collageComponent) {
+        components.add(collageComponent);
+        moveComponentToFirstPlan(collageComponent);
     }
 
     public int getHeight() {
@@ -50,7 +45,7 @@ public class Collage {
 
     public void setEditingMode(boolean editingMode) {
         this.editingMode = editingMode;
-        addImagesOnPane();
+        addComponentsOnPane();
     }
 
     /////////////////////////////   END OF API  ///////////////////////////////////////////////////
@@ -65,14 +60,14 @@ public class Collage {
         collagePane = pane;
     }
 
-    private void addImagesOnPane() {
+    private void addComponentsOnPane() {
         collagePane.getChildren().clear();
-        images.sort(Comparator.comparing(CollageImage::getZ));
-        for (CollageImage image : images) {
+        components.sort(Comparator.comparing(CollageComponent::getZ));
+        for (CollageComponent component : components) {
             if (editingMode)
-                collagePane.getChildren().addAll(image.getImageView(), image.getSizeAdjuster());
+                collagePane.getChildren().addAll(component.getImageView(), component.getSizeAdjuster());
             else
-                collagePane.getChildren().add(image.getImageView());
+                collagePane.getChildren().add(component.getImageView());
         }
     }
 
@@ -85,10 +80,10 @@ public class Collage {
                 content.putString("");
                 db.setContent(content);
                 event.consume();
-                for (CollageImage image : images) {
-                    currentModification = ImageModification.getModificationIfNeededOrNull(image, event);
+                for (CollageComponent component : components) {
+                    currentModification = ImageModification.getModificationIfNeededOrNull(component, event);
                     if (currentModification != null) {
-                        moveImageToFirstPlan(image);
+                        moveComponentToFirstPlan(component);
                         break;
                     }
                 }
@@ -108,31 +103,31 @@ public class Collage {
 
     }
 
-    void moveImageToFirstPlan(CollageImage collageImage) {
-        collagePane.getChildren().removeAll(collageImage.getImageView(), collageImage.getSizeAdjuster());
-        collagePane.getChildren().addAll(collageImage.getImageView(), collageImage.getSizeAdjuster());
-        collageImage.setZ(getImagesMaxZ() + 1);
+    void moveComponentToFirstPlan(CollageComponent component) {
+        collagePane.getChildren().removeAll(component.getImageView(), component.getSizeAdjuster());
+        collagePane.getChildren().addAll(component.getImageView(), component.getSizeAdjuster());
+        component.setZ(getImagesMaxZ() + 1);
         normalizeZCoordinates();
-        images.sort(Comparator.comparing(CollageImage::getZ).reversed());
+        components.sort(Comparator.comparing(CollageComponent::getZ).reversed());
     }
 
-    void deleteImage(CollageImage collageImage) {
-        images.remove(collageImage);
-        collagePane.getChildren().removeAll(collageImage.getImageView(), collageImage.getSizeAdjuster());
+    void deleteComponent(CollageComponent component) {
+        components.remove(component);
+        collagePane.getChildren().removeAll(component.getImageView(), component.getSizeAdjuster());
     }
 
     private int getImagesMaxZ() {
         int result = 0;
-        for (CollageImage collageImage : images)
-            if (collageImage.getZ() > result)
-                result = collageImage.getZ();
+        for (CollageComponent component : components)
+            if (component.getZ() > result)
+                result = component.getZ();
         return result;
     }
 
     private void normalizeZCoordinates() {
-        images.sort(Comparator.comparing(CollageImage::getZ));
-        for (int i = 0; i < images.size(); i++) {
-            images.get(i).setZ(i + 1);
+        components.sort(Comparator.comparing(CollageComponent::getZ));
+        for (int i = 0; i < components.size(); i++) {
+            components.get(i).setZ(i + 1);
         }
     }
 
