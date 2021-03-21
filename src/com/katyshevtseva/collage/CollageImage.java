@@ -5,6 +5,9 @@ import com.katyshevtseva.fx.Point;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class CollageImage extends CollageComponent {
     private ImageView imageView;
     private ImageView sizeAdjuster;
@@ -129,5 +132,10 @@ public class CollageImage extends CollageComponent {
         imageView.setFitHeight(newHeight);
 
         setSizeAdjusterCoordinates();
+    }
+
+    @Override
+    List<ImageView> getImageViewWithButtons() {
+        return Arrays.asList(imageView, sizeAdjuster);
     }
 }

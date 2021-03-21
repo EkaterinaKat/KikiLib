@@ -6,6 +6,8 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 
+import java.util.List;
+
 abstract class CollageComponent {
     Collage collage;
 
@@ -45,7 +47,7 @@ abstract class CollageComponent {
 
     abstract ImageView getImageView();
 
-    abstract ImageView getSizeAdjuster();
+    abstract List<ImageView> getImageViewWithButtons();
 
     abstract boolean imageContainsPoint(Point point);
 

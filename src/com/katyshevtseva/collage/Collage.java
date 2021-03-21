@@ -65,7 +65,7 @@ public class Collage {
         components.sort(Comparator.comparing(CollageComponent::getZ));
         for (CollageComponent component : components) {
             if (editingMode)
-                collagePane.getChildren().addAll(component.getImageView(), component.getSizeAdjuster());
+                collagePane.getChildren().addAll(component.getImageViewWithButtons());
             else
                 collagePane.getChildren().add(component.getImageView());
         }
@@ -104,8 +104,8 @@ public class Collage {
     }
 
     void moveComponentToFirstPlan(CollageComponent component) {
-        collagePane.getChildren().removeAll(component.getImageView(), component.getSizeAdjuster());
-        collagePane.getChildren().addAll(component.getImageView(), component.getSizeAdjuster());
+        collagePane.getChildren().removeAll(component.getImageViewWithButtons());
+        collagePane.getChildren().addAll(component.getImageViewWithButtons());
         component.setZ(getImagesMaxZ() + 1);
         normalizeZCoordinates();
         components.sort(Comparator.comparing(CollageComponent::getZ).reversed());
@@ -113,7 +113,7 @@ public class Collage {
 
     void deleteComponent(CollageComponent component) {
         components.remove(component);
-        collagePane.getChildren().removeAll(component.getImageView(), component.getSizeAdjuster());
+        collagePane.getChildren().removeAll(component.getImageViewWithButtons());
     }
 
     private int getImagesMaxZ() {
