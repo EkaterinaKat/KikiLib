@@ -1,8 +1,7 @@
-package com.katyshevtseva.collage;
-
+package com.katyshevtseva.collage.old;
 
 import com.katyshevtseva.fx.Point;
-import javafx.scene.image.Image;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.image.ImageView;
 
 import java.util.Arrays;
@@ -10,9 +9,6 @@ import java.util.List;
 
 public class CollageImage extends CollageComponent {
     private ImageView imageView;
-    private ImageView sizeAdjuster;
-    private int z;
-    private double sizeAdjusterSize;
 
     public static CollageImage fromExistingImage(ImageView imageView, double relativeHeight, double relativeWidth,
                                                  double relativeX, double relativeY, Collage collage, int z) {
@@ -27,77 +23,26 @@ public class CollageImage extends CollageComponent {
         return new CollageImage(imageView, initRelativeHeight, initRelativeWidth, initRelativeX, initRelativeY, collage, 1);
     }
 
-    public double getRelativeWidth() {
-        return imageView.getFitWidth() / collage.getWidth();
-    }
-
-    public double getRelativeHeight() {
-        return imageView.getFitHeight() / collage.getHeight();
-    }
-
-    public double getRelativeX() {
-        return imageView.getX() / collage.getWidth();
-    }
-
-    public double getRelativeY() {
-        return imageView.getY() / collage.getHeight();
-    }
-
     public ImageView getImageView() {
         return imageView;
-    }
-
-    public int getZ() {
-        return z;
     }
 
     /////////////////////////////   END OF API  ///////////////////////////////////////////////////
 
     private CollageImage(ImageView imageView, double relativeHeight, double relativeWidth,
                          double relativeX, double relativeY, Collage collage, int z) {
-        super(imageView);
-        this.collage = collage;
-        this.z = z;
-        sizeAdjusterSize = collage.getWidth() * 0.03;
+        super(collage, z);
         imageView.setFitHeight(collage.getHeight() * relativeHeight);
         imageView.setFitWidth(collage.getWidth() * relativeWidth);
-        sizeAdjuster = getSizeAdjusterImageView();
-        setCoordinates(new Point(collage.getWidth() * relativeX, collage.getHeight() * relativeY));
-    }
-
-    void initializeImageView(ImageView imageView) {
         this.imageView = imageView;
-    }
-
-    private ImageView getSizeAdjusterImageView() {
-        ImageView imageView = new ImageView(new Image("/resizing_arrow.png"));
-        imageView.setFitWidth(sizeAdjusterSize);
-        imageView.setFitHeight(sizeAdjusterSize);
-        return imageView;
-    }
-
-    ImageView getSizeAdjuster() {
-        return sizeAdjuster;
-    }
-
-    void setZ(int z) {
-        this.z = z;
+        formContextMenuAndSetOnImage();
+        setCoordinates(new Point(collage.getWidth() * relativeX, collage.getHeight() * relativeY));
     }
 
     void setCoordinates(Point newCoord) {
         imageView.setX(newCoord.getX());
         imageView.setY(newCoord.getY());
         setSizeAdjusterCoordinates();
-    }
-
-    private void setSizeAdjusterCoordinates() {
-        sizeAdjuster.setX(imageView.getX() + imageView.getFitWidth() - sizeAdjuster.getFitWidth() / 2);
-        sizeAdjuster.setY(imageView.getY() + imageView.getFitHeight() - sizeAdjuster.getFitHeight() / 2);
-    }
-
-    boolean sizeAdjusterContainsPoint(Point point) {
-        return ((point.getX() > sizeAdjuster.getX()) && (point.getX() < (sizeAdjuster.getX() + sizeAdjusterSize))) &&
-                ((point.getY() > sizeAdjuster.getY()) && (point.getY() < (sizeAdjuster.getY() + sizeAdjusterSize)));
     }
 
     boolean imageContainsPoint(Point point) {
@@ -136,6 +81,19 @@ public class CollageImage extends CollageComponent {
 
     @Override
     List<ImageView> getImageViewWithButtons() {
-        return Arrays.asList(imageView, sizeAdjuster);
+        return Arrays.asList(imageView, getSizeAdjuster());
+    }
+
+    ImageParams getCurrentImageParams(){
+        return new ImageParams(imageView.getX(), imageView.getY(), imageView.getFitWidth(), imageView.getFitHeight());
+    }
+
+    @Override
+    void setMenuOnImage(ContextMenu contextMenu) {
+        imageView.setOnContextMenuRequested(e -> {
+                    if (collage.isEditingMode())
+                        contextMenu.show(imageView, e.getScreenX(), e.getScreenY());
+                }
+        );
     }
 }

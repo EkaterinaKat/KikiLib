@@ -1,7 +1,7 @@
 package com.katyshevtseva.collage.test;
 
-import com.katyshevtseva.collage.Collage;
-import com.katyshevtseva.collage.CollageImage;
+import com.katyshevtseva.collage.old.Collage;
+import com.katyshevtseva.collage.old.CollageImage;
 import com.katyshevtseva.fx.WindowBuilder;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

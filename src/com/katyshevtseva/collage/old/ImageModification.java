@@ -1,4 +1,4 @@
-package com.katyshevtseva.collage;
+package com.katyshevtseva.collage.old;
 
 import com.katyshevtseva.fx.Point;
 import javafx.scene.input.DragEvent;

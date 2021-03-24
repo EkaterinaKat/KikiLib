@@ -1,4 +1,4 @@
 package com.katyshevtseva.collage;
 
-public class Collage {
+public class Image extends Component{
 }
