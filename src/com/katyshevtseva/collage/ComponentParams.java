@@ -1,4 +1,11 @@
 package com.katyshevtseva.collage;
 
-public abstract class ComponentParams {
+abstract class ComponentParams {
+    abstract double getX();
+
+    abstract double getY();
+
+    abstract double getHeight();
+
+    abstract double getWidth();
 }

@@ -1,7 +1,6 @@
 package com.katyshevtseva.collage.test;
 
-import com.katyshevtseva.collage.old.Collage;
-import com.katyshevtseva.collage.old.CollageImage;
+import com.katyshevtseva.collage.Collage;
 import com.katyshevtseva.fx.WindowBuilder;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -10,9 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Deque;
-import java.util.List;
 
 class Controller implements WindowBuilder.FxController {
     private Deque<String> imageUrls;
@@ -38,9 +35,24 @@ class Controller implements WindowBuilder.FxController {
 
     @FXML
     private void initialize() {
-        Collage collage = new Collage(800, 800, true);
-        List<CollageImage> collageImages = new ArrayList<>();
+        Collage collage = new Collage(800, 800);
 
+        // Тестируем вторую статическую фабрику
+        button.setOnAction(event -> {
+            String imageUrl = imageUrls.pollFirst();
+            if (imageUrl != null) {
+                ImageView imageView = new ImageView(new Image(imageUrl));
+                collage.addComponent(com.katyshevtseva.collage.Image.createNewImage(imageView, collage));
+            }
+        });
+
+        editingModeOn.setOnAction(event -> collage.setEditingMode(true));
+        editingModeOff.setOnAction(event -> collage.setEditingMode(false));
+
+        pane.getChildren().add(collage.getCollagePane());
+    }
+
+    private void old() {
         // Тестируем  первую статическую фабрику
 //        ImageView imageView1 = new ImageView(new Image(imageUrls.pollFirst()));
 //        collageImages.add(CollageImage.formExistingImage(imageView1, 0.25, 0.25, 0.5, 0.5, collage, 1));
@@ -52,19 +64,5 @@ class Controller implements WindowBuilder.FxController {
 //        collageImages.add(CollageImage.formExistingImage(imageView4, 0.25, 0.25, 0.3, 0.7, collage, 4));
 //        ImageView imageView5 = new ImageView(new Image(imageUrls.pollFirst()));
 //        collageImages.add(CollageImage.formExistingImage(imageView5, 0.25, 0.25, 0.1, 0.2, collage, 5));
-
-        // Тестируем вторую статическую фабрику
-        button.setOnAction(event -> {
-            String imageUrl = imageUrls.pollFirst();
-            if (imageUrl != null) {
-                ImageView imageView = new ImageView(new Image(imageUrl));
-                collage.addComponent(CollageImage.createNewImage(imageView, collage));
-            }
-        });
-
-        editingModeOn.setOnAction(event -> collage.setEditingMode(true));
-        editingModeOff.setOnAction(event -> collage.setEditingMode(false));
-
-        pane.getChildren().add(collage.getCollagePane());
     }
 }

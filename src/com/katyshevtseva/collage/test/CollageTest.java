@@ -13,7 +13,6 @@ public class CollageTest extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         new WindowBuilder("/com/katyshevtseva/collage/test/collage.fxml").setHeight(1000).setWidth(1000)
-                .setController(new Controller())
-                .setCursorImagePath("/cursor1.png").showWindow();
+                .setController(new Controller()).showWindow();
     }
 }
