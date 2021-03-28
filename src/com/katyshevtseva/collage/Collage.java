@@ -64,7 +64,7 @@ public class Collage {
 
     private void clearAndRefillPaneWithComponents() {
         collagePane.getChildren().clear();
-        components.sort(Comparator.comparing(Component::getZ)); //todo правильно ли сортируется
+        components.sort(Comparator.comparing(Component::getZ));
         for (Component component : components) {
             if (editingMode)
                 collagePane.getChildren().addAll(component.getImageViewWithButtons());

@@ -12,8 +12,7 @@ public abstract class Component {
     Collage collage;
     private int z;
     ImageView sizeAdjuster;
-    private double sizeAdjusterSize;
-    private ComponentParams params;
+    double buttonSize;
 
     public int getZ() {
         return z;
@@ -22,11 +21,10 @@ public abstract class Component {
 
     /////////////////////////////   END OF API  ///////////////////////////////////////////////////
 
-    Component(Collage collage, ComponentParams params, int z) {
+    Component(Collage collage, int z) {
         this.z = z;
         this.collage = collage;
-        this.params = params;
-        sizeAdjusterSize = collage.getWidth() * 0.03;
+        buttonSize = collage.getWidth() * 0.03;
         sizeAdjuster = getSizeAdjusterImageView();
     }
 
@@ -45,8 +43,8 @@ public abstract class Component {
 
     private ImageView getSizeAdjusterImageView() {
         ImageView imageView = new ImageView(new Image("/resizing_arrow.png"));
-        imageView.setFitWidth(sizeAdjusterSize);
-        imageView.setFitHeight(sizeAdjusterSize);
+        imageView.setFitWidth(buttonSize);
+        imageView.setFitHeight(buttonSize);
         return imageView;
     }
 
@@ -55,22 +53,22 @@ public abstract class Component {
     }
 
     void updateSizeAdjusterCoordinates() {
-        sizeAdjuster.setX(params.getX() + params.getWidth() - sizeAdjuster.getFitWidth() / 2);
-        sizeAdjuster.setY(params.getY() + params.getHeight() - sizeAdjuster.getFitHeight() / 2);
+        sizeAdjuster.setX(getX() + getWidth() - sizeAdjuster.getFitWidth() / 2);
+        sizeAdjuster.setY(getY() + getHeight() - sizeAdjuster.getFitHeight() / 2);
     }
 
     boolean sizeAdjusterContainsPoint(Point point) {
-        return ((point.getX() > sizeAdjuster.getX()) && (point.getX() < (sizeAdjuster.getX() + sizeAdjusterSize))) &&
-                ((point.getY() > sizeAdjuster.getY()) && (point.getY() < (sizeAdjuster.getY() + sizeAdjusterSize)));
+        return ((point.getX() > sizeAdjuster.getX()) && (point.getX() < (sizeAdjuster.getX() + buttonSize))) &&
+                ((point.getY() > sizeAdjuster.getY()) && (point.getY() < (sizeAdjuster.getY() + buttonSize)));
     }
 
     boolean imageContainsPoint(Point point) {
-        return ((point.getX() > params.getX()) && (point.getX() < (params.getX() + params.getWidth())))
-                && ((point.getY() > params.getY()) && (point.getY() < (params.getY() + params.getHeight())));
+        return ((point.getX() > getX()) && (point.getX() < (getX() + getWidth())))
+                && ((point.getY() > getY()) && (point.getY() < (getY() + getHeight())));
     }
 
     Point getPos() {
-        return new Point(params.getX(), params.getY());
+        return new Point(getX(), getY());
     }
 
     void relocateIfAllowable(Point newCoord) {
@@ -81,8 +79,8 @@ public abstract class Component {
 
     private boolean relocationAllowable(Point newCoord) {
         return newCoord.getX() > 0 && newCoord.getY() > 0 &&
-                newCoord.getX() + params.getWidth() < collage.getWidth()
-                && newCoord.getY() + params.getHeight() < collage.getHeight();
+                newCoord.getX() + getWidth() < collage.getWidth()
+                && newCoord.getY() + getHeight() < collage.getHeight();
     }
 
     abstract void setCoordinates(Point newCoord);
@@ -94,4 +92,12 @@ public abstract class Component {
     abstract List<ImageView> getImageViewWithButtons();
 
     abstract void setMenuOnImage(ContextMenu menu);
+
+    abstract double getX();
+
+    abstract double getY();
+
+    abstract double getWidth();
+
+    abstract double getHeight();
 }

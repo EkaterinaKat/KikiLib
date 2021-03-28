@@ -10,28 +10,26 @@ import java.util.List;
 public class Image extends Component {
     private ImageView imageView;
 
-    public static Image fromExistingImage(ImageView imageView, ImageParams params, Collage collage, int z) {
-        return new Image(imageView, params, collage, z);
+    public Image(ImageView imageView, Collage collage, int z, double relativeX, double relativeY, double relativeWidth, double relativeHeight) {
+        super(collage, z);
+        this.imageView = imageView;
+        setImageViewInitParams(new ImageParams(relativeX, relativeY, relativeWidth, relativeHeight));
+        formContextMenuAndSetOnImage();
     }
 
-    public static Image createNewImage(ImageView imageView, Collage collage) {
-        ImageParams params = ImageParams.getParams(collage, imageView);
-        return new Image(imageView, params, collage, 1);
-    }
-
-    public ImageView getImageView() {
-        return imageView;
+    public Image(ImageView imageView, Collage collage) {
+        super(collage, 1);
+        this.imageView = imageView;
+        setImageViewInitParams(new ImageParams());
+        formContextMenuAndSetOnImage();
     }
 
     /////////////////////////////   END OF API  ///////////////////////////////////////////////////
 
-    private Image(ImageView imageView, ImageParams params, Collage collage, int z) {
-        super(collage, params, z);
-        this.imageView = imageView;
-        imageView.setFitHeight(params.getInitHeight());
-        imageView.setFitWidth(params.getInitWidth());
-        formContextMenuAndSetOnImage();
-        setCoordinates(new Point(params.getInitX(), params.getInitY()));
+    private void setImageViewInitParams(ImageParams params) {
+        imageView.setFitHeight(params.initHeight);
+        imageView.setFitWidth(params.initWidth);
+        setCoordinates(new Point(params.initX, params.initY));
     }
 
     void setCoordinates(Point newCoord) {
@@ -71,5 +69,56 @@ public class Image extends Component {
                         menu.show(imageView, e.getScreenX(), e.getScreenY());
                 }
         );
+    }
+
+    @Override
+    double getX() {
+        return imageView.getX();
+    }
+
+    @Override
+    double getY() {
+        return imageView.getY();
+    }
+
+    @Override
+    double getWidth() {
+        return imageView.getFitWidth();
+    }
+
+    @Override
+    double getHeight() {
+        return imageView.getFitHeight();
+    }
+
+    ImageView getImageView() {
+        return imageView;
+    }
+
+
+    class ImageParams {
+        private double initX;
+        private double initY;
+        private double initWidth;
+        private double initHeight;
+
+        ImageParams(){
+            double relativeWidth = 0.3;
+            double relativeHeight = (relativeWidth * imageView.getImage().getHeight()) / imageView.getImage().getWidth();
+            double relativeX = 0.5 - relativeWidth / 2.0;
+            double relativeY = 0.5 - relativeHeight / 2.0;
+            calculateAbsoluteInitialValues(relativeX, relativeY, relativeWidth, relativeHeight);
+        }
+
+        ImageParams(double relativeX, double relativeY, double relativeWidth, double relativeHeight) {
+            calculateAbsoluteInitialValues(relativeX, relativeY, relativeWidth, relativeHeight);
+        }
+
+        private void calculateAbsoluteInitialValues(double relativeX, double relativeY, double relativeWidth, double relativeHeight) {
+            initX = collage.getWidth() * relativeX;
+            initY = collage.getHeight() * relativeY;
+            initHeight = collage.getHeight() * relativeHeight;
+            initWidth = collage.getWidth() * relativeWidth;
+        }
     }
 }

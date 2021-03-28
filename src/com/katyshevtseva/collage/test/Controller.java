@@ -42,7 +42,7 @@ class Controller implements WindowBuilder.FxController {
             String imageUrl = imageUrls.pollFirst();
             if (imageUrl != null) {
                 ImageView imageView = new ImageView(new Image(imageUrl));
-                collage.addComponent(com.katyshevtseva.collage.Image.createNewImage(imageView, collage));
+                collage.addComponent(new com.katyshevtseva.collage.Image(imageView, collage));
             }
         });
 
