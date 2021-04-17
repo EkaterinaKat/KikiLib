@@ -1,6 +1,6 @@
 package com.katyshevtseva.fx.dialog.controller;
 
-import com.katyshevtseva.fx.Utils;
+import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -26,13 +26,13 @@ public class ComboBoxDialogController<T> implements FxController {
 
     @FXML
     private void initialize() {
-        Utils.associateButtonWithControls(okButton, comboBox);
+        FxUtils.associateButtonWithControls(okButton, comboBox);
         comboBox.setItems(FXCollections.observableArrayList(comboBoxItems));
         if (initComboBoxSelectedItem != null)
             comboBox.setValue(initComboBoxSelectedItem);
         okButton.setOnAction(event -> {
             okButtonHandler.execute(comboBox.getValue());
-            Utils.closeWindowThatContains(comboBox);
+            FxUtils.closeWindowThatContains(comboBox);
         });
     }
 

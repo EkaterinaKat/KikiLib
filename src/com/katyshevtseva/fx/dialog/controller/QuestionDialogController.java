@@ -1,6 +1,6 @@
 package com.katyshevtseva.fx.dialog.controller;
 
-import com.katyshevtseva.fx.Utils;
+import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -30,7 +30,7 @@ public class QuestionDialogController implements WindowBuilder.FxController {
 
     private void handleAnswer(boolean b) {
         answerHandler.handle(b);
-        Utils.closeWindowThatContains(questionLabel);
+        FxUtils.closeWindowThatContains(questionLabel);
     }
 
     @FunctionalInterface

@@ -1,5 +1,7 @@
 package com.katyshevtseva.fx;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -10,9 +12,9 @@ import javafx.stage.Stage;
 import java.util.Arrays;
 import java.util.List;
 
-public class Utils {
+public class FxUtils {
 
-    private Utils() {
+    private FxUtils() {
     }
 
     public static void closeWindowThatContains(Node node) {
@@ -92,5 +94,22 @@ public class Utils {
         pane.setMinWidth(width);
         pane.setMaxWidth(width);
         return pane;
+    }
+
+    public static <E> void setComboBoxItems(ComboBox<E> comboBox, E[] items) {
+        ObservableList<E> observableList = FXCollections.observableArrayList(items);
+        comboBox.setItems(observableList);
+    }
+
+    public static <E> void setComboBoxItems(ComboBox<E> comboBox, List<E> items) {
+        ObservableList<E> observableList = FXCollections.observableArrayList(items);
+        comboBox.setItems(observableList);
+    }
+
+    public static <E> void setComboBoxItemsAndSetSelectedFirstItem(ComboBox<E> comboBox, List<E> items) {
+        ObservableList<E> observableList = FXCollections.observableArrayList(items);
+        comboBox.setItems(observableList);
+        if (items.size()>0)
+            comboBox.setValue(items.get(0));
     }
 }

@@ -1,6 +1,6 @@
 package com.katyshevtseva.fx.dialog.controller;
 
-import com.katyshevtseva.fx.Utils;
+import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -21,11 +21,11 @@ public class TextFieldDialogController implements FxController {
 
     @FXML
     private void initialize() {
-        Utils.associateButtonWithControls(okButton, textField);
+        FxUtils.associateButtonWithControls(okButton, textField);
         textField.setText(initText);
         okButton.setOnAction(event -> {
             okButtonHandler.execute(textField.getText());
-            Utils.closeWindowThatContains(textField);
+            FxUtils.closeWindowThatContains(textField);
         });
     }
 

@@ -1,6 +1,6 @@
 package com.katyshevtseva.fx.dialog.controller;
 
-import com.katyshevtseva.fx.Utils;
+import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -27,12 +27,12 @@ public class TextFieldAndTextAreaDialogController implements WindowBuilder.FxCon
 
     @FXML
     private void initialize() {
-        Utils.associateButtonWithControls(okButton, textArea, textField);
+        FxUtils.associateButtonWithControls(okButton, textArea, textField);
         textField.setText(initFirstText);
         textArea.setText(initSecondText);
         okButton.setOnAction(event -> {
             okButtonHandler.execute(textField.getText(), textArea.getText());
-            Utils.closeWindowThatContains(textField);
+            FxUtils.closeWindowThatContains(textField);
         });
     }
 

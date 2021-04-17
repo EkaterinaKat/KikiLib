@@ -1,6 +1,7 @@
 package com.katyshevtseva.collage.test;
 
 import com.katyshevtseva.collage.Collage;
+import com.katyshevtseva.collage.ImageSet;
 import com.katyshevtseva.fx.WindowBuilder;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -9,7 +10,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
+import java.util.List;
 
 class Controller implements WindowBuilder.FxController {
     private Deque<String> imageUrls;
@@ -38,17 +41,32 @@ class Controller implements WindowBuilder.FxController {
         Collage collage = new Collage(800, 800);
 
         // Тестируем вторую статическую фабрику
-        button.setOnAction(event -> {
-            String imageUrl = imageUrls.pollFirst();
-            if (imageUrl != null) {
-                ImageView imageView = new ImageView(new Image(imageUrl));
-                collage.addComponent(new com.katyshevtseva.collage.Image(imageView, collage));
-            }
-        });
+//        button.setOnAction(event -> {
+//            String imageUrl = imageUrls.pollFirst();
+//            if (imageUrl != null) {
+//                ImageView imageView = new ImageView(new Image(imageUrl));
+//                collage.addComponent(new com.katyshevtseva.collage.Image(imageView, collage));
+//            }
+//        });
+//
+//        editingModeOn.setOnAction(event -> collage.setEditingMode(true));
+//        editingModeOff.setOnAction(event -> collage.setEditingMode(false));
+//        pane.getChildren().add(collage.getCollagePane());
 
-        editingModeOn.setOnAction(event -> collage.setEditingMode(true));
-        editingModeOff.setOnAction(event -> collage.setEditingMode(false));
+        // Тестируем создание ImageSet без параметров
+        List<ImageView> imageViews = new ArrayList<>();
+        ImageView imageView1 = new ImageView(new Image(imageUrls.pollFirst()));
+        imageViews.add(imageView1);
+        ImageView imageView2 = new ImageView(new Image(imageUrls.pollFirst()));
+        imageViews.add(imageView2);
+        ImageView imageView3 = new ImageView(new Image(imageUrls.pollFirst()));
+        imageViews.add(imageView3);
+        ImageView imageView4 = new ImageView(new Image(imageUrls.pollFirst()));
+        imageViews.add(imageView4);
+        ImageView imageView5 = new ImageView(new Image(imageUrls.pollFirst()));
+        imageViews.add(imageView5);
 
+        collage.addComponent(new ImageSet(imageViews, collage));
         pane.getChildren().add(collage.getCollagePane());
     }
 

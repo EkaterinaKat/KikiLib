@@ -1,6 +1,6 @@
 package com.katyshevtseva.fx.dialog.controller;
 
-import com.katyshevtseva.fx.Utils;
+import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -27,7 +27,7 @@ public class TwoTextFieldsDialogController implements WindowBuilder.FxController
 
     @FXML
     private void initialize() {
-        Utils.associateButtonWithControls(okButton, textField1, textField2);
+        FxUtils.associateButtonWithControls(okButton, textField1, textField2);
         textField1.setText(initText1);
         textField2.setText(initText2);
         okButton.setOnAction(event -> okButtonListener());
@@ -41,7 +41,7 @@ public class TwoTextFieldsDialogController implements WindowBuilder.FxController
     private void okButtonListener() {
         okButtonHandler.execute(textField1.getText(), textField2.getText());
         if (closeAfterOk)
-            Utils.closeWindowThatContains(textField1);
+            FxUtils.closeWindowThatContains(textField1);
         else {
             textField1.clear();
             textField2.clear();
