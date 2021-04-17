@@ -3,8 +3,8 @@ package com.katyshevtseva.date;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-import static com.katyshevtseva.date.Utils.TimeUnit.DAY;
-import static com.katyshevtseva.date.Utils.shiftDate;
+import static com.katyshevtseva.date.DateUtils.TimeUnit.DAY;
+import static com.katyshevtseva.date.DateUtils.shiftDate;
 
 public class DateCorrector {
 

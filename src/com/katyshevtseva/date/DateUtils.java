@@ -7,8 +7,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class Utils {
-    private static DateFormat readableFormat = new SimpleDateFormat("dd.MM.yyyy");
+public class DateUtils {
+    public static DateFormat READABLE_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 
     public enum TimeUnit {
         DAY(Calendar.DATE), MONTH(Calendar.MONTH), YEAR(Calendar.YEAR);
@@ -44,6 +44,10 @@ public class Utils {
     }
 
     public static String getStringRepresentationOfPeriod(Period period) {
-        return String.format("%s-%s", readableFormat.format(period.start()), readableFormat.format(period.end()));
+        return String.format("%s-%s", READABLE_DATE_FORMAT.format(period.start()), READABLE_DATE_FORMAT.format(period.end()));
+    }
+
+    public static Period getLastMonthPeriod() {
+        return new Period(shiftDate(new Date(), TimeUnit.MONTH, -1), new Date());
     }
 }
