@@ -9,6 +9,7 @@ import java.util.List;
 
 public class DateUtils {
     public static DateFormat READABLE_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
+    public static DateFormat READABLE_TIME_FORMAT = new SimpleDateFormat("HH:mm");
 
     public enum TimeUnit {
         DAY(Calendar.DATE), MONTH(Calendar.MONTH), YEAR(Calendar.YEAR);
@@ -38,7 +39,7 @@ public class DateUtils {
         List<Date> result = new ArrayList<>();
         while (date.before(oneDayAfterEnd)) {
             result.add(date);
-            date = shiftDate(period.end(), TimeUnit.DAY, 1);
+            date = shiftDate(date, TimeUnit.DAY, 1);
         }
         return result;
     }
@@ -49,5 +50,10 @@ public class DateUtils {
 
     public static Period getLastMonthPeriod() {
         return new Period(shiftDate(new Date(), TimeUnit.MONTH, -1), new Date());
+    }
+
+    public static int getNumberOfMinutes(Date startDate, Date finishDate) {
+        long diff = finishDate.getTime() - startDate.getTime();
+        return (int) (diff / 60000);
     }
 }
