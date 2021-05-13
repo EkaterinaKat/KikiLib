@@ -62,4 +62,8 @@ public class Styler {
     public static String getTextSizeStyle(int size) {
         return " -fx-font-size: " + size + "; ";
     }
+
+    public static String getBlackBorderStyle() {
+        return " -fx-border-color: #000000; ";
+    }
 }

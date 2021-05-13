@@ -77,8 +77,8 @@ public class StandardDialogBuilder {
         getWindowBuilder("combobox_dialog.fxml", controller).showWindow();
     }
 
-    public void openTextFieldDialog(String initFirstText, TextFieldDialogController.OkButtonHandler okButtonHandler) {
-        TextFieldDialogController controller = new TextFieldDialogController(initFirstText, okButtonHandler);
+    public void openTextFieldDialog(String initText, TextFieldDialogController.OkButtonHandler okButtonHandler) {
+        TextFieldDialogController controller = new TextFieldDialogController(initText, okButtonHandler);
         getWindowBuilder("text_field_dialog.fxml", controller).showWindow();
     }
 

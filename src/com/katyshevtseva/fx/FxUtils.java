@@ -109,7 +109,19 @@ public class FxUtils {
     public static <E> void setComboBoxItemsAndSetSelectedFirstItem(ComboBox<E> comboBox, List<E> items) {
         ObservableList<E> observableList = FXCollections.observableArrayList(items);
         comboBox.setItems(observableList);
-        if (items.size()>0)
+        if (items.size() > 0)
             comboBox.setValue(items.get(0));
+    }
+
+    public static <E> void setComboBoxItems(ComboBox<E> comboBox, List<E> items, E defaultSelectedItem) {
+        ObservableList<E> observableList = FXCollections.observableArrayList(items);
+        comboBox.setItems(observableList);
+        comboBox.setValue(defaultSelectedItem);
+    }
+
+    public static <E> void setComboBoxItems(ComboBox<E> comboBox, E[] items, E defaultSelectedItem) {
+        ObservableList<E> observableList = FXCollections.observableArrayList(items);
+        comboBox.setItems(observableList);
+        comboBox.setValue(defaultSelectedItem);
     }
 }

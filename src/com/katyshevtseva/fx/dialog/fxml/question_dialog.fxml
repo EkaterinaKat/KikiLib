@@ -8,7 +8,7 @@
 
     <center>
         <GridPane alignment="CENTER">
-            <Label fx:id="questionLabel" styleClass="font_25"/>
+            <Label fx:id="questionLabel"/>
         </GridPane>
     </center>
 
