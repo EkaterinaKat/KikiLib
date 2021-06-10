@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 <Pane xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml">
 
     <ScrollPane fx:id="root">
-        <VBox fx:id="mainPane"/>
+        <VBox>
+            <Pane minHeight="10" maxHeight="10"/>
+            <HBox>
+                <Pane minWidth="10" maxHeight="10"/>
+                <VBox fx:id="mainPane"/>
+            </HBox>
+        </VBox>
+
     </ScrollPane>
 
 </Pane>

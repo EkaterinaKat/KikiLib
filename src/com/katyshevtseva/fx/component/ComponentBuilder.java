@@ -3,7 +3,6 @@ package com.katyshevtseva.fx.component;
 import com.katyshevtseva.fx.DesignInfo;
 import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.WindowBuilder;
-import com.katyshevtseva.fx.WindowBuilder.FxController;
 import javafx.scene.Node;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +24,7 @@ public class ComponentBuilder {
         return this;
     }
 
-    public <E> Component getMultipleChoiceComponent(List<E> items) {
+    public <E> Component<MultipleChoiceController<E>> getMultipleChoiceComponent(List<E> items) {
         MultipleChoiceController<E> controller = new MultipleChoiceController<>(items, size, designInfo);
         WindowBuilder windowBuilder = new WindowBuilder(COMPONENT_FXML_LOCATION + "multiple_choice.fxml")
                 .setController(controller)
@@ -34,13 +33,13 @@ public class ComponentBuilder {
         if (designInfo != null)
             windowBuilder.setCssPath(designInfo.getCssPath());
         Node node = windowBuilder.getNode();
-        return new Component(controller, node);
+        return new Component<>(controller, node);
     }
 
     @Data
     @RequiredArgsConstructor
-    public class Component {
-        private final FxController controller;
+    public class Component<E> {
+        private final E controller;
         private final Node node;
     }
 }

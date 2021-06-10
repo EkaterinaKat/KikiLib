@@ -3,11 +3,9 @@ package com.katyshevtseva.fx.component;
 import com.katyshevtseva.fx.DesignInfo;
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.Size;
-import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
@@ -36,6 +34,10 @@ public class MultipleChoiceController<E> implements FxController {
 
     public List<E> getSelectedItems() {
         return selectedItems;
+    }
+
+    public List<E> getAllItems() {
+        return items;
     }
 
     public void setCustomItemSupplier(ItemSupplier<E> itemSupplier) {
@@ -83,7 +85,7 @@ public class MultipleChoiceController<E> implements FxController {
                     new StandardDialogBuilder()
                             .setCssPath(designInfo.getCssPath())
                             .setIconPath(designInfo.getIconPath())
-                            .openComboBoxDialog(items, null, comboBoxItem -> {
+                            .openComboBoxDialog(getNotSelectedItems(), null, comboBoxItem -> {
                                 selectedItems.add(comboBoxItem);
                                 fillMainPane();
                             }));
@@ -92,5 +94,9 @@ public class MultipleChoiceController<E> implements FxController {
             fillMainPane();
         }
         return label;
+    }
+
+    private List<E> getNotSelectedItems() {
+        return items.stream().filter(e -> !selectedItems.contains(e)).collect(Collectors.toList());
     }
 }
