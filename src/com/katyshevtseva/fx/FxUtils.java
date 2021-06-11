@@ -1,13 +1,16 @@
 package com.katyshevtseva.fx;
 
+import com.katyshevtseva.general.OneArgKnob;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.util.Arrays;
 import java.util.List;
@@ -123,5 +126,30 @@ public class FxUtils {
         ObservableList<E> observableList = FXCollections.observableArrayList(items);
         comboBox.setItems(observableList);
         comboBox.setValue(defaultSelectedItem);
+    }
+
+    public static <T> void adjustButtonColumn(TableColumn<T, Void> column, String buttonText, OneArgKnob<T> knob) {
+        column.setCellFactory(new Callback<TableColumn<T, Void>, TableCell<T, Void>>() {
+            @Override
+            public TableCell<T, Void> call(final TableColumn<T, Void> param) {
+                return new TableCell<T, Void>() {
+                    private final Button button = new Button(buttonText);
+
+                    {
+                        button.setOnAction((ActionEvent event) -> knob.execute(getTableView().getItems().get(getIndex())));
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(button);
+                        }
+                    }
+                };
+            }
+        });
     }
 }
