@@ -128,7 +128,12 @@ public class FxUtils {
         comboBox.setValue(defaultSelectedItem);
     }
 
-    public static <T> void adjustButtonColumn(TableColumn<T, Void> column, String buttonText, OneArgKnob<T> knob) {
+    public static <T> void adjustButtonColumn(TableColumn<T, Void> column, String buttonText, OneArgKnob<T> buttonClickHandler) {
+        adjustButtonColumn(column, buttonText, buttonClickHandler, null);
+    }
+
+    public static <T> void adjustButtonColumn(TableColumn<T, Void> column, String buttonText,
+                                              OneArgKnob<T> buttonClickHandler, OneArgKnob<Button> buttonTuner) {
         column.setCellFactory(new Callback<TableColumn<T, Void>, TableCell<T, Void>>() {
             @Override
             public TableCell<T, Void> call(final TableColumn<T, Void> param) {
@@ -136,7 +141,9 @@ public class FxUtils {
                     private final Button button = new Button(buttonText);
 
                     {
-                        button.setOnAction((ActionEvent event) -> knob.execute(getTableView().getItems().get(getIndex())));
+                        if (buttonTuner != null)
+                            buttonTuner.execute(button);
+                        button.setOnAction((ActionEvent event) -> buttonClickHandler.execute(getTableView().getItems().get(getIndex())));
                     }
 
                     @Override

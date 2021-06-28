@@ -22,7 +22,9 @@ public class Styler {
     }
 
     public enum ThingToColor {
-        BACKGROUND(" -fx-background-color: "), TEXT(" -fx-text-fill: ");
+        BACKGROUND(" -fx-background-color: "),
+        TEXT(" -fx-text-fill: "),
+        TABLE_TEXT(" -fx-text-background-color: ");
 
         private String text;
 
@@ -40,7 +42,7 @@ public class Styler {
     }
 
     public static String getColorfullStyle(ThingToColor thingToColor, String color) {
-        return thingToColor.getText() + color + ";";
+        return thingToColor.getText() + color + "; ";
     }
 
     public static String getBoldTextStyle() {
