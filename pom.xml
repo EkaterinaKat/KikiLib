@@ -7,7 +7,9 @@
     <groupId>com.katyshevtseva</groupId>
     <artifactId>KikiLib</artifactId>
     <version>1.0</version>
+
     <build>
+        <sourceDirectory>${project.basedir}/src</sourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -18,6 +20,16 @@
                 </configuration>
             </plugin>
         </plugins>
+
+        <resources>
+            <resource>
+                <targetPath>com/katyshevtseva/fx/dialog/fxml</targetPath>
+                <directory>src/com/katyshevtseva/fx/dialog/fxml</directory>
+                <includes>
+                    <include>**/*.fxml</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
 
     <properties>

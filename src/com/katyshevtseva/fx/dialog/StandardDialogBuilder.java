@@ -3,7 +3,9 @@ package com.katyshevtseva.fx.dialog;
 import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.dialog.controller.*;
+import com.katyshevtseva.fx.dialog.controller.ImageSelectDialogController.ImageContainer;
 import com.katyshevtseva.fx.dialog.controller.QuestionDialogController.AnswerHandler;
+import com.katyshevtseva.general.OneArgKnob;
 
 import java.util.List;
 
@@ -86,6 +88,16 @@ public class StandardDialogBuilder {
                                                                  TwoTextFieldsDialogController.OkButtonHandler okButtonHandler) {
         TwoTextFieldsDialogController controller = new TwoTextFieldsDialogController(initText1, initText2, closeAfterOk, okButtonHandler);
         getWindowBuilder("two_text_fields_dialog.fxml", controller).showWindow();
+        return controller;
+    }
+
+    public ImageSelectDialogController openImageSelectionDialog(
+            List<ImageContainer> imageContainers, OneArgKnob<ImageContainer> selectionListener) {
+        ImageSelectDialogController controller = new ImageSelectDialogController(imageContainers, selectionListener);
+        getWindowBuilder("image_select_dialog.fxml", controller)
+                .setWidth(controller.getWindowWidth())
+                .setHeight(controller.getWindowHeight())
+                .showWindow();
         return controller;
     }
 
