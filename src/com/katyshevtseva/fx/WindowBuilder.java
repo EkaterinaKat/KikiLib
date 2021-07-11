@@ -28,6 +28,10 @@ public class WindowBuilder {
 
     public WindowBuilder(String fxmlName) {
         this.fxmlName = fxmlName;
+
+        ConfigUtil configUtil = new ConfigUtil();
+        iconImagePath = configUtil.getIconImagePath();
+        cssPath = configUtil.getCssPath();
     }
 
     public WindowBuilder setTitle(String title) {
@@ -55,11 +59,13 @@ public class WindowBuilder {
         return this;
     }
 
+    @Deprecated
     public WindowBuilder setIconImagePath(String iconImagePath) {
         this.iconImagePath = iconImagePath;
         return this;
     }
 
+    @Deprecated
     public WindowBuilder setCssPath(String cssPath) {
         this.cssPath = cssPath;
         return this;
