@@ -93,11 +93,37 @@ public class StandardDialogBuilder {
 
     public ImageSelectDialogController openImageSelectionDialog(
             List<ImageContainer> imageContainers, OneArgKnob<ImageContainer> selectionListener) {
-        ImageSelectDialogController controller = new ImageSelectDialogController(imageContainers, selectionListener);
+
+        ImageSelectDialogController controller = new ImageSelectDialogController(
+                imageContainers,
+                selectionListener);
+
         getWindowBuilder("image_select_dialog.fxml", controller)
                 .setWidth(controller.getWindowWidth())
                 .setHeight(controller.getWindowHeight())
                 .showWindow();
+
+        return controller;
+    }
+
+    public ImageSelectDialogController openEditableImageSelectionDialog(
+            List<ImageContainer> imageContainers,
+            List<ImageContainer> addableImageContainers,
+            OneArgKnob<ImageContainer> selectionListener,
+            OneArgKnob<List<ImageContainer>> windowCloseListener) {
+
+        EditableImageSelectDialogController controller = new EditableImageSelectDialogController(
+                imageContainers,
+                addableImageContainers,
+                selectionListener,
+                windowCloseListener);
+
+        getWindowBuilder("image_select_dialog.fxml", controller)
+                .setWidth(controller.getWindowWidth())
+                .setHeight(controller.getWindowHeight())
+                .setOnWindowCloseEventHandler(event -> windowCloseListener.execute(controller.getImageContainers()))
+                .showWindow();
+
         return controller;
     }
 

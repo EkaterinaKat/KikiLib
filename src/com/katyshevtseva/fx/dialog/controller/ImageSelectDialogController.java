@@ -14,6 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import lombok.Getter;
 
 import java.util.List;
 
@@ -25,16 +26,17 @@ import static com.katyshevtseva.general.GeneralUtils.getColumnByIndexAndColumnNu
 import static com.katyshevtseva.general.GeneralUtils.getRowByIndexAndColumnNum;
 
 public class ImageSelectDialogController implements FxController {
-    private static final int IMAGE_SIZE = 300;
+    static final int IMAGE_SIZE = 300;
     private static final int FRAME_SIZE = 30;
     private static final int GRID_GAP = 15;
-    private static final int MAX_NUM_OF_COLUMNS = 4;
+    static final int MAX_NUM_OF_COLUMNS = 4;
     private static final int MAX_NUM_OF_VISIBLE_ROWS = 2;
-    private List<ImageContainer> imageContainers;
+    @Getter
+    List<ImageContainer> imageContainers;
     private OneArgKnob<ImageContainer> selectionListener;
     @FXML
-    private ScrollPane scrollPane;
-    private GridPane gridPane;
+    ScrollPane scrollPane;
+    GridPane gridPane;
 
     public ImageSelectDialogController(List<ImageContainer> imageContainers, OneArgKnob<ImageContainer> selectionListener) {
         this.imageContainers = imageContainers;
@@ -61,59 +63,62 @@ public class ImageSelectDialogController implements FxController {
         scrollPane.setContent(hBox);
     }
 
-    private void setContent() {
+    void setContent() {
+        gridPane.getChildren().clear();
+
         for (int i = 0; i < imageContainers.size(); i++) {
-            ImageContainer imageContainer = imageContainers.get(i);
-            ImageView imageView = new ImageView(new Image(imageContainer.getUrl()));
-
-            if (getHeightByWidth(imageView, IMAGE_SIZE) <= IMAGE_SIZE) {
-                imageView.setFitWidth(IMAGE_SIZE);
-                imageView.setFitHeight(getHeightByWidth(imageView, IMAGE_SIZE));
-            } else {
-                imageView.setFitWidth(getWidthByHeight(imageView, IMAGE_SIZE));
-                imageView.setFitHeight(IMAGE_SIZE);
-            }
-
-            imageView.setOnMouseClicked(event -> {
-                selectionListener.execute(imageContainer);
-                FxUtils.closeWindowThatContains(scrollPane);
-            });
-
-            BorderPane borderPane = new BorderPane();
-            borderPane.setCenter(imageView);
-            BorderPane.setAlignment(imageView, Pos.CENTER);
-            borderPane.setMaxHeight(IMAGE_SIZE);
-            borderPane.setMaxWidth(IMAGE_SIZE);
-            borderPane.setMinHeight(IMAGE_SIZE);
-            borderPane.setMinWidth(IMAGE_SIZE);
-
-            gridPane.add(borderPane, getColumnByIndexAndColumnNum(i, MAX_NUM_OF_COLUMNS),
-                    getRowByIndexAndColumnNum(i, MAX_NUM_OF_COLUMNS));
-
-            GridPane.setHalignment(imageView, HPos.CENTER);
-            GridPane.setValignment(imageView, VPos.CENTER);
+            addImageToGridPane(i);
         }
     }
 
-    public int getWindowWidth() {
-        return getScrollPaneWidth() + 20;
+    void addImageToGridPane(int index) {
+        ImageContainer imageContainer = imageContainers.get(index);
+        ImageView imageView = new ImageView(new Image(imageContainer.getUrl()));
+
+        if (getHeightByWidth(imageView, IMAGE_SIZE) <= IMAGE_SIZE) {
+            imageView.setFitWidth(IMAGE_SIZE);
+            imageView.setFitHeight(getHeightByWidth(imageView, IMAGE_SIZE));
+        } else {
+            imageView.setFitWidth(getWidthByHeight(imageView, IMAGE_SIZE));
+            imageView.setFitHeight(IMAGE_SIZE);
+        }
+
+        imageView.setOnMouseClicked(event -> {
+            handleImageViewClick(imageContainer);
+        });
+
+        BorderPane borderPane = new BorderPane();
+        borderPane.setCenter(imageView);
+        BorderPane.setAlignment(imageView, Pos.CENTER);
+        borderPane.setMaxHeight(IMAGE_SIZE);
+        borderPane.setMaxWidth(IMAGE_SIZE);
+        borderPane.setMinHeight(IMAGE_SIZE);
+        borderPane.setMinWidth(IMAGE_SIZE);
+
+        gridPane.add(borderPane, getColumnByIndexAndColumnNum(index, MAX_NUM_OF_COLUMNS),
+                getRowByIndexAndColumnNum(index, MAX_NUM_OF_COLUMNS));
+
+        GridPane.setHalignment(imageView, HPos.CENTER);
+        GridPane.setValignment(imageView, VPos.CENTER);
+
     }
 
-    public int getWindowHeight() {
-        return getScrollPaneHeight() + 50;
+    void handleImageViewClick(ImageContainer imageContainer) {
+        selectionListener.execute(imageContainer);
+        FxUtils.closeWindowThatContains(scrollPane);
     }
 
-    private int getScrollPaneWidth() {
+    int getScrollPaneWidth() {
         return FRAME_SIZE * 2 + getColumnNum() * IMAGE_SIZE + (getColumnNum() - 1) * GRID_GAP + 20;
     }
 
     private int getColumnNum() {
-        if (imageContainers.size() >= MAX_NUM_OF_COLUMNS)
+        if (getNumOfCells() >= MAX_NUM_OF_COLUMNS)
             return MAX_NUM_OF_COLUMNS;
-        return imageContainers.size();
+        return getNumOfCells();
     }
 
-    private int getScrollPaneHeight() {
+    int getScrollPaneHeight() {
         return FRAME_SIZE * 2 + getVisibleRowNum() * IMAGE_SIZE + (getVisibleRowNum() - 1) * GRID_GAP + 20;
     }
 
@@ -124,10 +129,22 @@ public class ImageSelectDialogController implements FxController {
     }
 
     private int getRowNum() {
-        return (int) Math.ceil(imageContainers.size() * 1.0 / MAX_NUM_OF_COLUMNS);
+        return (int) Math.ceil(getNumOfCells() * 1.0 / MAX_NUM_OF_COLUMNS);
+    }
+
+    int getNumOfCells() {
+        return imageContainers.size();
     }
 
     public interface ImageContainer {
         String getUrl();
+    }
+
+    public int getWindowWidth() {
+        return getScrollPaneWidth() + 20;
+    }
+
+    public int getWindowHeight() {
+        return getScrollPaneHeight() + 50;
     }
 }
