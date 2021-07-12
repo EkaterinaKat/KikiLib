@@ -1,6 +1,5 @@
 package com.katyshevtseva.fx.component;
 
-import com.katyshevtseva.fx.DesignInfo;
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
@@ -16,7 +15,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class MultipleChoiceController<E> implements FxController {
-    private DesignInfo designInfo;
     private Size size;
     private List<E> items;
     private List<E> selectedItems = new ArrayList<>();
@@ -26,10 +24,9 @@ public class MultipleChoiceController<E> implements FxController {
     @FXML
     private VBox mainPane;
 
-    MultipleChoiceController(List<E> items, Size size, DesignInfo designInfo) {
+    MultipleChoiceController(List<E> items, Size size) {
         this.items = items;
         this.size = size;
-        this.designInfo = designInfo;
     }
 
     public List<E> getSelectedItems() {
@@ -83,8 +80,6 @@ public class MultipleChoiceController<E> implements FxController {
         if (customItemSupplier == null) {
             label.setOnMouseClicked(event ->
                     new StandardDialogBuilder()
-                            .setCssPath(designInfo.getCssPath())
-                            .setIconPath(designInfo.getIconPath())
                             .openComboBoxDialog(getNotSelectedItems(), null, comboBoxItem -> {
                                 selectedItems.add(comboBoxItem);
                                 fillMainPane();

@@ -59,18 +59,6 @@ public class WindowBuilder {
         return this;
     }
 
-    @Deprecated
-    public WindowBuilder setIconImagePath(String iconImagePath) {
-        this.iconImagePath = iconImagePath;
-        return this;
-    }
-
-    @Deprecated
-    public WindowBuilder setCssPath(String cssPath) {
-        this.cssPath = cssPath;
-        return this;
-    }
-
     public WindowBuilder setStretchable(boolean stretchable) {
         this.stretchable = stretchable;
         return this;

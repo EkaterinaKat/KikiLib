@@ -14,8 +14,6 @@ public class StandardDialogBuilder {
     private int dialogWidth = 340;
     private int dialogHeight = 200;
     private String title = "";
-    private String cssPath;
-    private String iconPath;
     private boolean isModal = true;
 
     public StandardDialogBuilder setDialogWidth(int width) {
@@ -30,16 +28,6 @@ public class StandardDialogBuilder {
 
     public StandardDialogBuilder setTitle(String width) {
         this.title = title;
-        return this;
-    }
-
-    public StandardDialogBuilder setCssPath(String cssPath) {
-        this.cssPath = cssPath;
-        return this;
-    }
-
-    public StandardDialogBuilder setIconPath(String iconPath) {
-        this.iconPath = iconPath;
         return this;
     }
 
@@ -129,7 +117,7 @@ public class StandardDialogBuilder {
 
     private WindowBuilder getWindowBuilder(String fxmlName, FxController controller) {
         return new WindowBuilder(DIALOG_FXML_LOCATION + fxmlName)
-                .setHeight(dialogHeight).setWidth(dialogWidth).setTitle(title).setIconImagePath(iconPath).setCssPath(cssPath)
+                .setHeight(dialogHeight).setWidth(dialogWidth).setTitle(title)
                 .setController(controller).setModal(isModal);
     }
 }
