@@ -61,9 +61,13 @@ class ConfigUtil {
     private File getConfigFileFromBuiltProject() {
         File necessaryDir = new File(".").getAbsoluteFile()
                 .getParentFile().getParentFile().getParentFile().getParentFile();
-        for (File file : necessaryDir.listFiles()) {
-            if (file.getName().equals(CONFIG_FILE_NAME))
-                return file;
+        try{
+            for (File file : necessaryDir.listFiles()) {
+                if (file.getName().equals(CONFIG_FILE_NAME))
+                    return file;
+            }
+        }catch (Exception e){
+
         }
         return null;
     }
