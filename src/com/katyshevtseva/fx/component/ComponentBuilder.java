@@ -2,6 +2,7 @@ package com.katyshevtseva.fx.component;
 
 import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.WindowBuilder;
+import com.katyshevtseva.fx.component.controller.MultipleChoiceController;
 import javafx.scene.Node;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

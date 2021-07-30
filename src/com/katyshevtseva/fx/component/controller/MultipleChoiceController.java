@@ -1,4 +1,4 @@
-package com.katyshevtseva.fx.component;
+package com.katyshevtseva.fx.component.controller;
 
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.Size;
@@ -24,7 +24,7 @@ public class MultipleChoiceController<E> implements FxController {
     @FXML
     private VBox mainPane;
 
-    MultipleChoiceController(List<E> items, Size size) {
+    public MultipleChoiceController(List<E> items, Size size) {
         this.items = items;
         this.size = size;
     }
