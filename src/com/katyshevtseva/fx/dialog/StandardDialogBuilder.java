@@ -1,9 +1,9 @@
 package com.katyshevtseva.fx.dialog;
 
+import com.katyshevtseva.fx.ImageContainer;
 import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.dialog.controller.*;
-import com.katyshevtseva.fx.dialog.controller.ImageSelectDialogController.ImageContainer;
 import com.katyshevtseva.fx.dialog.controller.QuestionDialogController.AnswerHandler;
 import com.katyshevtseva.general.OneArgKnob;
 

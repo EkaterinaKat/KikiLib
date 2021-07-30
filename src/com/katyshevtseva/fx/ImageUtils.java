@@ -1,0 +1,22 @@
+package com.katyshevtseva.fx;
+
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+import java.io.File;
+import java.net.MalformedURLException;
+
+public class ImageUtils {
+
+    // Absolute path must look like this "D:\\Some_files\\wardrobe\\masik.png"
+    public static ImageView getImageViewByAbsolutePath(String path) {
+        File file = new File(path);
+        try {
+            String localUrl = file.toURI().toURL().toString();
+            return new ImageView(new Image(localUrl));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        throw new RuntimeException();
+    }
+}

@@ -1,5 +1,6 @@
 package com.katyshevtseva.fx.dialog.controller;
 
+import com.katyshevtseva.fx.ImageContainer;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.general.OneArgKnob;
 import javafx.geometry.HPos;

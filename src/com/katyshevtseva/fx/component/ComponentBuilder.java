@@ -1,8 +1,11 @@
 package com.katyshevtseva.fx.component;
 
+import com.katyshevtseva.fx.ImageContainer;
 import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.WindowBuilder;
+import com.katyshevtseva.fx.component.controller.GalleryController;
 import com.katyshevtseva.fx.component.controller.MultipleChoiceController;
+import com.katyshevtseva.general.OneArgKnob;
 import javafx.scene.Node;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +29,18 @@ public class ComponentBuilder {
                 .setHeight(size.getHeight());
         Node node = windowBuilder.getNode();
         return new Component<>(controller, node);
+    }
+
+    public Component<GalleryController> getGalleryComponent(int columnNum,
+                                                            List<ImageContainer> imageContainers,
+                                                            OneArgKnob<ImageContainer> clickHandler) {
+        GalleryController galleryController = new GalleryController(size, columnNum, imageContainers, clickHandler);
+        WindowBuilder windowBuilder = new WindowBuilder(COMPONENT_FXML_LOCATION + "gallery.fxml")
+                .setController(galleryController)
+                .setWidth(size.getWidth())
+                .setHeight(size.getHeight());
+        Node node = windowBuilder.getNode();
+        return new Component<>(galleryController, node);
     }
 
     @Data
