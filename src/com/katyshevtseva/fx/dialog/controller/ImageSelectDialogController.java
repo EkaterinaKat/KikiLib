@@ -1,6 +1,7 @@
 package com.katyshevtseva.fx.dialog.controller;
 
 import com.katyshevtseva.fx.FxUtils;
+import com.katyshevtseva.fx.ImageContainer;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.general.OneArgKnob;
 import javafx.fxml.FXML;
@@ -134,10 +135,6 @@ public class ImageSelectDialogController implements FxController {
 
     int getNumOfCells() {
         return imageContainers.size();
-    }
-
-    public interface ImageContainer {
-        String getUrl();
     }
 
     public int getWindowWidth() {
