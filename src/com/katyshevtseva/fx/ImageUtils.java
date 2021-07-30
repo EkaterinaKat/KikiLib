@@ -10,10 +10,14 @@ public class ImageUtils {
 
     // Absolute path must look like this "D:\\Some_files\\wardrobe\\masik.png"
     public static ImageView getImageViewByAbsolutePath(String path) {
+        return new ImageView(getImageByAbsolutePath(path));
+    }
+
+    public static Image getImageByAbsolutePath(String path) {
         File file = new File(path);
         try {
             String localUrl = file.toURI().toURL().toString();
-            return new ImageView(new Image(localUrl));
+            return new Image(localUrl);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
