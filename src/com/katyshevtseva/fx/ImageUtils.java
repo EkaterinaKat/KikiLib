@@ -8,7 +8,6 @@ import java.net.MalformedURLException;
 
 public class ImageUtils {
 
-    // Absolute path must look like this "D:\\Some_files\\wardrobe\\masik.png"
     public static ImageView getImageViewByAbsolutePath(String path) {
         return new ImageView(getImageByAbsolutePath(path));
     }

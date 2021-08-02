@@ -31,9 +31,6 @@ public class ComponentBuilder {
         return new Component<>(controller, node);
     }
 
-    /**
-     * @param imageContainers должны содержать абсолютные пути до изображений
-     */
     public Component<GalleryController> getGalleryComponent(int columnNum,
                                                             List<ImageContainer> imageContainers,
                                                             OneArgKnob<ImageContainer> clickHandler) {

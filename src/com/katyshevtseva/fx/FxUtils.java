@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class FxUtils {
@@ -158,5 +159,9 @@ public class FxUtils {
                 };
             }
         });
+    }
+
+    public static Date getDate(DatePicker datePicker) {
+        return datePicker.getValue() != null ? java.sql.Date.valueOf(datePicker.getValue()) : null;
     }
 }
