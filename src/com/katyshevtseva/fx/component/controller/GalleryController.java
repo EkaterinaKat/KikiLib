@@ -1,17 +1,16 @@
 package com.katyshevtseva.fx.component.controller;
 
 import com.katyshevtseva.fx.ImageContainer;
+import com.katyshevtseva.fx.ImageSizeUtil;
 import com.katyshevtseva.fx.ImageUtils;
 import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.general.OneArgKnob;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
-import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -20,8 +19,6 @@ import java.util.List;
 
 import static com.katyshevtseva.fx.FxUtils.getPaneWithHeight;
 import static com.katyshevtseva.fx.FxUtils.getPaneWithWidth;
-import static com.katyshevtseva.fx.ImageSizeUtil.getHeightByWidth;
-import static com.katyshevtseva.fx.ImageSizeUtil.getWidthByHeight;
 import static com.katyshevtseva.general.GeneralUtils.getColumnByIndexAndColumnNum;
 import static com.katyshevtseva.general.GeneralUtils.getRowByIndexAndColumnNum;
 
@@ -72,27 +69,11 @@ public class GalleryController implements FxController {
         ImageContainer imageContainer = imageContainers.get(index);
         ImageView imageView = ImageUtils.getImageViewByAbsolutePath(imageContainer.getUrl());
 
-        if (getHeightByWidth(imageView, IMAGE_SIZE) <= IMAGE_SIZE) {
-            imageView.setFitWidth(IMAGE_SIZE);
-            imageView.setFitHeight(getHeightByWidth(imageView, IMAGE_SIZE));
-        } else {
-            imageView.setFitWidth(getWidthByHeight(imageView, IMAGE_SIZE));
-            imageView.setFitHeight(IMAGE_SIZE);
-        }
-
         if (clickHandler != null) {
             imageView.setOnMouseClicked(event -> clickHandler.execute(imageContainer));
         }
 
-        BorderPane borderPane = new BorderPane();
-        borderPane.setCenter(imageView);
-        BorderPane.setAlignment(imageView, Pos.CENTER);
-        borderPane.setMaxHeight(IMAGE_SIZE);
-        borderPane.setMaxWidth(IMAGE_SIZE);
-        borderPane.setMinHeight(IMAGE_SIZE);
-        borderPane.setMinWidth(IMAGE_SIZE);
-
-        gridPane.add(borderPane, getColumnByIndexAndColumnNum(index, columnNum),
+        gridPane.add(ImageSizeUtil.placeImageInSquare(imageView, IMAGE_SIZE), getColumnByIndexAndColumnNum(index, columnNum),
                 getRowByIndexAndColumnNum(index, columnNum));
 
         GridPane.setHalignment(imageView, HPos.CENTER);

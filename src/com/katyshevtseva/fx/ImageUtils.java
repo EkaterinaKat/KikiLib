@@ -6,12 +6,14 @@ import javafx.scene.image.ImageView;
 import java.io.File;
 import java.net.MalformedURLException;
 
+@SuppressWarnings("WeakerAccess")
 public class ImageUtils {
 
     public static ImageView getImageViewByAbsolutePath(String path) {
         return new ImageView(getImageByAbsolutePath(path));
     }
 
+    //Absolute path must look like this "D:\\Some_files\\wardrobe\\masik.png"
     public static Image getImageByAbsolutePath(String path) {
         File file = new File(path);
         try {
