@@ -1,9 +1,13 @@
 package com.katyshevtseva.fx;
 
+import javafx.scene.image.Image;
+
 /**
  * Must contain image absolute path
  * Absolute path must look like this "D:\\Some_files\\wardrobe\\masik.png"
  */
 public interface ImageContainer {
-    String getUrl();
+    Image getImage();
+
+    String getPath();
 }

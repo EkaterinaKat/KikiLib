@@ -2,7 +2,6 @@ package com.katyshevtseva.fx.dialog.controller;
 
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.ImageContainer;
-import com.katyshevtseva.fx.ImageUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.general.OneArgKnob;
 import javafx.fxml.FXML;
@@ -74,7 +73,7 @@ public class ImageSelectDialogController implements FxController {
 
     void addImageToGridPane(int index) {
         ImageContainer imageContainer = imageContainers.get(index);
-        ImageView imageView = ImageUtils.getImageViewByAbsolutePath(imageContainer.getUrl());
+        ImageView imageView = new ImageView(imageContainer.getImage());
 
         if (getHeightByWidth(imageView, IMAGE_SIZE) <= IMAGE_SIZE) {
             imageView.setFitWidth(IMAGE_SIZE);

@@ -2,7 +2,6 @@ package com.katyshevtseva.fx.component.controller;
 
 import com.katyshevtseva.fx.ImageContainer;
 import com.katyshevtseva.fx.ImageSizeUtil;
-import com.katyshevtseva.fx.ImageUtils;
 import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.general.OneArgKnob;
@@ -67,7 +66,7 @@ public class GalleryController implements FxController {
 
     private void addImageToGridPane(int index) {
         ImageContainer imageContainer = imageContainers.get(index);
-        ImageView imageView = ImageUtils.getImageViewByAbsolutePath(imageContainer.getUrl());
+        ImageView imageView = new ImageView(imageContainer.getImage());
 
         if (clickHandler != null) {
             imageView.setOnMouseClicked(event -> clickHandler.execute(imageContainer));
