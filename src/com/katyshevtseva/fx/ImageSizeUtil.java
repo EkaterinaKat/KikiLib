@@ -8,13 +8,16 @@ import javafx.scene.layout.BorderPane;
 public class ImageSizeUtil {
 
     public static Node placeImageInSquare(ImageView imageView, int squareSide) {
-        if (getHeightByWidth(imageView, squareSide) <= squareSide) {
-            imageView.setFitWidth(squareSide);
-            imageView.setFitHeight(getHeightByWidth(imageView, squareSide));
-        } else {
-            imageView.setFitWidth(getWidthByHeight(imageView, squareSide));
-            imageView.setFitHeight(squareSide);
-        }
+
+        new BackgroundLoadedImageAdjuster(imageView.getImage(), () -> {
+            if (getHeightByWidth(imageView, squareSide) <= squareSide) {
+                imageView.setFitWidth(squareSide);
+                imageView.setFitHeight(getHeightByWidth(imageView, squareSide));
+            } else {
+                imageView.setFitWidth(getWidthByHeight(imageView, squareSide));
+                imageView.setFitHeight(squareSide);
+            }
+        }).start();
 
         BorderPane borderPane = new BorderPane();
         borderPane.setCenter(imageView);
