@@ -3,14 +3,12 @@ package com.katyshevtseva.date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class DateUtils {
     public static DateFormat READABLE_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
     public static DateFormat READABLE_TIME_FORMAT = new SimpleDateFormat("HH:mm");
+    public static DateFormat MONTH_YEAR_DATE_FORMAT = new SimpleDateFormat("MMM yyyy", new Locale("ru"));
 
     public enum TimeUnit {
         DAY(Calendar.DATE), MONTH(Calendar.MONTH), YEAR(Calendar.YEAR);
@@ -35,7 +33,7 @@ public class DateUtils {
 
     /**
      * @param period
-     * @return Список всех дат, которых пренадлежат периоду. Границы включаются
+     * @return Список всех дат, которых принадлежат периоду. Границы включаются
      */
     public static List<Date> getDateRange(Period period) {
         Date date = new Date(period.start().getTime());
@@ -72,5 +70,17 @@ public class DateUtils {
     public static int getNumberOfMinutes(Date startDate, Date finishDate) {
         long diff = finishDate.getTime() - startDate.getTime();
         return (int) (diff / 60000);
+    }
+
+    public static Date getNextMonthFirstDate(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.MONTH, 1);
+        calendar.set(Calendar.DATE, 1);
+        return calendar.getTime();
+    }
+
+    public static String getMonthYearString(Date date) {
+        return MONTH_YEAR_DATE_FORMAT.format(date);
     }
 }

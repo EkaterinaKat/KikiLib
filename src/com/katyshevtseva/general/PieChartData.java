@@ -8,8 +8,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class PieChartData {
-    private TitleType titleType;
-    private List<Segment> segments = new ArrayList<>();
+    private final TitleType titleType;
+    private final List<Segment> segments = new ArrayList<>();
     @Getter
     private long total = 0;
     @Getter
@@ -56,10 +56,17 @@ public class PieChartData {
         private int percent;
         private String titleAmountAndPercentInfo;
         private String title;
+        private NoArgsKnob clickHandler;
 
         public Segment(int amount, String title) {
             this.amount = amount;
             this.title = title;
+        }
+
+        public Segment(int amount, String title, NoArgsKnob clickHandler) {
+            this.amount = amount;
+            this.title = title;
+            this.clickHandler = clickHandler;
         }
     }
 }
