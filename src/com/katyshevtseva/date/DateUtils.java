@@ -51,7 +51,7 @@ public class DateUtils {
         return removeTimeFromDate(date1).before(removeTimeFromDate(date2));
     }
 
-    private static Date removeTimeFromDate(Date date) {
+    public static Date removeTimeFromDate(Date date) {
         try {
             return READABLE_DATE_FORMAT.parse(READABLE_DATE_FORMAT.format(date));
         } catch (ParseException e) {
@@ -70,6 +70,16 @@ public class DateUtils {
     public static int getNumberOfMinutes(Date startDate, Date finishDate) {
         long diff = finishDate.getTime() - startDate.getTime();
         return (int) (diff / 60000);
+    }
+
+    /**
+     * @return Число дней между датами. Если даты соседние, то число дней = 1.
+     * Если даты совпадают, то число дней = 0.
+     * Если startDate раньше finishDate, то число положительное и наоборот.
+     */
+    public static int getNumberOfDays(Date startDate, Date finishDate) {
+        long diff = finishDate.getTime() - startDate.getTime();
+        return (int) (diff / 86_400_000);
     }
 
     public static Date getNextMonthFirstDate(Date date) {
