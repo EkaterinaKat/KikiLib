@@ -3,12 +3,15 @@ package com.katyshevtseva.config;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Properties;
 
 import static com.katyshevtseva.config.ConfigConstants.CONFIG_FILE_NAME;
 
 public class ConfigUtil {
-    private final Properties configs;
+    private Properties configs;
 
     public ConfigUtil() {
         File configFile = getConfigFileOrNull();
@@ -16,15 +19,27 @@ public class ConfigUtil {
         if (configFile == null)
             configFile = getConfigFileFromBuiltProject();
 
-        configs = new Properties();
-        try {
-            configs.load(new FileInputStream(Objects.requireNonNull(configFile)));
-        } catch (IOException | NullPointerException e) {
-            throw new RuntimeException("Файл конфигурации не найден или произошла ошибка при его чтении");
+        if (configFile != null) {
+            configs = new Properties();
+            try {
+                configs.load(new FileInputStream(configFile));
+            } catch (IOException e) {
+                throw new RuntimeException("Произошла ошибка при чтении файла конфигурации");
+            }
         }
     }
 
     public String getConfigOrNull(String name) {
+        if (configs == null) {
+            return null;
+        }
+        return configs.getProperty(name);
+    }
+
+    public String getConfigOrThrowExeption(String name) {
+        if (configs == null || configs.getProperty(name) == null) {
+            throw new RuntimeException("Не удалось найти значение " + name);
+        }
         return configs.getProperty(name);
     }
 

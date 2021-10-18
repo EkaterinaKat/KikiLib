@@ -5,4 +5,5 @@ public class ConfigConstants {
 
     public static final String ICON_IMAGE_PATH = "ICON_IMAGE_PATH";
     public static final String CSS_PATH = "CSS_PATH";
+    public static final String HIBERNATE_CONFIG_FILE_PATH = "HIBERNATE_CONFIG_FILE_PATH";
 }
