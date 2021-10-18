@@ -1,5 +1,7 @@
 package com.katyshevtseva.fx;
 
+import com.katyshevtseva.config.ConfigConstants;
+import com.katyshevtseva.config.ConfigUtil;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.ImageCursor;
@@ -30,8 +32,8 @@ public class WindowBuilder {
         this.fxmlName = fxmlName;
 
         ConfigUtil configUtil = new ConfigUtil();
-        iconImagePath = configUtil.getIconImagePath();
-        cssPath = configUtil.getCssPath();
+        iconImagePath = configUtil.getConfigOrNull(ConfigConstants.ICON_IMAGE_PATH);
+        cssPath = configUtil.getConfigOrNull(ConfigConstants.CSS_PATH);
     }
 
     public WindowBuilder setTitle(String title) {

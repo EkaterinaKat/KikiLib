@@ -1,43 +1,31 @@
-package com.katyshevtseva.fx;
+package com.katyshevtseva.config;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
-class ConfigUtil {
-    private final String CONFIG_FILE_NAME = "config.ini";
-    private String iconImagePath;
-    private String cssPath;
+import static com.katyshevtseva.config.ConfigConstants.CONFIG_FILE_NAME;
 
-    ConfigUtil() {
+public class ConfigUtil {
+    private final Properties configs;
+
+    public ConfigUtil() {
         File configFile = getConfigFileOrNull();
 
         if (configFile == null)
             configFile = getConfigFileFromBuiltProject();
 
-        if (configFile != null) {
-            Properties properties = new Properties();
-            try {
-                properties.load(new FileInputStream(configFile));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            iconImagePath = properties.getProperty("ICON_IMAGE_PATH");
-            cssPath = properties.getProperty("CSS_PATH");
+        configs = new Properties();
+        try {
+            configs.load(new FileInputStream(Objects.requireNonNull(configFile)));
+        } catch (IOException | NullPointerException e) {
+            throw new RuntimeException("Файл конфигурации не найден или произошла ошибка при его чтении");
         }
     }
 
-    String getIconImagePath() {
-        return iconImagePath;
-    }
-
-    String getCssPath() {
-        return cssPath;
+    public String getConfigOrNull(String name) {
+        return configs.getProperty(name);
     }
 
     private File getConfigFileOrNull() {
@@ -61,12 +49,12 @@ class ConfigUtil {
     private File getConfigFileFromBuiltProject() {
         File necessaryDir = new File(".").getAbsoluteFile()
                 .getParentFile().getParentFile().getParentFile().getParentFile();
-        try{
+        try {
             for (File file : necessaryDir.listFiles()) {
                 if (file.getName().equals(CONFIG_FILE_NAME))
                     return file;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
         return null;
