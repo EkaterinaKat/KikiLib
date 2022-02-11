@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -163,5 +164,20 @@ public class FxUtils {
 
     public static Date getDate(DatePicker datePicker) {
         return datePicker.getValue() != null ? java.sql.Date.valueOf(datePicker.getValue()) : null;
+    }
+
+    public static void setSize(Region region, Size size) {
+        setWidth(region, size.getWidth());
+        setHeight(region, size.getHeight());
+    }
+
+    public static void setWidth(Region region, int width) {
+        region.setMaxWidth(width);
+        region.setMinWidth(width);
+    }
+
+    public static void setHeight(Region region, int height) {
+        region.setMaxHeight(height);
+        region.setMinHeight(height);
     }
 }
