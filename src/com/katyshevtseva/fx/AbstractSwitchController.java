@@ -1,6 +1,7 @@
 package com.katyshevtseva.fx;
 
 import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.fx.component.ComponentBuilder;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
@@ -25,6 +26,12 @@ public abstract class AbstractSwitchController {
             node = nodeSupplier.getNode(fxController);
         pane.getChildren().clear();
         pane.getChildren().add(node);
+    }
+
+    protected void activateMode(Button button, ComponentBuilder.Component<?> component) {
+        activateButton(button);
+        pane.getChildren().clear();
+        pane.getChildren().add(component.getNode());
     }
 
 

@@ -4,8 +4,10 @@ import com.katyshevtseva.fx.ImageContainer;
 import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.component.controller.GalleryController;
+import com.katyshevtseva.fx.component.controller.HierarchyController;
 import com.katyshevtseva.fx.component.controller.MultipleChoiceController;
 import com.katyshevtseva.general.OneArgKnob;
+import com.katyshevtseva.hierarchy.HierarchyService;
 import javafx.scene.Node;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +43,15 @@ public class ComponentBuilder {
                 .setHeight(size.getHeight());
         Node node = windowBuilder.getNode();
         return new Component<>(galleryController, node);
+    }
+
+    public Component<HierarchyController> getHierarchyComponent(HierarchyService service, boolean editable) {
+        HierarchyController controller = new HierarchyController(service, editable, size);
+        WindowBuilder windowBuilder = new WindowBuilder(COMPONENT_FXML_LOCATION + "hierarchy.fxml")
+                .setController(controller)
+                .setWidth(size.getWidth())
+                .setHeight(size.getHeight());
+        return new Component<>(controller, windowBuilder.getNode());
     }
 
     @Data

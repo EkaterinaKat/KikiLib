@@ -5,52 +5,62 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class HierarchyService {
+public abstract class HierarchyService<L extends Leaf, G extends Group> {
+    private HierarchySchemaService schemaService;
 
     protected abstract void createNewGroup(String name);
 
-    protected abstract void saveModifiedGroup(Group group);
+    protected abstract void saveModifiedGroup(G group);
 
-    protected abstract void saveModifiedLeaf(Leaf leaf);
+    protected abstract void saveModifiedLeaf(L leaf);
 
-    protected abstract List<Group> getAllGroups();
+    public abstract List<G> getAllGroups();
 
-    protected abstract List<Leaf> getAllLeaves();
+    protected abstract List<L> getAllLeaves();
 
-    protected abstract void deleteGroup(Group group);
+    protected abstract void deleteGroup(G group);
 
-    protected abstract List<Leaf> getLeavesByParentGroup(Group group);
+    protected abstract List<L> getLeavesByParentGroup(G group);
 
-    protected abstract List<Group> getGroupsByParentGroup(Group group);
+    protected abstract List<G> getGroupsByParentGroup(G group);
 
-    public void destroyTreeAndDeleteGroup(Group group) {
-        destroyTreeWithRootNode(group);
-        deleteGroup(group);
+    public List<HierarchySchemaService.SchemaLine> getSchema() {
+        if (schemaService == null) {
+            schemaService = new HierarchySchemaService(this);
+        }
+        return schemaService.getSchema();
     }
 
-    void destroyTreeWithRootNode(HierarchyNode node) {
+    public void createGroup(String name) {
+        createNewGroup(name);
+    }
+
+    public void deleteFromSchema(HierarchyNode node) {
         node.setParentGroup(null);
         saveModifiedNode(node);
+    }
 
-        if (node.isLeaf())
-            return;
+    public void destroyTreeAndDeleteGroup(G group) {
+        for (HierarchyNode childNode : getNodesByParent(group)) {
+            childNode.setParentGroup(null);
+            saveModifiedNode(childNode);
+        }
 
-        for (HierarchyNode childNode : getNodesByParent(node))
-            destroyTreeWithRootNode(childNode);
+        deleteGroup(group);
     }
 
     void saveModifiedNode(HierarchyNode node) {
         if (node.isLeaf())
-            saveModifiedLeaf((Leaf) node);
+            saveModifiedLeaf((L) node);
         else
-            saveModifiedGroup((Group) node);
+            saveModifiedGroup((G) node);
     }
 
     public List<HierarchyNode> getNodesByParent(HierarchyNode parentNode) {
         List<HierarchyNode> nodes = new ArrayList<>();
         if (!parentNode.isLeaf()) {
-            nodes.addAll(getLeavesByParentGroup((Group) parentNode));
-            nodes.addAll(getGroupsByParentGroup((Group) parentNode));
+            nodes.addAll(getLeavesByParentGroup((G) parentNode));
+            nodes.addAll(getGroupsByParentGroup((G) parentNode));
         }
         return nodes;
     }
@@ -62,17 +72,21 @@ public abstract class HierarchyService {
         return nodes;
     }
 
-    private List<Leaf> getTopLevelLeaves() {
+    public boolean isTopLevel(HierarchyNode node) {
+        return node.getParentGroup() == null;
+    }
+
+    private List<L> getTopLevelLeaves() {
         return getAllLeaves().stream().filter(leaf -> leaf.getParentGroup() == null).collect(Collectors.toList());
     }
 
-    private List<Group> getTopLevelGroups() {
+    private List<G> getTopLevelGroups() {
         return getAllGroups().stream().filter(group -> group.getParentGroup() == null).collect(Collectors.toList());
     }
 
-    public List<Leaf> getAllDescendantLeavesByHierarchyNode(HierarchyNode root) {
+    public List<L> getAllDescendantLeavesByHierarchyNode(HierarchyNode root) {
         if (root.isLeaf())
-            return Collections.singletonList((Leaf) root);
+            return Collections.singletonList((L) root);
 
         return getNodesByParent(root).stream()
                 .flatMap(node -> getAllDescendantLeavesByHierarchyNode(node).stream())

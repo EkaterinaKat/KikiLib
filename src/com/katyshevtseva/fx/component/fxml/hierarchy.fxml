@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml">
+
+    <ScrollPane fx:id="scrollPane">
+        <HBox>
+            <Pane maxWidth="20" minWidth="20"/>
+            <VBox>
+                <Pane maxHeight="20" minHeight="20"/>
+                <GridPane fx:id="schemaBox"/>
+                <Pane maxHeight="20" minHeight="20"/>
+            </VBox>
+            <Pane maxWidth="20" minWidth="20"/>
+        </HBox>
+    </ScrollPane>
+
+    <Pane maxWidth="20" minWidth="20"/>
+
+    <VBox fx:id="editGroupPane">
+        <TextField fx:id="nameTextField"/>
+        <Pane minHeight="20" maxHeight="20"/>
+        <Button text="Add group" fx:id="addButton"/>
+        <Pane minHeight="20" maxHeight="20"/>
+        <TableView fx:id="table">
+            <columns>
+                <TableColumn fx:id="titleColumn" text="Groups"/>
+                <TableColumn fx:id="deleteColumn"/>
+            </columns>
+        </TableView>
+    </VBox>
+
+</HBox>

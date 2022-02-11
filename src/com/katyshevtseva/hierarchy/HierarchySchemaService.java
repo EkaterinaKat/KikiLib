@@ -2,20 +2,19 @@ package com.katyshevtseva.hierarchy;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
 public class HierarchySchemaService {
-    private HierarchyService service;
-    private boolean editable;
+    private HierarchyService<?, ?> service;
 
     public List<SchemaLine> getSchema() {
         List<SchemaLine> schema = new ArrayList<>();
         for (HierarchyNode topLevelNode : service.getTopLevelNodes()) {
             schema.addAll(getSchemaByRoot(topLevelNode, 0));
-            schema.add(new EmptyLine());
         }
         return schema;
     }
@@ -31,22 +30,17 @@ public class HierarchySchemaService {
             schema.addAll(getSchemaByRoot(childNode, level + 1));
         }
 
-        if (editable) {
-            schema.add(new AddButton(level + 1, (Group) node));
-        }
-
+        schema.add(new AddButton(level + 1, (Group) node));
         return schema;
     }
 
-    @Getter
-    @AllArgsConstructor
-    public class Entry implements SchemaLine {
+    public class Entry extends SchemaLine {
+        @Getter
         private final HierarchyNode node;
-        private final int level;
 
-        public void deleteFromSchema() {
-            node.setParentGroup(null);
-            service.saveModifiedNode(node);
+        public Entry(HierarchyNode node, int level) {
+            super(level);
+            this.node = node;
         }
 
         public boolean isLeaf() {
@@ -58,17 +52,15 @@ public class HierarchySchemaService {
         }
     }
 
-    public class AddButton implements SchemaLine {
-        @Getter
-        private final int level;
+    public class AddButton extends SchemaLine {
         private final Group groupToAddTo;
 
         AddButton(int level, Group groupToAddTo) {
-            this.level = level;
+            super(level);
             this.groupToAddTo = groupToAddTo;
         }
 
-        public void add(HierarchyNode childNodeToAdd) throws SchemaException {
+        public void execute(HierarchyNode childNodeToAdd) throws SchemaException {
             if (childNodeToAdd.getParentGroup() != null)
                 throw new SchemaException(childNodeToAdd.getTitle() + " уже имеет родителя");
 
@@ -80,11 +72,9 @@ public class HierarchySchemaService {
         }
     }
 
-    public static class EmptyLine implements SchemaLine {
-
-    }
-
-    public interface SchemaLine {
-
+    @RequiredArgsConstructor
+    public abstract class SchemaLine {
+        @Getter
+        final int level;
     }
 }
