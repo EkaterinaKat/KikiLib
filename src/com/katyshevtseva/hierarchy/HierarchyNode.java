@@ -8,6 +8,8 @@ public interface HierarchyNode {
 
     String getTitle();
 
+    String getDescription();
+
     void setParentGroup(Group group);
 
     Group getParentGroup();
