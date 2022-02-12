@@ -60,7 +60,9 @@ public class DateUtils {
     }
 
     public static String getStringRepresentationOfPeriod(Period period) {
-        return String.format("%s-%s", READABLE_DATE_FORMAT.format(period.start()), READABLE_DATE_FORMAT.format(period.end()));
+        return String.format("%s-%s",
+                period.start() != null ? READABLE_DATE_FORMAT.format(period.start()) : "*",
+                period.end() != null ? READABLE_DATE_FORMAT.format(period.end()) : "*");
     }
 
     public static Period getLastMonthPeriod() {

@@ -13,4 +13,16 @@ public class GeneralUtils {
     public static boolean isEmpty(String s) {
         return s == null || s.equals("");
     }
+
+    public static String getSuccessBanner(String title) {
+        return String.format("***********************************************\n" +
+                "                 %s SUCCESS\n" +
+                "***********************************************\n", title);
+    }
+
+    public static String getFailedBanner(String title) {
+        return String.format("***********************************************\n" +
+                "                 %s FAILED\n" +
+                "***********************************************\n", title);
+    }
 }
