@@ -57,7 +57,8 @@ class HistoryController<E extends HasHistory<A>, A extends Action> implements Fx
 
         if (action instanceof StatusChangeAction) {
             StatusChangeAction<?> statusChangeAction = (StatusChangeAction<?>) action;
-            Label statusChangeLabel = new Label(String.format("%s -> %s", statusChangeAction.getFrom(), statusChangeAction.getTo()));
+            Label statusChangeLabel = new Label(
+                    String.format("%s -> %s", statusChangeAction.getFrom().getTitle(), statusChangeAction.getTo().getTitle()));
             vBox.getChildren().addAll(getPaneWithHeight(15), statusChangeLabel);
         }
 
