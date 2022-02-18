@@ -13,4 +13,8 @@ public abstract class HistoryService<A extends Action> {
         action.setDescription(description);
         saveNewAction(action);
     }
+
+    public static String getStatusChangeDesc(String oldStatus, String newStatus) {
+        return String.format("%s -> %s", oldStatus, newStatus);
+    }
 }
