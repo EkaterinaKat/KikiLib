@@ -6,7 +6,6 @@ import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.history.Action;
 import com.katyshevtseva.history.HasHistory;
-import com.katyshevtseva.history.StatusChangeAction;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -54,13 +53,6 @@ class HistoryController<E extends HasHistory<A>, A extends Action> implements Fx
 
         Label datesLabel = new Label(READABLE_DATE_FORMAT.format(action.getDate()));
         vBox.getChildren().addAll(getPaneWithHeight(15), datesLabel);
-
-        if (action instanceof StatusChangeAction) {
-            StatusChangeAction<?> statusChangeAction = (StatusChangeAction<?>) action;
-            Label statusChangeLabel = new Label(
-                    String.format("%s -> %s", statusChangeAction.getFrom().getTitle(), statusChangeAction.getTo().getTitle()));
-            vBox.getChildren().addAll(getPaneWithHeight(15), statusChangeLabel);
-        }
 
         Label descLabel = new Label(action.getDescription());
         descLabel.setWrapText(true);

@@ -2,20 +2,16 @@ package com.katyshevtseva.history;
 
 import java.util.Date;
 
-public abstract class StatusHistoryServce<S extends Status> {
+public abstract class StatusHistoryServce<S extends Status, A extends Action> extends HistoryService<A> {
 
-    protected abstract StatusChangeAction<S> createNewStatusChangeAction();
-
-    protected abstract void saveNewStatusChangeAction(StatusChangeAction<S> action);
-
-    void setStatus(HasStatusHistory<S> hasStatusHistory, S status, String description) {
-        StatusChangeAction<S> action = createNewStatusChangeAction();
+    public void createNewStatusChangeActionAction(HasStatusHistory<S, A> hasStatusHistory, S status) {
+        A action = createNewAction();
         action.setDate(new Date());
-        action.setFrom(hasStatusHistory.getStatus());
-        action.setTo(status);
-        action.setDescription(description);
-        saveNewStatusChangeAction(action);
+        action.setDescription(getStatusChangeDesc(hasStatusHistory.getStatus(), status));
+        saveNewAction(action);
+    }
 
-        hasStatusHistory.setStatus(status);
+    private String getStatusChangeDesc(S oldStatus, S newStatus) {
+        return String.format("%s -> %s", oldStatus.getTitle(), newStatus.getTitle());
     }
 }

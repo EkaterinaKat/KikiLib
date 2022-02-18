@@ -7,7 +7,7 @@ public abstract class HistoryService<A extends Action> {
 
     protected abstract void saveNewAction(A action);
 
-    void createNewAction(String description) {
+    public void createNewAction(String description) {
         A action = createNewAction();
         action.setDate(new Date());
         action.setDescription(description);
