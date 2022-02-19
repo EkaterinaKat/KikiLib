@@ -5,11 +5,14 @@ import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
-import com.katyshevtseva.general.OneArgKnob;
-import com.katyshevtseva.hierarchy.*;
+import com.katyshevtseva.general.TwoArgKnob;
+import com.katyshevtseva.hierarchy.Group;
+import com.katyshevtseva.hierarchy.HierarchyNode;
 import com.katyshevtseva.hierarchy.HierarchySchemaService.AddButton;
 import com.katyshevtseva.hierarchy.HierarchySchemaService.Entry;
 import com.katyshevtseva.hierarchy.HierarchySchemaService.SchemaLine;
+import com.katyshevtseva.hierarchy.HierarchyService;
+import com.katyshevtseva.hierarchy.SchemaException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -31,7 +34,7 @@ public class HierarchyController implements FxController {
     private final HierarchyService service;
     private final boolean editableSchema;
     private final Size size;
-    private final OneArgKnob<Leaf> leafClickHandler;
+    private final TwoArgKnob<HierarchyNode, Label> nodeLabelAdjuster;
     @FXML
     private GridPane schemaBox;
     @FXML
@@ -123,8 +126,8 @@ public class HierarchyController implements FxController {
             } else {
                 entryLabel.setStyle(Styler.getColorfullStyle(Styler.ThingToColor.TEXT, getColorByLevel(line.getLevel())));
             }
-            if (leafClickHandler != null && node.isLeaf()) {
-                entryLabel.setOnMouseClicked(event -> leafClickHandler.execute((Leaf) node));
+            if (nodeLabelAdjuster != null) {
+                nodeLabelAdjuster.execute(node, entryLabel);
             }
             entryLabel.setTooltip(new Tooltip(node.getDescription()));
 
