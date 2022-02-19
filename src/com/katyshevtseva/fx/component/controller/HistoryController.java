@@ -41,7 +41,7 @@ class HistoryController<E extends HasHistory<A>, A extends Action> implements Fx
     public void show(E entity) {
         historyPane.getChildren().clear();
         historyPane.getChildren().add(getPaneWithHeight(20));
-        List<A> actions = entity.getActions().stream().sorted(Comparator.comparing(Action::getDate)).collect(Collectors.toList());
+        List<A> actions = entity.getHistory().stream().sorted(Comparator.comparing(Action::getDate)).collect(Collectors.toList());
         for (Action action : actions) {
             historyPane.getChildren().add(actionToBlock(action));
             historyPane.getChildren().add(FxUtils.getPaneWithHeight(20));

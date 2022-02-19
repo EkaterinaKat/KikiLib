@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface HasHistory<A extends Action> {
 
-    List<A> getActions();
+    List<A> getHistory();
 }
