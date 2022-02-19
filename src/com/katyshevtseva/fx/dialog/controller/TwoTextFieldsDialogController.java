@@ -2,28 +2,24 @@ package com.katyshevtseva.fx.dialog.controller;
 
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder;
+import com.katyshevtseva.general.TwoArgKnob;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class TwoTextFieldsDialogController implements WindowBuilder.FxController {
+    private final String initText1;
+    private final String initText2;
+    private final boolean closeAfterOk;
+    private final TwoArgKnob<String, String> okButtonHandler;
     @FXML
     private TextField textField1;
     @FXML
     private TextField textField2;
     @FXML
     private Button okButton;
-    private OkButtonHandler okButtonHandler;
-    private boolean closeAfterOk;
-    private String initText1;
-    private String initText2;
-
-    public TwoTextFieldsDialogController(String initText1, String initText2, boolean closeAfterOk, OkButtonHandler okButtonHandler) {
-        this.okButtonHandler = okButtonHandler;
-        this.closeAfterOk = closeAfterOk;
-        this.initText1 = initText1;
-        this.initText2 = initText2;
-    }
 
     @FXML
     private void initialize() {
@@ -47,11 +43,6 @@ public class TwoTextFieldsDialogController implements WindowBuilder.FxController
             textField2.clear();
             textField1.requestFocus();
         }
-    }
-
-    @FunctionalInterface
-    public interface OkButtonHandler {
-        void execute(String text1, String text2);
     }
 
     public TextField getTextField1() {

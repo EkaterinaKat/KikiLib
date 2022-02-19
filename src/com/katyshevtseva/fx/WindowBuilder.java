@@ -16,16 +16,17 @@ import javafx.stage.WindowEvent;
 import java.io.IOException;
 
 public class WindowBuilder {
-    private String fxmlName;
+    private final String fxmlName;
+    private final String iconImagePath;
+    private final String cssPath;
     private String title = "";
     private int width = 500;
     private int height = 500;
+    private Size size;
     private FxController controller;
     private boolean isModal = false;
-    private String iconImagePath;
     private boolean stretchable = false;
     private EventHandler<WindowEvent> eventHandler;
-    private String cssPath;
     private String cursorImagePath;
 
     public WindowBuilder(String fxmlName) {
@@ -41,13 +42,20 @@ public class WindowBuilder {
         return this;
     }
 
+    @Deprecated
     public WindowBuilder setWidth(int width) {
         this.width = width;
         return this;
     }
 
+    @Deprecated
     public WindowBuilder setHeight(int height) {
         this.height = height;
+        return this;
+    }
+
+    public WindowBuilder setSize(Size size) {
+        this.size = size;
         return this;
     }
 
@@ -88,10 +96,18 @@ public class WindowBuilder {
         Stage stage = new Stage();
         stage.setTitle(title);
         if (!stretchable) {
-            stage.setMinHeight(height);
-            stage.setMaxHeight(height);
-            stage.setMinWidth(width);
-            stage.setMaxWidth(width);
+            if (size == null) {
+                stage.setMinHeight(height);
+                stage.setMaxHeight(height);
+                stage.setMinWidth(width);
+                stage.setMaxWidth(width);
+            } else {
+                stage.setMinHeight(size.getHeight());
+                stage.setMaxHeight(size.getHeight());
+                stage.setMinWidth(size.getWidth());
+                stage.setMaxWidth(size.getWidth());
+            }
+
         }
         Scene scene = new Scene(getNodeByFxmlAndController(), width, height);
         if (cursorImagePath != null)

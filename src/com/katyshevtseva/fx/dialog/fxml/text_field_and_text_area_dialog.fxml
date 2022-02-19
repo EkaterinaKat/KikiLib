@@ -10,9 +10,9 @@
     <center>
         <VBox alignment="CENTER">
             <Pane prefHeight="15"/>
-            <TextField fx:id="textField" minWidth="270" maxWidth="270"/>
+            <TextField fx:id="textField"/>
             <Pane prefHeight="15"/>
-            <TextArea fx:id="textArea" minWidth="270" maxWidth="270" maxHeight="80" wrapText="true"/>
+            <TextArea fx:id="textArea" wrapText="true"/>
             <Pane prefHeight="15"/>
             <Button text="Ok" fx:id="okButton"/>
             <Pane prefHeight="15"/>

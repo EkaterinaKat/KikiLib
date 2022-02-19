@@ -1,28 +1,24 @@
 package com.katyshevtseva.fx.dialog;
 
 import com.katyshevtseva.fx.ImageContainer;
+import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.dialog.controller.*;
 import com.katyshevtseva.fx.dialog.controller.QuestionDialogController.AnswerHandler;
 import com.katyshevtseva.general.OneArgKnob;
+import com.katyshevtseva.general.TwoArgKnob;
 
 import java.util.List;
 
 public class StandardDialogBuilder {
-    private final String DIALOG_FXML_LOCATION = "/com/katyshevtseva/fx/dialog/fxml/";
-    private int dialogWidth = 340;
-    private int dialogHeight = 200;
+    private static final String DIALOG_FXML_LOCATION = "/com/katyshevtseva/fx/dialog/fxml/";
+    private Size size;
     private String title = "";
     private boolean isModal = true;
 
-    public StandardDialogBuilder setDialogWidth(int width) {
-        dialogWidth = width;
-        return this;
-    }
-
-    public StandardDialogBuilder setDialogHeight(int height) {
-        dialogHeight = height;
+    public StandardDialogBuilder setSize(Size size) {
+        this.size = size;
         return this;
     }
 
@@ -46,10 +42,17 @@ public class StandardDialogBuilder {
         getWindowBuilder("info_dialog.fxml", controller).showWindow();
     }
 
-    public void openTextFieldAndTextAreaDialog(String initFirstText, String initSecondText,
-                                               TextFieldAndTextAreaDialogController.OkButtonHandler okButtonHandler) {
+    public void openTextFieldAndTextAreaDialog(TwoArgKnob<String, String> okButtonHandler) {
+        openTextFieldAndTextAreaDialog("", "", okButtonHandler);
+    }
+
+    public void openTextFieldAndTextAreaDialog(String initFirstText, String initSecondText, TwoArgKnob<String, String> okButtonHandler) {
+        if (size == null) {
+            size = new Size(340, 450);
+        }
+
         TextFieldAndTextAreaDialogController controller =
-                new TextFieldAndTextAreaDialogController(initFirstText, initSecondText, okButtonHandler);
+                new TextFieldAndTextAreaDialogController(initFirstText, initSecondText, okButtonHandler, size);
         getWindowBuilder("text_field_and_text_area_dialog.fxml", controller).showWindow();
     }
 
@@ -73,7 +76,7 @@ public class StandardDialogBuilder {
     }
 
     public TwoTextFieldsDialogController openTwoTextFieldsDialog(String initText1, String initText2, boolean closeAfterOk,
-                                                                 TwoTextFieldsDialogController.OkButtonHandler okButtonHandler) {
+                                                                 TwoArgKnob<String, String> okButtonHandler) {
         TwoTextFieldsDialogController controller = new TwoTextFieldsDialogController(initText1, initText2, closeAfterOk, okButtonHandler);
         getWindowBuilder("two_text_fields_dialog.fxml", controller).showWindow();
         return controller;
@@ -116,8 +119,11 @@ public class StandardDialogBuilder {
     }
 
     private WindowBuilder getWindowBuilder(String fxmlName, FxController controller) {
+        if (size == null) {
+            size = new Size(200, 340);
+        }
+
         return new WindowBuilder(DIALOG_FXML_LOCATION + fxmlName)
-                .setHeight(dialogHeight).setWidth(dialogWidth).setTitle(title)
-                .setController(controller).setModal(isModal);
+                .setSize(size).setTitle(title).setController(controller).setModal(isModal);
     }
 }
