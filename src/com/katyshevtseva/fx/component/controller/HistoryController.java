@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 import static com.katyshevtseva.date.DateUtils.READABLE_DATE_FORMAT;
 import static com.katyshevtseva.fx.FxUtils.*;
 
-class HistoryController<E extends HasHistory<A>, A extends Action> implements FxController {
+class HistoryController<E extends HasHistory<A>, A extends Action<?>> implements FxController {
     private final Size size;
     private int blockWidth;
     @FXML

@@ -48,12 +48,12 @@ public class ComponentBuilder {
         return new Component<>(galleryController, node);
     }
 
-    public Component<HierarchyController> getHierarchyComponent(HierarchyService service, boolean editable) {
-        return getHierarchyComponent(service, editable, null);
+    public Component<HierarchyController> getHierarchyComponent(HierarchyService service, boolean editable, boolean groupTable) {
+        return getHierarchyComponent(service, editable, groupTable, null);
     }
 
-    public Component<HierarchyController> getHierarchyComponent(HierarchyService service, boolean editable, TwoArgKnob<HierarchyNode, Label> nodeLabelAdjuster) {
-        HierarchyController controller = new HierarchyController(service, editable, size, nodeLabelAdjuster);
+    public Component<HierarchyController> getHierarchyComponent(HierarchyService service, boolean editable, boolean groupTable, TwoArgKnob<HierarchyNode, Label> nodeLabelAdjuster) {
+        HierarchyController controller = new HierarchyController(service, editable, groupTable, size, nodeLabelAdjuster);
         WindowBuilder windowBuilder = new WindowBuilder(COMPONENT_FXML_LOCATION + "hierarchy.fxml")
                 .setController(controller)
                 .setWidth(size.getWidth())

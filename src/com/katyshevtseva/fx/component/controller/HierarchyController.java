@@ -33,6 +33,7 @@ public class HierarchyController implements FxController {
     private static final double RATIO_OF_TITLE_COLUMN_WIDTH_TO_BUTTON_COLUMN_WIDTH = 3.0 / 4.0;
     private final HierarchyService service;
     private final boolean editableSchema;
+    private final boolean groupTable;
     private final Size size;
     private final TwoArgKnob<HierarchyNode, Label> nodeLabelAdjuster;
     @FXML
@@ -54,7 +55,7 @@ public class HierarchyController implements FxController {
 
     @FXML
     private void initialize() {
-        editGroupPane.setVisible(editableSchema);
+        editGroupPane.setVisible(groupTable);
         adjustSizes();
         adjustColumns();
         fillTable();
@@ -69,7 +70,7 @@ public class HierarchyController implements FxController {
     }
 
     private void adjustSizes() {
-        if (editableSchema) {
+        if (groupTable) {
             int groupEditPaneWidth = (int) (size.getWidth() * (1 - RATIO_OF_SCHEMA_WIDTH_TO_TABLE_WIDTH) - 20);
             int scrollPaneWidth = (int) (size.getWidth() * RATIO_OF_SCHEMA_WIDTH_TO_TABLE_WIDTH);
 
