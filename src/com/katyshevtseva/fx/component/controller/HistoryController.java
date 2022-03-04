@@ -12,6 +12,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Comparator;
 import java.util.List;
@@ -20,7 +21,8 @@ import java.util.stream.Collectors;
 import static com.katyshevtseva.date.DateUtils.READABLE_DATE_FORMAT;
 import static com.katyshevtseva.fx.FxUtils.*;
 
-class HistoryController<E extends HasHistory<A>, A extends Action<?>> implements FxController {
+@RequiredArgsConstructor
+public class HistoryController<E extends HasHistory<A>, A extends Action<E>> implements FxController {
     private final Size size;
     private int blockWidth;
     @FXML
@@ -28,20 +30,20 @@ class HistoryController<E extends HasHistory<A>, A extends Action<?>> implements
     @FXML
     private ScrollPane scrollPane;
 
-    public HistoryController(Size size) {
-        this.size = size;
+    @FXML
+    private void initialize() {
         setSizes();
     }
 
     private void setSizes() {
-        blockWidth = size.getWidth() - 25;
+        blockWidth = size.getWidth() - 60;
         setSize(scrollPane, size);
     }
 
     public void show(E entity) {
         historyPane.getChildren().clear();
         historyPane.getChildren().add(getPaneWithHeight(20));
-        List<A> actions = entity.getHistory().stream().sorted(Comparator.comparing(Action::getDate)).collect(Collectors.toList());
+        List<A> actions = entity.getHistory().stream().sorted(Comparator.comparing(Action::getOrder)).collect(Collectors.toList());
         for (Action action : actions) {
             historyPane.getChildren().add(actionToBlock(action));
             historyPane.getChildren().add(FxUtils.getPaneWithHeight(20));

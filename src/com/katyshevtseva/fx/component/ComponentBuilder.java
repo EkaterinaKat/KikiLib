@@ -5,11 +5,14 @@ import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.component.controller.GalleryController;
 import com.katyshevtseva.fx.component.controller.HierarchyController;
+import com.katyshevtseva.fx.component.controller.HistoryController;
 import com.katyshevtseva.fx.component.controller.MultipleChoiceController;
 import com.katyshevtseva.general.OneArgKnob;
 import com.katyshevtseva.general.TwoArgKnob;
 import com.katyshevtseva.hierarchy.HierarchyNode;
 import com.katyshevtseva.hierarchy.HierarchyService;
+import com.katyshevtseva.history.Action;
+import com.katyshevtseva.history.HasHistory;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import lombok.Data;
@@ -30,8 +33,7 @@ public class ComponentBuilder {
         MultipleChoiceController<E> controller = new MultipleChoiceController<>(items, size);
         WindowBuilder windowBuilder = new WindowBuilder(COMPONENT_FXML_LOCATION + "multiple_choice.fxml")
                 .setController(controller)
-                .setWidth(size.getWidth())
-                .setHeight(size.getHeight());
+                .setSize(size);
         Node node = windowBuilder.getNode();
         return new Component<>(controller, node);
     }
@@ -42,8 +44,7 @@ public class ComponentBuilder {
         GalleryController galleryController = new GalleryController(size, columnNum, imageContainers, clickHandler);
         WindowBuilder windowBuilder = new WindowBuilder(COMPONENT_FXML_LOCATION + "gallery.fxml")
                 .setController(galleryController)
-                .setWidth(size.getWidth())
-                .setHeight(size.getHeight());
+                .setSize(size);
         Node node = windowBuilder.getNode();
         return new Component<>(galleryController, node);
     }
@@ -56,8 +57,15 @@ public class ComponentBuilder {
         HierarchyController controller = new HierarchyController(service, editable, groupTable, size, nodeLabelAdjuster);
         WindowBuilder windowBuilder = new WindowBuilder(COMPONENT_FXML_LOCATION + "hierarchy.fxml")
                 .setController(controller)
-                .setWidth(size.getWidth())
-                .setHeight(size.getHeight());
+                .setSize(size);
+        return new Component<>(controller, windowBuilder.getNode());
+    }
+
+    public <E extends HasHistory<A>, A extends Action<E>> Component<HistoryController<E, A>> getHistoryComponent() {
+        HistoryController<E, A> controller = new HistoryController<>(size);
+        WindowBuilder windowBuilder = new WindowBuilder(COMPONENT_FXML_LOCATION + "history.fxml")
+                .setController(controller)
+                .setSize(size);
         return new Component<>(controller, windowBuilder.getNode());
     }
 

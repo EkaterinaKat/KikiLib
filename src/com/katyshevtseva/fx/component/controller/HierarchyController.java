@@ -69,6 +69,14 @@ public class HierarchyController implements FxController {
         });
     }
 
+    public void fillSchema() {
+        schemaBox.getChildren().clear();
+        List<SchemaLine> schema = service.getSchema();
+        for (int i = 0; i < schema.size(); i++) {
+            addLineToSchemaBox(schema.get(i), i);
+        }
+    }
+
     private void adjustSizes() {
         if (groupTable) {
             int groupEditPaneWidth = (int) (size.getWidth() * (1 - RATIO_OF_SCHEMA_WIDTH_TO_TABLE_WIDTH) - 20);
@@ -82,14 +90,6 @@ public class HierarchyController implements FxController {
             deleteColumn.setPrefWidth(groupEditPaneWidth * (1 - RATIO_OF_TITLE_COLUMN_WIDTH_TO_BUTTON_COLUMN_WIDTH) - 13);
         } else {
             setSize(scrollPane, size);
-        }
-    }
-
-    private void fillSchema() {
-        schemaBox.getChildren().clear();
-        List<SchemaLine> schema = service.getSchema();
-        for (int i = 0; i < schema.size(); i++) {
-            addLineToSchemaBox(schema.get(i), i);
         }
     }
 

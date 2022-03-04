@@ -5,9 +5,10 @@ import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.dialog.controller.*;
-import com.katyshevtseva.fx.dialog.controller.QuestionDialogController.AnswerHandler;
 import com.katyshevtseva.general.OneArgKnob;
 import com.katyshevtseva.general.TwoArgKnob;
+import com.katyshevtseva.history.Action;
+import com.katyshevtseva.history.HasHistory;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class StandardDialogBuilder {
         return this;
     }
 
-    public void openQuestionDialog(String question, AnswerHandler answerHandler) {
+    public void openQuestionDialog(String question, OneArgKnob<Boolean> answerHandler) {
         QuestionDialogController controller = new QuestionDialogController(question, answerHandler);
         getWindowBuilder("question_dialog.fxml", controller).showWindow();
     }
@@ -115,6 +116,16 @@ public class StandardDialogBuilder {
                 .setOnWindowCloseEventHandler(event -> windowCloseListener.execute(controller.getImageContainers()))
                 .showWindow();
 
+        return controller;
+    }
+
+    public <E extends HasHistory<A>, A extends Action<E>> HistoryDialogController<E, A> openHistoryDialog(E entity) {
+        if (size == null) {
+            size = new Size(600, 700);
+        }
+
+        HistoryDialogController<E, A> controller = new HistoryDialogController<>(entity, size);
+        getWindowBuilder("history_dialog.fxml", controller).setSize(size).showWindow();
         return controller;
     }
 

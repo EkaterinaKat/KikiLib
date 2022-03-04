@@ -29,7 +29,7 @@ public class TextFieldAndTextAreaDialogController implements WindowBuilder.FxCon
     @FXML
     private void initialize() {
         setSizes();
-        FxUtils.associateButtonWithControls(okButton, textArea, textField);
+        FxUtils.associateButtonWithControls(okButton, textField);
         textField.setText(initFirstText);
         textArea.setText(initSecondText);
         okButton.setOnAction(event -> {

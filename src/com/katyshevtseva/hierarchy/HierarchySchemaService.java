@@ -61,9 +61,6 @@ public class HierarchySchemaService {
         }
 
         public void execute(HierarchyNode childNodeToAdd) throws SchemaException {
-            if (childNodeToAdd.getParentGroup() != null)
-                throw new SchemaException(childNodeToAdd.getTitle() + " уже имеет родителя");
-
             if (service.treeWithRootContainsNode(childNodeToAdd, groupToAddTo))
                 throw new SchemaException(groupToAddTo.getTitle() + " является подкатегорией категории " + childNodeToAdd.getTitle());
 

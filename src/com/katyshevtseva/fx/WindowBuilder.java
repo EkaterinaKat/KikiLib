@@ -59,6 +59,11 @@ public class WindowBuilder {
         return this;
     }
 
+    public WindowBuilder setSize(int height, int width) {
+        this.size = new Size(height, width);
+        return this;
+    }
+
     public WindowBuilder setController(FxController controller) {
         this.controller = controller;
         return this;

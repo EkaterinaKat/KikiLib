@@ -11,4 +11,6 @@ public interface Action<E extends HasHistory<?>> {
     String getDescription();
 
     void setEntity(E entity);
+
+    long getOrder();
 }

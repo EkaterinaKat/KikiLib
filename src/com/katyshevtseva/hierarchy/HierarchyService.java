@@ -49,7 +49,7 @@ public abstract class HierarchyService<L extends Leaf, G extends Group> {
         deleteGroup(group);
     }
 
-    void saveModifiedNode(HierarchyNode node) {
+    protected void saveModifiedNode(HierarchyNode node) {
         if (node.isLeaf())
             saveModifiedLeaf((L) node);
         else
@@ -76,11 +76,11 @@ public abstract class HierarchyService<L extends Leaf, G extends Group> {
         return node.getParentGroup() == null;
     }
 
-    private List<L> getTopLevelLeaves() {
+    protected List<L> getTopLevelLeaves() {
         return getAllLeaves().stream().filter(leaf -> leaf.getParentGroup() == null).collect(Collectors.toList());
     }
 
-    private List<G> getTopLevelGroups() {
+    protected List<G> getTopLevelGroups() {
         return getAllGroups().stream().filter(group -> group.getParentGroup() == null).collect(Collectors.toList());
     }
 
@@ -91,6 +91,15 @@ public abstract class HierarchyService<L extends Leaf, G extends Group> {
         return getNodesByParent(root).stream()
                 .flatMap(node -> getAllDescendantLeavesByHierarchyNode(node).stream())
                 .collect(Collectors.toList());
+    }
+
+    public List<G> getAllDescendantGroupsByParentGroup(G root) {
+        List<G> result = getGroupsByParentGroup(root).stream()
+                .flatMap(node -> getAllDescendantGroupsByParentGroup(node).stream())
+                .collect(Collectors.toList());
+        result.add(root);
+
+        return result;
     }
 
     boolean treeWithRootContainsNode(HierarchyNode root, HierarchyNode nodeToSearch) {
