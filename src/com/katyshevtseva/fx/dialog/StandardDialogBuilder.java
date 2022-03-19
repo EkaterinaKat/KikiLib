@@ -91,8 +91,7 @@ public class StandardDialogBuilder {
                 selectionListener);
 
         getWindowBuilder("image_select_dialog.fxml", controller)
-                .setWidth(controller.getWindowWidth())
-                .setHeight(controller.getWindowHeight())
+                .setSize(controller.getWindowHeight(), controller.getWindowWidth())
                 .showWindow();
 
         return controller;
@@ -111,8 +110,7 @@ public class StandardDialogBuilder {
                 windowCloseListener);
 
         getWindowBuilder("image_select_dialog.fxml", controller)
-                .setWidth(controller.getWindowWidth())
-                .setHeight(controller.getWindowHeight())
+                .setSize(controller.getWindowHeight(), controller.getWindowWidth())
                 .setOnWindowCloseEventHandler(event -> windowCloseListener.execute(controller.getImageContainers()))
                 .showWindow();
 
