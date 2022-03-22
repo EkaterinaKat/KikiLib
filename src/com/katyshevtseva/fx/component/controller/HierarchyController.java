@@ -163,9 +163,11 @@ public class HierarchyController implements FxController {
     }
 
     private void fillTable() {
-        ObservableList<Group> groups = FXCollections.observableArrayList();
-        groups.addAll(service.getAllGroups());
-        table.setItems(groups);
+        if (groupTable) {
+            ObservableList<Group> groups = FXCollections.observableArrayList();
+            groups.addAll(service.getAllGroups());
+            table.setItems(groups);
+        }
     }
 
     private String getColorByLevel(int level) {
