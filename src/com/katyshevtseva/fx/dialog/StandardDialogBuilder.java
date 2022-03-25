@@ -10,6 +10,7 @@ import com.katyshevtseva.general.TwoArgKnob;
 import com.katyshevtseva.history.Action;
 import com.katyshevtseva.history.HasHistory;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class StandardDialogBuilder {
@@ -58,16 +59,20 @@ public class StandardDialogBuilder {
     }
 
     //340x200 хорошо подходит для этого окна
-    public <T> void openTextFieldAndComboBoxDialog(String initText, List<T> comboBoxItems, T initComboBoxItem,
-                                                   TextFieldAndComboBoxDialogController.OkButtonHandler<T> okButtonHandler) {
-        TextFieldAndComboBoxDialogController<T> controller = new TextFieldAndComboBoxDialogController<T>(
+    public <T> TextFieldAndComboBoxDialogController<T> openTextFieldAndComboBoxDialog(String initText, List<T> comboBoxItems, T initComboBoxItem, TwoArgKnob<String, T> okButtonHandler) {
+        TextFieldAndComboBoxDialogController<T> controller = new TextFieldAndComboBoxDialogController<>(
                 initText, comboBoxItems, initComboBoxItem, okButtonHandler);
         getWindowBuilder("text_field_and_combobox_dialog.fxml", controller).showWindow();
+        return controller;
+    }
+
+    public <T> TextFieldAndComboBoxDialogController<T> openTextFieldAndComboBoxDialog(T[] comboBoxItems, TwoArgKnob<String, T> okButtonHandler) {
+        return openTextFieldAndComboBoxDialog(null, Arrays.asList(comboBoxItems), null, okButtonHandler);
     }
 
     public <T> void openComboBoxDialog(List<T> comboBoxItems, T initComboBoxItem,
                                        ComboBoxDialogController.OkButtonHandler<T> okButtonHandler) {
-        ComboBoxDialogController<T> controller = new ComboBoxDialogController<T>(comboBoxItems, initComboBoxItem, okButtonHandler);
+        ComboBoxDialogController<T> controller = new ComboBoxDialogController<>(comboBoxItems, initComboBoxItem, okButtonHandler);
         getWindowBuilder("combobox_dialog.fxml", controller).showWindow();
     }
 

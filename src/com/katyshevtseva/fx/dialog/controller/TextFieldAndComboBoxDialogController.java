@@ -2,28 +2,31 @@ package com.katyshevtseva.fx.dialog.controller;
 
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.general.TwoArgKnob;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import lombok.Getter;
 
 import java.util.List;
 
 public class TextFieldAndComboBoxDialogController<T> implements FxController {
     @FXML
+    @Getter
     private TextField textField;
     @FXML
     private ComboBox<T> comboBox;
     @FXML
     private Button okButton;
-    private OkButtonHandler<T> okButtonHandler;
+    private TwoArgKnob<String, T> okButtonHandler;
     private String initText;
     private List<T> comboBoxItems;
     private T initComboBoxSelectedItem;
 
     public TextFieldAndComboBoxDialogController(String initText, List<T> comboBoxItems,
-                                                T initComboBoxSelectedItem, OkButtonHandler<T> okButtonHandler) {
+                                                T initComboBoxSelectedItem, TwoArgKnob<String, T> okButtonHandler) {
         this.okButtonHandler = okButtonHandler;
         this.initText = initText;
         this.comboBoxItems = comboBoxItems;
@@ -41,10 +44,5 @@ public class TextFieldAndComboBoxDialogController<T> implements FxController {
             okButtonHandler.execute(textField.getText(), comboBox.getValue());
             FxUtils.closeWindowThatContains(textField);
         });
-    }
-
-    @FunctionalInterface
-    public interface OkButtonHandler<T> {
-        void execute(String text, T comboBoxItem);
     }
 }

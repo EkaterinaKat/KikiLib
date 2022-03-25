@@ -74,7 +74,7 @@ public class FxUtils {
     private static void setButtonAccessibility(Button button, List<Control> controls) {
         boolean disableButton = false;
         for (Control control : controls) {
-            if (control instanceof TextField && ((TextField) control).getText().trim().equals("")) {
+            if (control instanceof TextField && textFieldIsEmpty((TextField) control)) {
                 disableButton = true;
             } else if (control instanceof TextArea && ((TextArea) control).getText().trim().equals("")) {
                 disableButton = true;
@@ -85,6 +85,10 @@ public class FxUtils {
             }
             button.setDisable(disableButton);
         }
+    }
+
+    private static boolean textFieldIsEmpty(TextField textField) {
+        return textField.getText() == null || textField.getText().trim().equals("");
     }
 
     public static Pane getPaneWithHeight(int height) {
