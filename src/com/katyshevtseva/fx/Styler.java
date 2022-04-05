@@ -8,7 +8,8 @@ public class Styler {
 
     public enum StandardColor {
         GRAY("#808080"), BLACK("#000000"), GREEN("#008000"), PURPLE("#800080"),
-        BLUE("#4C9FFF"), ORANGE("#FFA24C"), SCREAMING_GREEN("#4FFF4C");
+        BLUE("#4C9FFF"), ORANGE("#FFA24C"), SCREAMING_GREEN("#4FFF4C"), RED("#cf2121"),
+        WHITE("#FFFFFF");
 
         private String code;
 
