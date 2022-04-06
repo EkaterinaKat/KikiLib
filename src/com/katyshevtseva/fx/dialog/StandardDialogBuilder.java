@@ -24,6 +24,16 @@ public class StandardDialogBuilder {
         return this;
     }
 
+    public StandardDialogBuilder setSize(int height, int width) {
+        this.size = new Size(height, width);
+        return this;
+    }
+
+    public StandardDialogBuilder setSize(int size) {
+        this.size = new Size(size, size);
+        return this;
+    }
+
     public StandardDialogBuilder setTitle(String width) {
         this.title = title;
         return this;
