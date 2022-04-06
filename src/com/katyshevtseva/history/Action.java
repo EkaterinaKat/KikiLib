@@ -1,10 +1,8 @@
 package com.katyshevtseva.history;
 
-import java.util.Date;
-
 public interface Action<E extends HasHistory<?>> {
 
-    Date getDate();
+    String getDateString();
 
     void setDescription(String comment);
 

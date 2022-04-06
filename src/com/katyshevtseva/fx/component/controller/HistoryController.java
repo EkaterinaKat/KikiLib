@@ -18,7 +18,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.katyshevtseva.date.DateUtils.READABLE_DATE_FORMAT;
 import static com.katyshevtseva.fx.FxUtils.*;
 
 @RequiredArgsConstructor
@@ -53,7 +52,7 @@ public class HistoryController<E extends HasHistory<A>, A extends Action<E>> imp
     private Pane actionToBlock(Action action) {
         VBox vBox = new VBox();
 
-        Label datesLabel = new Label(READABLE_DATE_FORMAT.format(action.getDate()));
+        Label datesLabel = new Label(action.getDateString());
         vBox.getChildren().addAll(getPaneWithHeight(15), datesLabel);
 
         Label descLabel = new Label(action.getDescription());

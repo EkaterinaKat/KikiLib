@@ -8,6 +8,7 @@ import java.util.*;
 public class DateUtils {
     public static DateFormat READABLE_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
     public static DateFormat READABLE_TIME_FORMAT = new SimpleDateFormat("HH:mm");
+    public static DateFormat READABLE_DATE_TIME_FORMAT = new SimpleDateFormat("dd.MM.yyyy HH:mm");
     public static DateFormat MONTH_YEAR_DATE_FORMAT = new SimpleDateFormat("MMM yyyy", new Locale("ru"));
 
     public enum TimeUnit {
