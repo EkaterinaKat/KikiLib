@@ -20,8 +20,14 @@ public abstract class HierarchyService<L extends Leaf, G extends Group> {
 
     protected abstract void deleteGroup(G group);
 
+    /**
+     * Должен возвращать листья из первого поколения потомков
+     */
     protected abstract List<L> getLeavesByParentGroup(G group);
 
+    /**
+     * Должен возвращать группы из первого поколения потомков
+     */
     protected abstract List<G> getGroupsByParentGroup(G group);
 
     public List<HierarchySchemaService.SchemaLine> getSchema() {
@@ -56,6 +62,9 @@ public abstract class HierarchyService<L extends Leaf, G extends Group> {
             saveModifiedGroup((G) node);
     }
 
+    /**
+     * Возвращает всех потомков (и листья и группы) parentNode в первом поколении. Сам parentNode в список не включается
+     */
     public List<HierarchyNode> getNodesByParent(HierarchyNode parentNode) {
         List<HierarchyNode> nodes = new ArrayList<>();
         if (!parentNode.isLeaf()) {
@@ -102,7 +111,7 @@ public abstract class HierarchyService<L extends Leaf, G extends Group> {
         return result;
     }
 
-    boolean treeWithRootContainsNode(HierarchyNode root, HierarchyNode nodeToSearch) {
+    public boolean treeWithRootContainsNode(HierarchyNode root, HierarchyNode nodeToSearch) {
         if (nodesAreEqual(root, nodeToSearch))
             return true;
 
