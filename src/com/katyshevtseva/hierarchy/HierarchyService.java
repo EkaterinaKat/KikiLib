@@ -48,8 +48,7 @@ public abstract class HierarchyService<L extends Leaf, G extends Group> {
 
     public void destroyTreeAndDeleteGroup(G group) {
         for (HierarchyNode childNode : getNodesByParent(group)) {
-            childNode.setParentGroup(null);
-            saveModifiedNode(childNode);
+            deleteFromSchema(childNode);
         }
 
         deleteGroup(group);
