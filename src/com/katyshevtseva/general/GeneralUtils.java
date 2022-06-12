@@ -1,5 +1,7 @@
 package com.katyshevtseva.general;
 
+import java.util.List;
+
 public class GeneralUtils {
 
     public static int getRowByIndexAndColumnNum(int index, int columnNum) {
@@ -12,6 +14,10 @@ public class GeneralUtils {
 
     public static boolean isEmpty(String s) {
         return s == null || s.equals("");
+    }
+
+    public static boolean isEmpty(List list) {
+        return list == null || list.isEmpty();
     }
 
     public static String getSuccessBanner(String title) {
