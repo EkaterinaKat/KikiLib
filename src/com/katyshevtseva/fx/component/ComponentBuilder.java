@@ -3,14 +3,12 @@ package com.katyshevtseva.fx.component;
 import com.katyshevtseva.fx.ImageContainer;
 import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.WindowBuilder;
-import com.katyshevtseva.fx.component.controller.GalleryController;
-import com.katyshevtseva.fx.component.controller.HierarchyController;
-import com.katyshevtseva.fx.component.controller.HistoryController;
-import com.katyshevtseva.fx.component.controller.MultipleChoiceController;
+import com.katyshevtseva.fx.component.controller.*;
 import com.katyshevtseva.general.OneArgKnob;
 import com.katyshevtseva.general.TwoArgKnob;
 import com.katyshevtseva.hierarchy.HierarchyNode;
 import com.katyshevtseva.hierarchy.HierarchyService;
+import com.katyshevtseva.hierarchy.StaticHierarchySchemaLine;
 import com.katyshevtseva.history.Action;
 import com.katyshevtseva.history.HasHistory;
 import javafx.scene.Node;
@@ -55,6 +53,17 @@ public class ComponentBuilder {
 
     public Component<HierarchyController> getHierarchyComponent(HierarchyService service, boolean editable, boolean groupTable, TwoArgKnob<HierarchyNode, Label> nodeLabelAdjuster) {
         HierarchyController controller = new HierarchyController(service, editable, groupTable, size, nodeLabelAdjuster);
+        WindowBuilder windowBuilder = new WindowBuilder(COMPONENT_FXML_LOCATION + "hierarchy.fxml")
+                .setController(controller)
+                .setSize(size);
+        return new Component<>(controller, windowBuilder.getNode());
+    }
+
+    public Component<StaticHierarchyController> getStaticHierarchyComponent(
+            List<StaticHierarchySchemaLine> schema,
+            TwoArgKnob<StaticHierarchySchemaLine, Label> nodeLabelAdjuster,
+            OneArgKnob<StaticHierarchySchemaLine> clickHandler) {
+        StaticHierarchyController controller = new StaticHierarchyController(schema, size, nodeLabelAdjuster, clickHandler);
         WindowBuilder windowBuilder = new WindowBuilder(COMPONENT_FXML_LOCATION + "hierarchy.fxml")
                 .setController(controller)
                 .setSize(size);
