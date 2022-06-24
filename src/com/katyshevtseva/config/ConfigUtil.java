@@ -44,17 +44,20 @@ public class ConfigUtil {
     }
 
     private File getConfigFileOrNull() {
-        return getFiles(new File(".")).stream()
+        return getFiles(new File("."), "out").stream()
                 .filter(file -> file.getName().equals(CONFIG_FILE_NAME)).findFirst().orElse(null);
     }
 
-    private List<File> getFiles(File file) {
+    private List<File> getFiles(File file, String dirToIgnore) {
         if (file.isFile())
             return Collections.singletonList(file);
 
+        if (file.getName().equals(dirToIgnore))
+            return Collections.emptyList();
+
         List<File> result = new ArrayList<>();
         for (File file1 : file.listFiles()) {
-            result.addAll(getFiles(file1));
+            result.addAll(getFiles(file1, dirToIgnore));
         }
 
         return result;

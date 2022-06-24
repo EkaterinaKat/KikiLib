@@ -8,7 +8,7 @@ import org.hibernate.cfg.AnnotationConfiguration;
 
 import java.io.File;
 
-class HibernateUtil {
+public class HibernateUtil {
     private static Session session;
 
     private static Session buildSession() {
@@ -22,7 +22,7 @@ class HibernateUtil {
         }
     }
 
-    static Session getSession() {
+    public static Session getSession() {
         if (session == null) {
             session = buildSession();
         }
