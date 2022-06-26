@@ -3,6 +3,7 @@ package com.katyshevtseva.fx.component;
 import com.katyshevtseva.fx.ImageContainer;
 import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.WindowBuilder;
+import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.component.controller.*;
 import com.katyshevtseva.general.OneArgKnob;
 import com.katyshevtseva.general.TwoArgKnob;
@@ -29,22 +30,14 @@ public class ComponentBuilder {
 
     public <E> Component<MultipleChoiceController<E>> getMultipleChoiceComponent(List<E> items) {
         MultipleChoiceController<E> controller = new MultipleChoiceController<>(items, size);
-        WindowBuilder windowBuilder = new WindowBuilder(COMPONENT_FXML_LOCATION + "multiple_choice.fxml")
-                .setController(controller)
-                .setSize(size);
-        Node node = windowBuilder.getNode();
-        return new Component<>(controller, node);
+        return getComponent("multiple_choice.fxml", controller);
     }
 
     public Component<GalleryController> getGalleryComponent(int columnNum,
                                                             List<ImageContainer> imageContainers,
                                                             OneArgKnob<ImageContainer> clickHandler) {
-        GalleryController galleryController = new GalleryController(size, columnNum, imageContainers, clickHandler);
-        WindowBuilder windowBuilder = new WindowBuilder(COMPONENT_FXML_LOCATION + "gallery.fxml")
-                .setController(galleryController)
-                .setSize(size);
-        Node node = windowBuilder.getNode();
-        return new Component<>(galleryController, node);
+        GalleryController controller = new GalleryController(size, columnNum, imageContainers, clickHandler);
+        return getComponent("gallery.fxml", controller);
     }
 
     public Component<HierarchyController> getHierarchyComponent(HierarchyService service, boolean editable, boolean groupTable) {
@@ -53,10 +46,7 @@ public class ComponentBuilder {
 
     public Component<HierarchyController> getHierarchyComponent(HierarchyService service, boolean editable, boolean groupTable, TwoArgKnob<HierarchyNode, Label> nodeLabelAdjuster) {
         HierarchyController controller = new HierarchyController(service, editable, groupTable, size, nodeLabelAdjuster);
-        WindowBuilder windowBuilder = new WindowBuilder(COMPONENT_FXML_LOCATION + "hierarchy.fxml")
-                .setController(controller)
-                .setSize(size);
-        return new Component<>(controller, windowBuilder.getNode());
+        return getComponent("hierarchy.fxml", controller);
     }
 
     public Component<StaticHierarchyController> getStaticHierarchyComponent(
@@ -64,15 +54,23 @@ public class ComponentBuilder {
             TwoArgKnob<StaticHierarchySchemaLine, Label> nodeLabelAdjuster,
             OneArgKnob<StaticHierarchySchemaLine> clickHandler) {
         StaticHierarchyController controller = new StaticHierarchyController(schema, size, nodeLabelAdjuster, clickHandler);
-        WindowBuilder windowBuilder = new WindowBuilder(COMPONENT_FXML_LOCATION + "hierarchy.fxml")
-                .setController(controller)
-                .setSize(size);
-        return new Component<>(controller, windowBuilder.getNode());
+        return getComponent("hierarchy.fxml", controller);
     }
 
     public <E extends HasHistory<A>, A extends Action<E>> Component<HistoryController<E, A>> getHistoryComponent() {
         HistoryController<E, A> controller = new HistoryController<>(size);
-        WindowBuilder windowBuilder = new WindowBuilder(COMPONENT_FXML_LOCATION + "history.fxml")
+        return getComponent("history.fxml", controller);
+    }
+
+    public <T> Component<PaginationPaneController<T>> getPaginationComponent(
+            PaginationPaneController.PageSource<T> pageSource,
+            OneArgKnob<List<T>> contentReceiver) {
+        PaginationPaneController<T> controller = new PaginationPaneController<>(pageSource, contentReceiver);
+        return getComponent("pagination_pane.fxml", controller);
+    }
+
+    private <Controller extends FxController> Component<Controller> getComponent(String fxml, Controller controller) {
+        WindowBuilder windowBuilder = new WindowBuilder(COMPONENT_FXML_LOCATION + fxml)
                 .setController(controller)
                 .setSize(size);
         return new Component<>(controller, windowBuilder.getNode());

@@ -26,10 +26,14 @@ public abstract class HistoryService<E extends HasHistory<A>, A extends Action<E
         commitAction(entity, "EDITED:\n" + entity.getConditionDescForHistory());
     }
 
-    private void commitAction(E entity, String description) {
+    public void commitAction(E entity, String description) {
+        commitAction(entity, description, new Date());
+    }
+
+    public void commitAction(E entity, String description, Date date) {
         A action = createNewAction();
         action.setEntity(entity);
-        setDate(action, new Date());
+        setDate(action, date);
         action.setDescription(description);
         saveNewAction(action);
     }
