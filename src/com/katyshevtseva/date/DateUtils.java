@@ -52,6 +52,10 @@ public class DateUtils {
         return removeTimeFromDate(date1).before(removeTimeFromDate(date2));
     }
 
+    public static boolean equalsIgnoreTime(Date date1, Date date2) {
+        return removeTimeFromDate(date1).equals(removeTimeFromDate(date2));
+    }
+
     public static Date removeTimeFromDate(Date date) {
         try {
             return READABLE_DATE_FORMAT.parse(READABLE_DATE_FORMAT.format(date));
@@ -66,6 +70,10 @@ public class DateUtils {
                 period.end() != null ? READABLE_DATE_FORMAT.format(period.end()) : "*");
     }
 
+    public static String getPeriodStringWithLengthIncludingBorders(Period period) {
+        return getStringRepresentationOfPeriod(period) + " (" + (getNumberOfDays(period) + 1) + ")";
+    }
+
     public static Period getLastMonthPeriod() {
         return new Period(shiftDate(new Date(), TimeUnit.MONTH, -1), new Date());
     }
@@ -73,6 +81,10 @@ public class DateUtils {
     public static int getNumberOfMinutes(Date startDate, Date finishDate) {
         long diff = finishDate.getTime() - startDate.getTime();
         return (int) (diff / 60000);
+    }
+
+    public static int getNumberOfDays(Period period) {
+        return getNumberOfDays(period.start(), period.end());
     }
 
     /**

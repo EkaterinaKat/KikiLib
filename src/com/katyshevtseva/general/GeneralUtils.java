@@ -20,6 +20,14 @@ public class GeneralUtils {
         return list == null || list.isEmpty();
     }
 
+    public static String getSuccessBanner() {
+        return getSuccessBanner("");
+    }
+
+    public static String getFailedBanner() {
+        return getFailedBanner("");
+    }
+
     public static String getSuccessBanner(String title) {
         return String.format("***********************************************\n" +
                 "                 %s SUCCESS\n" +
