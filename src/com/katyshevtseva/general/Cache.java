@@ -14,12 +14,16 @@ public class Cache<Key, Value> {
         this.valueSupplier = valueSupplier;
     }
 
-    public Value getCachedValue(Key key) {
+    public Value getValue(Key key) {
         Value value = map.get(key);
         if (value == null) {
             value = valueSupplier.execute(key);
             map.put(key, value);
         }
         return value;
+    }
+
+    public void clear() {
+        map.clear();
     }
 }

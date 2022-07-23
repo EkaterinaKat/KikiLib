@@ -5,9 +5,15 @@ import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 
+import static com.katyshevtseva.fx.FxUtils.setSize;
+
 public class ImageSizeUtil {
 
     public static Node placeImageInSquare(ImageView imageView, int squareSide) {
+        return placeImageInSquare(imageView, squareSide, null);
+    }
+
+    public static Node placeImageInSquare(ImageView imageView, int squareSide, ImageView icon) {
 
         new BackgroundLoadedImageAdjuster(imageView.getImage(), () -> {
             if (getHeightByWidth(imageView, squareSide) <= squareSide) {
@@ -22,10 +28,14 @@ public class ImageSizeUtil {
         BorderPane borderPane = new BorderPane();
         borderPane.setCenter(imageView);
         BorderPane.setAlignment(imageView, Pos.CENTER);
-        borderPane.setMaxHeight(squareSide);
-        borderPane.setMaxWidth(squareSide);
-        borderPane.setMinHeight(squareSide);
-        borderPane.setMinWidth(squareSide);
+        setSize(borderPane, squareSide);
+
+        if (icon != null) {
+            borderPane.setBottom(icon);
+            BorderPane.setAlignment(icon, Pos.BASELINE_RIGHT);
+            icon.setFitHeight(squareSide / 10.0);
+            icon.setFitWidth(squareSide / 10.0);
+        }
 
         return borderPane;
     }

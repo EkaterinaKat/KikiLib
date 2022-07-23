@@ -175,6 +175,11 @@ public class FxUtils {
         setHeight(region, size.getHeight());
     }
 
+    public static void setSize(Region region, int size) {
+        setWidth(region, size);
+        setHeight(region, size);
+    }
+
     public static void setWidth(Region region, int width) {
         region.setMaxWidth(width);
         region.setMinWidth(width);
