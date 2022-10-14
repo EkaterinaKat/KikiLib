@@ -20,9 +20,7 @@ public class WindowBuilder {
     private final String iconImagePath;
     private final String cssPath;
     private String title = "";
-    private int width = 500;
-    private int height = 500;
-    private Size size;
+    private Size size = new Size(500, 500);
     private FxController controller;
     private boolean isModal = false;
     private boolean stretchable = false;
@@ -39,18 +37,6 @@ public class WindowBuilder {
 
     public WindowBuilder setTitle(String title) {
         this.title = title;
-        return this;
-    }
-
-    @Deprecated
-    public WindowBuilder setWidth(int width) {
-        this.width = width;
-        return this;
-    }
-
-    @Deprecated
-    public WindowBuilder setHeight(int height) {
-        this.height = height;
         return this;
     }
 
@@ -101,20 +87,12 @@ public class WindowBuilder {
         Stage stage = new Stage();
         stage.setTitle(title);
         if (!stretchable) {
-            if (size == null) {
-                stage.setMinHeight(height);
-                stage.setMaxHeight(height);
-                stage.setMinWidth(width);
-                stage.setMaxWidth(width);
-            } else {
-                stage.setMinHeight(size.getHeight());
-                stage.setMaxHeight(size.getHeight());
-                stage.setMinWidth(size.getWidth());
-                stage.setMaxWidth(size.getWidth());
-            }
-
+            stage.setMinHeight(size.getHeight());
+            stage.setMaxHeight(size.getHeight());
+            stage.setMinWidth(size.getWidth());
+            stage.setMaxWidth(size.getWidth());
         }
-        Scene scene = new Scene(getNodeByFxmlAndController(), width, height);
+        Scene scene = new Scene(getNodeByFxmlAndController(), size.getWidth(), size.getHeight());
         if (cursorImagePath != null)
             scene.setCursor(new ImageCursor(new Image(cursorImagePath), 19, 19));
         stage.setScene(scene);
