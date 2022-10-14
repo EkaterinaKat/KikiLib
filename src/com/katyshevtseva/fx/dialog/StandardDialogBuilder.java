@@ -44,6 +44,10 @@ public class StandardDialogBuilder {
         return this;
     }
 
+    public void openContainerDialog(FxController controller) {
+        getWindowBuilder("container.fxml", controller).showWindow();
+    }
+
     public void openQuestionDialog(String question, OneArgKnob<Boolean> answerHandler) {
         QuestionDialogController controller = new QuestionDialogController(question, answerHandler);
         getWindowBuilder("question_dialog.fxml", controller).showWindow();

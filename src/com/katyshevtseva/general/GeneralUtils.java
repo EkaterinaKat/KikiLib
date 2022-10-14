@@ -28,15 +28,15 @@ public class GeneralUtils {
         return getFailedBanner("");
     }
 
+    public static String getHeader(String text) {
+        return String.format("\n*************** %s ***************", text);
+    }
+
     public static String getSuccessBanner(String title) {
-        return String.format("***********************************************\n" +
-                "                 %s SUCCESS\n" +
-                "***********************************************\n", title);
+        return String.format("*************** %s SUCCESS o(>ω<)o ***************\n", title);
     }
 
     public static String getFailedBanner(String title) {
-        return String.format("***********************************************\n" +
-                "                 %s FAILED\n" +
-                "***********************************************\n", title);
+        return String.format("*************** %s FAILED (」°ロ°)」 ***************\n", title);
     }
 }
