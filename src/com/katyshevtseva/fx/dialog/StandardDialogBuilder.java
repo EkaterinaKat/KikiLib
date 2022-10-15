@@ -9,6 +9,7 @@ import com.katyshevtseva.general.OneArgKnob;
 import com.katyshevtseva.general.TwoArgKnob;
 import com.katyshevtseva.history.Action;
 import com.katyshevtseva.history.HasHistory;
+import javafx.scene.Node;
 
 import java.util.Arrays;
 import java.util.List;
@@ -44,8 +45,12 @@ public class StandardDialogBuilder {
         return this;
     }
 
-    public void openContainerDialog(FxController controller) {
+    public void openNoFxmlContainerDialog(FxController controller) {
         getWindowBuilder("container.fxml", controller).showWindow();
+    }
+
+    public void openNodeContainerDialog(Node node) {
+        getWindowBuilder("container.fxml", new NodeContainerController(node)).showWindow();
     }
 
     public void openQuestionDialog(String question, OneArgKnob<Boolean> answerHandler) {

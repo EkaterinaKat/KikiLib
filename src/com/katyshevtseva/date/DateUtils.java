@@ -48,7 +48,7 @@ public class DateUtils {
         return result;
     }
 
-    private static boolean before(Date date1, Date date2) {
+    public static boolean before(Date date1, Date date2) {
         return removeTimeFromDate(date1).before(removeTimeFromDate(date2));
     }
 
