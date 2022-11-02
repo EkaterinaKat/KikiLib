@@ -3,7 +3,8 @@ package com.katyshevtseva.fx.component.controller;
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
-import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
+import com.katyshevtseva.fx.dialogconstructor.DcComboBox;
+import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -78,12 +79,14 @@ public class MultipleChoiceController<E> implements FxController {
     private Label getAddLabel() {
         Label label = new Label("<+>");
         if (customItemSupplier == null) {
-            label.setOnMouseClicked(event ->
-                    new StandardDialogBuilder()
-                            .openComboBoxDialog(getNotSelectedItems(), null, comboBoxItem -> {
-                                selectedItems.add(comboBoxItem);
-                                fillMainPane();
-                            }));
+            label.setOnMouseClicked(event -> {
+                DcComboBox<E> comboBox = new DcComboBox<>(true, null, getNotSelectedItems());
+                DialogConstructor.constructDialog(() -> {
+                    selectedItems.add(comboBox.getValue());
+                    fillMainPane();
+                }, comboBox);
+            });
+
         } else {
             selectedItems.add(customItemSupplier.getItem());
             fillMainPane();

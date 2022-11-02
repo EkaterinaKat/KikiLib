@@ -37,6 +37,13 @@
                 </includes>
             </resource>
             <resource>
+                <targetPath>com/katyshevtseva/fx/dialogconstructor</targetPath>
+                <directory>src/com/katyshevtseva/fx/dialogconstructor</directory>
+                <includes>
+                    <include>**/*.fxml</include>
+                </includes>
+            </resource>
+            <resource>
                 <targetPath>com/katyshevtseva/fx/images</targetPath>
                 <directory>src/com/katyshevtseva/fx/images</directory>
                 <includes>

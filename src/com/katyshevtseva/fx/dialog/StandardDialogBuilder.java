@@ -6,12 +6,10 @@ import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.dialog.controller.*;
 import com.katyshevtseva.general.OneArgKnob;
-import com.katyshevtseva.general.TwoArgKnob;
 import com.katyshevtseva.history.Action;
 import com.katyshevtseva.history.HasHistory;
 import javafx.scene.Node;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class StandardDialogBuilder {
@@ -61,50 +59,6 @@ public class StandardDialogBuilder {
     public void openInfoDialog(String info) {
         InfoDialogController controller = new InfoDialogController(info);
         getWindowBuilder("info_dialog.fxml", controller).showWindow();
-    }
-
-    public void openTextFieldAndTextAreaDialog(TwoArgKnob<String, String> okButtonHandler) {
-        openTextFieldAndTextAreaDialog("", "", okButtonHandler);
-    }
-
-    public void openTextFieldAndTextAreaDialog(String initFirstText, String initSecondText, TwoArgKnob<String, String> okButtonHandler) {
-        if (size == null) {
-            size = new Size(340, 450);
-        }
-
-        TextFieldAndTextAreaDialogController controller =
-                new TextFieldAndTextAreaDialogController(initFirstText, initSecondText, okButtonHandler, size);
-        getWindowBuilder("text_field_and_text_area_dialog.fxml", controller).showWindow();
-    }
-
-    //340x200 хорошо подходит для этого окна
-    public <T> TextFieldAndComboBoxDialogController<T> openTextFieldAndComboBoxDialog(String initText, List<T> comboBoxItems, T initComboBoxItem, TwoArgKnob<String, T> okButtonHandler) {
-        TextFieldAndComboBoxDialogController<T> controller = new TextFieldAndComboBoxDialogController<>(
-                initText, comboBoxItems, initComboBoxItem, okButtonHandler);
-        getWindowBuilder("text_field_and_combobox_dialog.fxml", controller).showWindow();
-        return controller;
-    }
-
-    public <T> TextFieldAndComboBoxDialogController<T> openTextFieldAndComboBoxDialog(T[] comboBoxItems, TwoArgKnob<String, T> okButtonHandler) {
-        return openTextFieldAndComboBoxDialog(null, Arrays.asList(comboBoxItems), null, okButtonHandler);
-    }
-
-    public <T> void openComboBoxDialog(List<T> comboBoxItems, T initComboBoxItem,
-                                       ComboBoxDialogController.OkButtonHandler<T> okButtonHandler) {
-        ComboBoxDialogController<T> controller = new ComboBoxDialogController<>(comboBoxItems, initComboBoxItem, okButtonHandler);
-        getWindowBuilder("combobox_dialog.fxml", controller).showWindow();
-    }
-
-    public void openTextFieldDialog(String initText, TextFieldDialogController.OkButtonHandler okButtonHandler) {
-        TextFieldDialogController controller = new TextFieldDialogController(initText, okButtonHandler);
-        getWindowBuilder("text_field_dialog.fxml", controller).showWindow();
-    }
-
-    public TwoTextFieldsDialogController openTwoTextFieldsDialog(String initText1, String initText2, boolean closeAfterOk,
-                                                                 TwoArgKnob<String, String> okButtonHandler) {
-        TwoTextFieldsDialogController controller = new TwoTextFieldsDialogController(initText1, initText2, closeAfterOk, okButtonHandler);
-        getWindowBuilder("two_text_fields_dialog.fxml", controller).showWindow();
-        return controller;
     }
 
     public ImageSelectDialogController openImageSelectionDialog(

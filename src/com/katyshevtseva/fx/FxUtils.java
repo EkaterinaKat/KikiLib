@@ -69,6 +69,7 @@ public class FxUtils {
             } else
                 throw new RuntimeException("Элемент неизвестного типа");
         }
+        setButtonAccessibility(button, controls);
     }
 
     private static void setButtonAccessibility(Button button, List<Control> controls) {
