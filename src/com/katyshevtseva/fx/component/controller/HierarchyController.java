@@ -1,8 +1,8 @@
 package com.katyshevtseva.fx.component.controller;
 
-import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.Styler;
+import com.katyshevtseva.fx.TableUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.general.TwoArgKnob;
@@ -150,7 +150,7 @@ public class HierarchyController implements FxController {
 
     private void adjustColumns() {
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        FxUtils.adjustButtonColumn(deleteColumn, "[x]",
+        TableUtils.adjustButtonColumn(deleteColumn, "[x]",
                 group ->
                         new StandardDialogBuilder().openQuestionDialog("Delete?", b -> {
                             if (b) {
