@@ -9,7 +9,7 @@ public class Styler {
     public enum StandardColor {
         GRAY("#808080"), BLACK("#000000"), GREEN("#008000"), PURPLE("#800080"),
         BLUE("#4C9FFF"), ORANGE("#FFA24C"), SCREAMING_GREEN("#4FFF4C"), RED("#cf2121"),
-        WHITE("#FFFFFF");
+        WHITE("#FFFFFF"), PASTEL_PINK("#FFD1DC"), PEACH("#FFE5B4"), BROWN("#4F250C");
 
         private String code;
 
@@ -25,7 +25,8 @@ public class Styler {
     public enum ThingToColor {
         BACKGROUND(" -fx-background-color: "),
         TEXT(" -fx-text-fill: "),
-        TABLE_TEXT(" -fx-text-background-color: ");
+        TABLE_TEXT(" -fx-text-background-color: "),
+        BORDER(" -fx-border-color: ");
 
         private String text;
 

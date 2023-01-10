@@ -42,6 +42,11 @@ public class MultipleChoiceController<E> implements FxController {
         customItemSupplier = itemSupplier;
     }
 
+    public void clear() {
+        selectedItems.clear();
+        fillMainPane();
+    }
+
     @FunctionalInterface
     public interface ItemSupplier<E> {
         E getItem();
