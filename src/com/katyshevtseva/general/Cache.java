@@ -8,9 +8,9 @@ import java.util.Map;
  */
 public class Cache<Key, Value> {
     private final Map<Key, Value> map = new HashMap<>();
-    private final OneArgOneAnswerKnob<Key, Value> valueSupplier;
+    private final OneInOneOutKnob<Key, Value> valueSupplier;
 
-    public Cache(OneArgOneAnswerKnob<Key, Value> valueSupplier) {
+    public Cache(OneInOneOutKnob<Key, Value> valueSupplier) {
         this.valueSupplier = valueSupplier;
     }
 

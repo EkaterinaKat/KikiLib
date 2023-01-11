@@ -1,6 +1,6 @@
 package com.katyshevtseva.general;
 
 @FunctionalInterface
-public interface OneArgOneAnswerKnob<T, E> {
+public interface OneInOneOutKnob<T, E> {
     E execute(T t);
 }

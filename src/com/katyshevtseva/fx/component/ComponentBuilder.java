@@ -69,6 +69,11 @@ public class ComponentBuilder {
         return getComponent("pagination_pane.fxml", controller);
     }
 
+    public <T> Component<BlockListController<T>> getBlockListComponent() {
+        BlockListController<T> controller = new BlockListController<>(size);
+        return getComponent("block_list.fxml", controller);
+    }
+
     private <Controller extends FxController> Component<Controller> getComponent(String fxml, Controller controller) {
         WindowBuilder windowBuilder = new WindowBuilder(COMPONENT_FXML_LOCATION + fxml)
                 .setController(controller)

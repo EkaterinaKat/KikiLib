@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml">
+
+    <GridPane vgap="10">
+        <ScrollPane fx:id="scrollPane" GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <HBox>
+                <Pane maxWidth="20" minWidth="20"/>
+                <VBox fx:id="contentPane"/>
+            </HBox>
+        </ScrollPane>
+        <VBox fx:id="paginationPane" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+    </GridPane>
+
+</VBox>

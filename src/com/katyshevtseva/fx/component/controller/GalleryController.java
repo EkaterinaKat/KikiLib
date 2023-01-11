@@ -4,7 +4,7 @@ import com.katyshevtseva.fx.ImageContainer;
 import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.general.OneArgKnob;
-import com.katyshevtseva.general.OneArgOneAnswerKnob;
+import com.katyshevtseva.general.OneInOneOutKnob;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
@@ -30,7 +30,7 @@ public class GalleryController implements FxController {
     private final int columnNum;
     private List<ImageContainer> imageContainers;
     private final OneArgKnob<ImageContainer> clickHandler;
-    private OneArgOneAnswerKnob<ImageContainer, ImageView> iconSupplier;
+    private OneInOneOutKnob<ImageContainer, ImageView> iconSupplier;
     @FXML
     private VBox root;
     private GridPane gridPane;
@@ -58,7 +58,7 @@ public class GalleryController implements FxController {
         fillGridPane();
     }
 
-    public void setIconSupplier(OneArgOneAnswerKnob<ImageContainer, ImageView> iconSupplier) {
+    public void setIconSupplier(OneInOneOutKnob<ImageContainer, ImageView> iconSupplier) {
         this.iconSupplier = iconSupplier;
     }
 
