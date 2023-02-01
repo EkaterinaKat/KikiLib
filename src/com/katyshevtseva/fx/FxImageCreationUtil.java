@@ -1,5 +1,6 @@
 package com.katyshevtseva.fx;
 
+import com.katyshevtseva.general.Cache;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -8,6 +9,28 @@ import java.net.MalformedURLException;
 
 @SuppressWarnings("WeakerAccess")
 public class FxImageCreationUtil {
+    private static final String ICONS_LOCATION = "D:\\onedrive\\central_image_storage\\icons\\";
+    private static final Cache<IconPicture, Image> iconCache = new Cache<>(FxImageCreationUtil::getIconByPicture);
+
+    public static Image getIcon(IconPicture iconPicture) {
+        return iconCache.getValue(iconPicture);
+    }
+
+    private static Image getIconByPicture(IconPicture iconPicture) {
+        return getImageByAbsolutePath(ICONS_LOCATION + iconPicture.fileName);
+    }
+
+    public enum IconPicture {
+        GREY_PLUS("grey_plus.png"), OK("ok.png"), GREEN_TICK("green_tick.png"),
+        RED_CROSS("red_cross.png"), KIKI_ORG_LOGO("kiki_org_logo.png"), DELTE("delete.png"),
+        GREY_CROSS("gray_cross.png"), GREEN_PLUS("green_plus.png"), VOC_LOGO("vocabulary_logo.png");
+
+        private final String fileName;
+
+        IconPicture(String fileName) {
+            this.fileName = fileName;
+        }
+    }
 
     //Absolute path must look like this "D:\\Some_files\\wardrobe\\masik.png"
     public static ImageView getImageViewByAbsolutePath(String path) {

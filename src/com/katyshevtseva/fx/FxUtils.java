@@ -1,11 +1,11 @@
 package com.katyshevtseva.fx;
 
 import com.katyshevtseva.date.Period;
+import com.katyshevtseva.fx.FxImageCreationUtil.IconPicture;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
@@ -34,13 +34,12 @@ public class FxUtils {
         });
     }
 
-    public static void setImageOnButton(String imageName, Button button, int size) {
-        setImageOnButton(imageName, button, size, size);
+    public static void setImageOnButton(IconPicture iconPicture, Button button, int size) {
+        setImageOnButton(iconPicture, button, size, size);
     }
 
-    public static void setImageOnButton(String imageName, Button button, int height, int width) {
-        Image image = new Image(imageName);
-        ImageView imageView = new ImageView(image);
+    public static void setImageOnButton(IconPicture iconPicture, Button button, int height, int width) {
+        ImageView imageView = new ImageView(FxImageCreationUtil.getIcon(iconPicture));
         imageView.setFitHeight(height);
         imageView.setFitWidth(width);
         button.graphicProperty().setValue(imageView);

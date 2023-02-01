@@ -7,7 +7,6 @@ import javafx.geometry.HPos;
 import javafx.geometry.Rectangle2D;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Screen;
@@ -16,12 +15,14 @@ import javafx.stage.Stage;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.katyshevtseva.fx.FxImageCreationUtil.IconPicture.GREY_PLUS;
+import static com.katyshevtseva.fx.FxImageCreationUtil.getIcon;
 import static com.katyshevtseva.general.GeneralUtils.getColumnByIndexAndColumnNum;
 import static com.katyshevtseva.general.GeneralUtils.getRowByIndexAndColumnNum;
 
 public class EditableImageSelectDialogController extends ImageSelectDialogController {
-    private List<ImageContainer> addableImageContainers;
-    private OneArgKnob<List<ImageContainer>> windowCloseListener;
+    private final List<ImageContainer> addableImageContainers;
+    private final OneArgKnob<List<ImageContainer>> windowCloseListener;
 
     public EditableImageSelectDialogController(List<ImageContainer> imageContainers,
                                                List<ImageContainer> addableImageContainers,
@@ -76,7 +77,7 @@ public class EditableImageSelectDialogController extends ImageSelectDialogContro
     }
 
     private ImageView getAddImageButton() {
-        ImageView imageView = new ImageView(new Image("/com/katyshevtseva/fx/images/plus.png"));
+        ImageView imageView = new ImageView(getIcon(GREY_PLUS));
         imageView.setFitHeight(IMAGE_SIZE);
         imageView.setFitWidth(IMAGE_SIZE);
         imageView.setOnMouseClicked(event -> new StandardDialogBuilder().openImageSelectionDialog(getFreeImages(), imageContainer -> {
