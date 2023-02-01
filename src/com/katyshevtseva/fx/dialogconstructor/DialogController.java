@@ -39,10 +39,13 @@ public class DialogController implements FxController {
     private void initialize() {
         container.getChildren().add(getPaneWithHeight(20));
         for (DcElement element : elements) {
-            setWidth(element.getControl(), controlsWidth);
-            container.getChildren().addAll(element.getControl(), getPaneWithHeight(15));
+            element.getControls().forEach(control -> setWidth(control, controlsWidth));
+            element.getControls().forEach(control -> {
+                container.getChildren().add(control);
+                container.getChildren().add(getPaneWithHeight(10));
+            });
             element.setInitValue();
-            element.getControl().setDisable(element.isDisabled());
+            element.getControls().forEach(control -> control.setDisable(element.isDisabled()));
         }
         Button okButton = new Button("Ok");
         setWidth(okButton, controlsWidth);
@@ -53,7 +56,7 @@ public class DialogController implements FxController {
         container.getChildren().add(okButton);
 
         List<Control> requiredControls = elements.stream().filter(DcElement::isRequired)
-                .map(DcElement::getControl).collect(Collectors.toList());
+                .flatMap(dcElement -> dcElement.getControls().stream()).collect(Collectors.toList());
         if (!requiredControls.isEmpty()) {
             associateButtonWithControls(okButton, requiredControls);
         }

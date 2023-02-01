@@ -4,6 +4,9 @@ import com.katyshevtseva.fx.Size;
 import javafx.scene.control.Control;
 import javafx.scene.control.TextField;
 
+import java.util.Collections;
+import java.util.List;
+
 public class DcTextField implements DcElement {
     private final boolean required;
     private final TextField textField;
@@ -25,8 +28,8 @@ public class DcTextField implements DcElement {
     }
 
     @Override
-    public Control getControl() {
-        return textField;
+    public List<Control> getControls() {
+        return Collections.singletonList(textField);
     }
 
     @Override

@@ -9,7 +9,8 @@ public class Styler {
     public enum StandardColor {
         GRAY("#808080"), BLACK("#000000"), GREEN("#008000"), PURPLE("#800080"),
         BLUE("#4C9FFF"), ORANGE("#FFA24C"), SCREAMING_GREEN("#4FFF4C"), RED("#cf2121"),
-        WHITE("#FFFFFF"), PASTEL_PINK("#FFD1DC"), PEACH("#FFE5B4"), BROWN("#4F250C");
+        WHITE("#FFFFFF"), PASTEL_PINK("#FFD1DC"), PEACH("#FFE5B4"), BROWN("#4F250C"),
+        GOLD("#FFC30A");
 
         private String code;
 
@@ -69,5 +70,13 @@ public class Styler {
 
     public static String getBlackBorderStyle() {
         return " -fx-border-color: #000000; ";
+    }
+
+    public static String getBorderWidth(int width) {
+        return String.format(" -fx-border-width: %d; ", width);
+    }
+
+    public static String getBorderRadius(int radius) {
+        return String.format(" -fx-border-radius: %d; ", radius);
     }
 }

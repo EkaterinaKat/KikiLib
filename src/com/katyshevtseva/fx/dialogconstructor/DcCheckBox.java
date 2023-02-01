@@ -4,6 +4,9 @@ import com.katyshevtseva.fx.Size;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Control;
 
+import java.util.Collections;
+import java.util.List;
+
 public class DcCheckBox implements DcElement {
     private final CheckBox checkBox;
     private final boolean initValue;
@@ -28,8 +31,8 @@ public class DcCheckBox implements DcElement {
     }
 
     @Override
-    public Control getControl() {
-        return checkBox;
+    public List<Control> getControls() {
+        return Collections.singletonList(checkBox);
     }
 
     @Override

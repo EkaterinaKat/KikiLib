@@ -108,4 +108,13 @@ public class DateUtils {
     public static String getMonthYearString(Date date) {
         return MONTH_YEAR_DATE_FORMAT.format(date);
     }
+
+    public static Period getPeriodOfMonthDateBelongsTo(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.DATE, 1);
+        Date start = calendar.getTime();
+        Date end = shiftDate(shiftDate(start, TimeUnit.MONTH, 1), TimeUnit.DAY, -1);
+        return new Period(start, end);
+    }
 }

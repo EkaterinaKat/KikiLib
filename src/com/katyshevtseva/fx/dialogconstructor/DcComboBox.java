@@ -5,6 +5,7 @@ import com.katyshevtseva.fx.Size;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
 
+import java.util.Collections;
 import java.util.List;
 
 public class DcComboBox<T> implements DcElement {
@@ -34,8 +35,8 @@ public class DcComboBox<T> implements DcElement {
     }
 
     @Override
-    public Control getControl() {
-        return comboBox;
+    public List<Control> getControls() {
+        return Collections.singletonList(comboBox);
     }
 
     @Override

@@ -4,6 +4,9 @@ import com.katyshevtseva.fx.Size;
 import javafx.scene.control.Control;
 import javafx.scene.control.TextArea;
 
+import java.util.Collections;
+import java.util.List;
+
 public class DcTextArea implements DcElement {
     private final boolean required;
     private final TextArea textArea;
@@ -26,8 +29,8 @@ public class DcTextArea implements DcElement {
     }
 
     @Override
-    public Control getControl() {
-        return textArea;
+    public List<Control> getControls() {
+        return Collections.singletonList(textArea);
     }
 
     @Override

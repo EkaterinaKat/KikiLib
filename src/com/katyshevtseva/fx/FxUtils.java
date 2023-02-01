@@ -1,5 +1,6 @@
 package com.katyshevtseva.fx;
 
+import com.katyshevtseva.date.Period;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -10,6 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -132,6 +134,10 @@ public class FxUtils {
         comboBox.setValue(defaultSelectedItem);
     }
 
+    public static Period getPeriod(DatePicker startDatePicker, DatePicker endDatePicker) {
+        return new Period(getDate(startDatePicker), getDate(endDatePicker));
+    }
+
     public static Date getDate(DatePicker datePicker) {
         return datePicker.getValue() != null ? java.sql.Date.valueOf(datePicker.getValue()) : null;
     }
@@ -154,5 +160,13 @@ public class FxUtils {
     public static void setHeight(Region region, int height) {
         region.setMaxHeight(height);
         region.setMinHeight(height);
+    }
+
+    public static void setDate(DatePicker datePicker, Date date) {
+        datePicker.setValue(new java.sql.Date(date.getTime()).toLocalDate());
+    }
+
+    public static void setCurrentDate(DatePicker datePicker) {
+        datePicker.setValue(LocalDate.now());
     }
 }
