@@ -23,7 +23,8 @@ public class FxImageCreationUtil {
     public enum IconPicture {
         GREY_PLUS("grey_plus.png"), OK("ok.png"), GREEN_TICK("green_tick.png"),
         RED_CROSS("red_cross.png"), KIKI_ORG_LOGO("kiki_org_logo.png"), DELTE("delete.png"),
-        GREY_CROSS("gray_cross.png"), GREEN_PLUS("green_plus.png"), VOC_LOGO("vocabulary_logo.png");
+        GREY_CROSS("gray_cross.png"), GREEN_PLUS("green_plus.png"), VOC_LOGO("vocabulary_logo.png"),
+        SUMMER("summer.png"), WINTER("winter.png"), AUTUMN("autumn.png");
 
         private final String fileName;
 

@@ -35,5 +35,8 @@ public abstract class AbstractSwitchController implements FxController {
 
         pane.getChildren().clear();
         pane.getChildren().add(section.getNode());
+        if (section.getOnOpenListener() != null) {
+            section.getOnOpenListener().execute();
+        }
     }
 }
