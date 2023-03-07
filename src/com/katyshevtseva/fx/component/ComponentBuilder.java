@@ -69,9 +69,9 @@ public class ComponentBuilder {
         return getComponent("pagination_pane.fxml", controller);
     }
 
-    public <T> Component<BlockListController<T>> getBlockListComponent() {
-        BlockListController<T> controller = new BlockListController<>(size);
-        return getComponent("block_list.fxml", controller);
+    public <T> Component<PageableBlockListController<T>> getPageableBlockListComponent() {
+        PageableBlockListController<T> controller = new PageableBlockListController<>(size);
+        return getComponent("pageable_block_list.fxml", controller);
     }
 
     private <Controller extends FxController> Component<Controller> getComponent(String fxml, Controller controller) {

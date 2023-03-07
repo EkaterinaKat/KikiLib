@@ -21,7 +21,7 @@ import static com.katyshevtseva.fx.FxUtils.getPaneWithHeight;
 import static com.katyshevtseva.fx.FxUtils.setSize;
 
 @RequiredArgsConstructor
-public class BlockListController<E> implements FxController {
+public class PageableBlockListController<E> implements FxController {
     private final Size size;
     private int blockWidth;
     @FXML

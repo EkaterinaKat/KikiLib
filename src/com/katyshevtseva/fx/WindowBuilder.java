@@ -27,6 +27,28 @@ public class WindowBuilder {
     private EventHandler<WindowEvent> eventHandler;
     private String cursorImagePath;
 
+    public static Node getNode(NodeInfo nodeInfo, FxController controller) {
+        return new WindowBuilder(nodeInfo.getFileName()).setController(controller).getNode();
+    }
+
+    public interface NodeInfo {
+        String getFileName();
+    }
+
+    public static void openDialog(DialogInfo dialogInfo, FxController controller) {
+        new WindowBuilder(dialogInfo.getFileName())
+                .setController(controller).setSize(dialogInfo.getSize())
+                .setTitle(dialogInfo.getTitle()).showWindow();
+    }
+
+    public interface DialogInfo {
+        String getFileName();
+
+        String getTitle();
+
+        Size getSize();
+    }
+
     public WindowBuilder(String fxmlName) {
         this.fxmlName = fxmlName;
 
