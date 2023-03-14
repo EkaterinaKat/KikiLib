@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.*?>
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:id="scrollPane">
+
+    <HBox>
+        <Pane fx:id="leftPane"/>
+        <VBox>
+            <Pane fx:id="topPane"/>
+            <GridPane fx:id="gridPane"/>
+        </VBox>
+    </HBox>
+
+
+</ScrollPane>
+
+

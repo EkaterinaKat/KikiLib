@@ -6,13 +6,16 @@ import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.component.controller.*;
 import com.katyshevtseva.general.OneArgKnob;
+import com.katyshevtseva.general.OneInOneOutKnob;
 import com.katyshevtseva.general.TwoArgKnob;
+import com.katyshevtseva.general.TwoInOneOutKnob;
 import com.katyshevtseva.hierarchy.HierarchyNode;
 import com.katyshevtseva.hierarchy.HierarchyService;
 import com.katyshevtseva.hierarchy.StaticHierarchySchemaLine;
 import com.katyshevtseva.history.Action;
 import com.katyshevtseva.history.HasHistory;
 import javafx.scene.Node;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -67,6 +70,17 @@ public class ComponentBuilder {
             OneArgKnob<List<T>> contentReceiver) {
         PaginationPaneController<T> controller = new PaginationPaneController<>(pageSource, contentReceiver);
         return getComponent("pagination_pane.fxml", controller);
+    }
+
+    public <T> Component<BlockGridController<T>> getBlockGridComponent(
+            int blockWidth, OneArgKnob<T> clickHandler,
+            OneInOneOutKnob<T, ContextMenu> contextMenuSupplier,
+            TwoInOneOutKnob<T, Integer, Node> blockSupplier) {
+
+        BlockGridController<T> controller = new BlockGridController<>(blockWidth, size,
+                clickHandler, contextMenuSupplier, blockSupplier);
+
+        return getComponent("block_grid.fxml", controller);
     }
 
     public <T> Component<PageableBlockListController<T>> getPageableBlockListComponent() {
