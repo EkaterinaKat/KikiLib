@@ -1,4 +1,4 @@
-package com.katyshevtseva.fx;
+package com.katyshevtseva.image;
 
 import javafx.scene.image.Image;
 
@@ -10,4 +10,6 @@ public interface ImageContainer {
     Image getImage();
 
     String getPath();
+
+    String getFileName();
 }

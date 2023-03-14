@@ -1,10 +1,10 @@
 package com.katyshevtseva.fx.component.controller;
 
-import com.katyshevtseva.fx.ImageContainer;
 import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.general.OneArgKnob;
 import com.katyshevtseva.general.OneInOneOutKnob;
+import com.katyshevtseva.image.ImageContainer;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;

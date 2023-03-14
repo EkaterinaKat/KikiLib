@@ -1,6 +1,5 @@
 package com.katyshevtseva.fx.component;
 
-import com.katyshevtseva.fx.ImageContainer;
 import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
@@ -14,6 +13,7 @@ import com.katyshevtseva.hierarchy.HierarchyService;
 import com.katyshevtseva.hierarchy.StaticHierarchySchemaLine;
 import com.katyshevtseva.history.Action;
 import com.katyshevtseva.history.HasHistory;
+import com.katyshevtseva.image.ImageContainer;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;

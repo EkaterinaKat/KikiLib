@@ -1,6 +1,5 @@
 package com.katyshevtseva.fx.dialog;
 
-import com.katyshevtseva.fx.ImageContainer;
 import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
@@ -8,6 +7,7 @@ import com.katyshevtseva.fx.dialog.controller.*;
 import com.katyshevtseva.general.OneArgKnob;
 import com.katyshevtseva.history.Action;
 import com.katyshevtseva.history.HasHistory;
+import com.katyshevtseva.image.ImageContainer;
 import javafx.scene.Node;
 
 import java.util.List;
