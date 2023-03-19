@@ -8,7 +8,11 @@ import java.util.Arrays;
 public class DialogConstructor {
 
     public static void constructDialog(NoArgsKnob onConfirmHandler, DcElement... elements) {
-        DialogController controller = new DialogController(Arrays.asList(elements), onConfirmHandler);
+        constructDialog(onConfirmHandler, null, elements);
+    }
+
+    public static void constructDialog(NoArgsKnob onConfirmHandler, Integer height, DcElement... elements) {
+        DialogController controller = new DialogController(Arrays.asList(elements), onConfirmHandler, height);
 
         new WindowBuilder("/com/katyshevtseva/fx/dialogconstructor/container.fxml")
                 .setSize(controller.getWindowSize()).setController(controller).showWindow();

@@ -23,15 +23,18 @@ public class DialogController implements FxController {
     @FXML
     private VBox container;
 
-    public DialogController(List<DcElement> elements, NoArgsKnob onConfirmHandler) {
+    public DialogController(List<DcElement> elements, NoArgsKnob onConfirmHandler, Integer height) {
         this.elements = elements;
         this.onConfirmHandler = onConfirmHandler;
 
-        windowSize = new Size(
+        int windowHeight = height != null ? height :
                 elements.stream().mapToInt(dcElement -> dcElement.getSize().getHeight()).sum()
-                        + 70 - (15 * (elements.size() - 1)),
-                elements.stream().mapToInt(dcElement -> dcElement.getSize().getWidth()).max().orElseThrow(RuntimeException::new)
-        );
+                        + 70 - (15 * (elements.size() - 1));
+
+        int windowWidth = elements.stream().mapToInt(dcElement -> dcElement.getSize().getWidth())
+                .max().orElseThrow(RuntimeException::new);
+
+        windowSize = new Size(windowHeight, windowWidth);
         controlsWidth = windowSize.getWidth() - 60;
     }
 

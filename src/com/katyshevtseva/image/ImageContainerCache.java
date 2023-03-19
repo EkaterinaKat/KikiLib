@@ -16,7 +16,7 @@ public class ImageContainerCache {
         return instance;
     }
 
-    public ImageContainer getImageContainer(String fileName, String location) {
+    public ImageContainer getImageContainer(String fileName, String location, double width) {
         String fullPath = location + fileName;
         ImageContainer imageContainer = cache.get(fullPath);
 
@@ -27,7 +27,7 @@ public class ImageContainerCache {
         imageContainer = new ImageContainer() {
             @Override
             public Image getImage() {
-                return FxImageCreationUtil.getImageByAbsolutePath(fullPath, 400.0, false);
+                return FxImageCreationUtil.getImageByAbsolutePath(fullPath, width, false);
             }
 
             @Override

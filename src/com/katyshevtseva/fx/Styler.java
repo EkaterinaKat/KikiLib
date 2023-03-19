@@ -1,5 +1,8 @@
 package com.katyshevtseva.fx;
 
+import javafx.beans.value.ObservableValue;
+import javafx.scene.Node;
+
 public class Styler {
 
     private Styler() {
@@ -78,5 +81,18 @@ public class Styler {
 
     public static String getBorderRadius(int radius) {
         return String.format(" -fx-border-radius: %d; ", radius);
+    }
+
+    public static void setHoverStyle(Node node, String hoverStyle) {
+        String initStyle = node.getStyle();
+
+        node.hoverProperty().addListener(
+                (ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
+                    if (show) {
+                        node.setStyle(hoverStyle);
+                    } else {
+                        node.setStyle(initStyle);
+                    }
+                });
     }
 }

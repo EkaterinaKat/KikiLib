@@ -1,11 +1,26 @@
 package com.katyshevtseva.hibernate;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 import java.io.Serializable;
 import java.util.List;
 
 public class CoreDao {
+
+    public <T> List<T> findBy(Class<T> tClass, String propertyName, Object propertyValue) {
+        Session session = HibernateUtil.getSession();
+        session.beginTransaction();
+
+        Criteria criteria = session.createCriteria(tClass).add(Restrictions.eq(propertyName, propertyValue));
+        List<T> logs = criteria.list();
+
+        session.getTransaction().commit();
+
+        return logs;
+    }
+
     public <T> List<T> getAll(String className) {
         Session session = HibernateUtil.getSession();
         session.beginTransaction();
