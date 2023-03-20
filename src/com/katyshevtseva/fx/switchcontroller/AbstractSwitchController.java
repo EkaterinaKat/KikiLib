@@ -1,13 +1,12 @@
 package com.katyshevtseva.fx.switchcontroller;
 
-import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.general.OneArgKnob;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 
 import java.util.List;
 
-public abstract class AbstractSwitchController implements FxController {
+public abstract class AbstractSwitchController {
     private List<Section> sections;
     private Pane pane;
 
@@ -35,8 +34,6 @@ public abstract class AbstractSwitchController implements FxController {
 
         pane.getChildren().clear();
         pane.getChildren().add(section.getNode());
-        if (section.getOnOpenListener() != null) {
-            section.getOnOpenListener().execute();
-        }
+        section.getController().update();
     }
 }

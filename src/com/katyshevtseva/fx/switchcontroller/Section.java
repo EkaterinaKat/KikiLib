@@ -1,31 +1,22 @@
 package com.katyshevtseva.fx.switchcontroller;
 
 import com.katyshevtseva.fx.WindowBuilder.FxController;
-import com.katyshevtseva.general.NoArgsKnob;
 import com.katyshevtseva.general.OneInOneOutKnob;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import lombok.Getter;
 
 public class Section {
-    private final FxController controller;
+    @Getter
+    private final SectionController controller;
     private final OneInOneOutKnob<FxController, Node> nodeSupplier;
     private Node node;
     @Getter
-    private NoArgsKnob onOpenListener;
-    @Getter
     private final Button button;
 
-    public Section(String title, FxController controller, OneInOneOutKnob<FxController, Node> nodeSupplier) {
+    public Section(String title, SectionController controller, OneInOneOutKnob<FxController, Node> nodeSupplier) {
         this.controller = controller;
         this.nodeSupplier = nodeSupplier;
-        button = new Button(title);
-    }
-
-    public Section(String title, FxController controller, OneInOneOutKnob<FxController, Node> nodeSupplier, NoArgsKnob onOpenListener) {
-        this.controller = controller;
-        this.nodeSupplier = nodeSupplier;
-        this.onOpenListener = onOpenListener;
         button = new Button(title);
     }
 
