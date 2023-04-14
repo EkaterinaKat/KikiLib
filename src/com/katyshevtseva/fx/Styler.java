@@ -13,7 +13,7 @@ public class Styler {
         GRAY("#808080"), BLACK("#000000"), GREEN("#008000"), PURPLE("#800080"),
         BLUE("#4C9FFF"), ORANGE("#FFA24C"), SCREAMING_GREEN("#4FFF4C"), RED("#cf2121"),
         WHITE("#FFFFFF"), PASTEL_PINK("#FFD1DC"), PEACH("#FFE5B4"), BROWN("#4F250C"),
-        GOLD("#FFC30A");
+        GOLD("#FFC30A"), DARK_BLUE("#002137");
 
         private String code;
 

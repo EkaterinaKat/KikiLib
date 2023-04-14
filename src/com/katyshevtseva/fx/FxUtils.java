@@ -7,8 +7,10 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
@@ -167,5 +169,24 @@ public class FxUtils {
 
     public static void setCurrentDate(DatePicker datePicker) {
         datePicker.setValue(LocalDate.now());
+    }
+
+    public static Label getLabel(String text, int width) {
+        Label label = new Label(text);
+        label.setMaxWidth(width);
+        label.setWrapText(true);
+        return label;
+    }
+
+    public static Node frame(Node node, int frameWidth) {
+        return frame(node, frameWidth, frameWidth);
+    }
+
+    public static Node frame(Node node, int vertical, int horizontal) {
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(getPaneWithHeight(vertical), node, getPaneWithHeight(vertical));
+        HBox hBox = new HBox();
+        hBox.getChildren().addAll(getPaneWithWidth(horizontal), node, getPaneWithWidth(horizontal));
+        return hBox;
     }
 }

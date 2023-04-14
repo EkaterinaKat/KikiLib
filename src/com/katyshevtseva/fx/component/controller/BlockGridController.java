@@ -70,11 +70,11 @@ public class BlockGridController<E> implements FxController {
         gridPane.getChildren().clear();
 
         for (int i = 0; i < items.size(); i++) {
-            addImageToGridPane(i);
+            addBlockToGridPane(i);
         }
     }
 
-    private void addImageToGridPane(int index) {
+    private void addBlockToGridPane(int index) {
         E item = items.get(index);
         Node node = blockSupplier.execute(item, blockWidth);
 
@@ -82,7 +82,10 @@ public class BlockGridController<E> implements FxController {
             node.setOnMouseClicked(event -> clickHandler.execute(item));
         }
         if (contextMenuSupplier != null) {
-            node.setOnContextMenuRequested(event -> contextMenuSupplier.execute(item));
+            node.setOnContextMenuRequested(event -> {
+                ContextMenu contextMenu = contextMenuSupplier.execute(item);
+                contextMenu.show(node, event.getScreenX(), event.getScreenY());
+            });
         }
 
         gridPane.add(node,
