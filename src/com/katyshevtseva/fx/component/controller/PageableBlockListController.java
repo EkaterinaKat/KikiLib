@@ -41,6 +41,11 @@ public class PageableBlockListController<E> implements FxController {
         setSize(scrollPane, size);
     }
 
+    public void clear() {
+        paginationPane.getChildren().clear();
+        contentPane.getChildren().clear();
+    }
+
     public void show(PageSource<E> pageSource, TwoInOneOutKnob<E, Integer, Node> blockSupplier) {
         //tunePagination
         Component<PaginationPaneController<E>> component =
