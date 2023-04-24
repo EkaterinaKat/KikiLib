@@ -28,21 +28,21 @@ public class WindowBuilder {
     private String cursorImagePath;
 
     public static Node getNode(NodeInfo nodeInfo, FxController controller) {
-        return new WindowBuilder(nodeInfo.getFileName()).setController(controller).getNode();
+        return new WindowBuilder(nodeInfo.getFullFileName()).setController(controller).getNode();
     }
 
     public interface NodeInfo {
-        String getFileName();
+        String getFullFileName();
     }
 
     public static void openDialog(DialogInfo dialogInfo, FxController controller) {
-        new WindowBuilder(dialogInfo.getFileName())
+        new WindowBuilder(dialogInfo.getFullFileName())
                 .setController(controller).setSize(dialogInfo.getSize())
                 .setTitle(dialogInfo.getTitle()).showWindow();
     }
 
     public interface DialogInfo {
-        String getFileName();
+        String getFullFileName();
 
         String getTitle();
 
