@@ -63,6 +63,10 @@ public class Styler {
         return " -fx-font-style: italic; ";
     }
 
+    public static String getUnderlineTextStyle() {
+        return " -fx-underline: true; ";
+    }
+
     public static String getNotItalicTextStyle() {
         return " -fx-font-style: normal; ";
     }

@@ -1,8 +1,10 @@
 package com.katyshevtseva.hibernate;
 
+import com.katyshevtseva.general.OneInOneOutKnob;
 import com.katyshevtseva.general.Page;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
@@ -58,21 +60,29 @@ public class CoreDao {
         return new Page<>(list, query.getPageNum(), (int) (Math.ceil(count * 1.0 / query.getPageSize())));
     }
 
-    public <T> List<T> find(Query<T> query) {
+    public <T> List<T> find(Class<T> tClass, Criterion criterion) {
         Session session = HibernateUtil.getSession();
         session.beginTransaction();
-        Criteria criteria = session.createCriteria(query.getTClass());
 
-        for (Map.Entry<String, Object> entry : query.getEqualityRestrictions().entrySet())
-            criteria.add(Restrictions.eq(entry.getKey(), entry.getValue()));
-
-        if (query.getOrder() != null)
-            criteria.addOrder(query.getOrder());
+        Criteria criteria = session.createCriteria(tClass);
+        criteria.add(criterion);
 
         List<T> list = criteria.list();
         session.getTransaction().commit();
 
         return list;
+    }
+
+    public <T> List<T> findByQuery(OneInOneOutKnob<Session, org.hibernate.Query> querySupplier) {
+        Session session = HibernateUtil.getSession();
+        session.beginTransaction();
+
+        org.hibernate.Query query = querySupplier.execute(session);
+        List<T> entries = query.list();
+
+        session.getTransaction().commit();
+
+        return entries;
     }
 
     public <T> List<T> getAll(String className) {
