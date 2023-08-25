@@ -1,5 +1,8 @@
 package com.katyshevtseva.general;
 
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.util.List;
 
 public class GeneralUtils {
@@ -83,5 +86,10 @@ public class GeneralUtils {
             result.append(letter);
         }
         return result.toString();
+    }
+
+    public static void saveToClipBoard(String s) {
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(new StringSelection(s), null);
     }
 }

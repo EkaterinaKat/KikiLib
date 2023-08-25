@@ -172,10 +172,27 @@ public class FxUtils {
     }
 
     public static Label getLabel(String text, int width) {
-        Label label = new Label(text);
-        label.setMaxWidth(width);
-        label.setWrapText(true);
+        Label label = new Label();
+        tuneLabel(label, text, null, width);
         return label;
+    }
+
+    public static Label getLabel(String text, Integer textSize, Integer width) {
+        Label label = new Label();
+        tuneLabel(label, text, textSize, width);
+        return label;
+    }
+
+    public static void tuneLabel(Label label, String text, Integer textSize, Integer width) {
+        if (width != null) {
+            label.setMaxWidth(width);
+        }
+        label.setWrapText(true);
+        label.setText(text);
+        if (textSize != null) {
+            label.setStyle(Styler.getTextSizeStyle(textSize));
+        }
+
     }
 
     public static Node frame(Node node, int frameWidth) {
