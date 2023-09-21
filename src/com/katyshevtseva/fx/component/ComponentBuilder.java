@@ -40,7 +40,7 @@ public class ComponentBuilder {
                                                             List<ImageContainer> imageContainers,
                                                             OneArgKnob<ImageContainer> clickHandler) {
         GalleryController controller = new GalleryController(size, columnNum, imageContainers, clickHandler);
-        return getComponent("gallery.fxml", controller);
+        return getComponent("vbox_container.fxml", controller);
     }
 
     public Component<HierarchyController> getHierarchyComponent(HierarchyService service, boolean editable, boolean groupTable) {
@@ -86,6 +86,12 @@ public class ComponentBuilder {
     public <T> Component<PageableBlockListController<T>> getPageableBlockListComponent() {
         PageableBlockListController<T> controller = new PageableBlockListController<>(size);
         return getComponent("pageable_block_list.fxml", controller);
+    }
+
+    public <T> Component<RadioButtonController<T>> getRadioButtonComponent(List<T> items, T selectedItem,
+                                                                           OneArgKnob<T> selectListener) {
+        RadioButtonController<T> controller = new RadioButtonController<>(items, selectedItem, selectListener);
+        return getComponent("hbox_container.fxml", controller);
     }
 
     private <Controller extends FxController> Component<Controller> getComponent(String fxml, Controller controller) {
