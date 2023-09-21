@@ -14,6 +14,7 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import lombok.Getter;
 
 import java.util.List;
 
@@ -35,12 +36,14 @@ public class BlockGridController<E> implements FxController {
     @FXML
     private ScrollPane scrollPane;
     @FXML
+    @Getter
     private GridPane gridPane;
     @FXML
     private Pane leftPane;
     @FXML
     private Pane topPane;
 
+    //чтобы была одна колонка нужно чтобы scrollPaneSize.width была больше blockWidth на 2*FRAME_SIZE=40
     public BlockGridController(int blockWidth, Size scrollPaneSize, OneArgKnob<E> clickHandler,
                                OneInOneOutKnob<E, ContextMenu> contextMenuSupplier,
                                TwoInOneOutKnob<E, Integer, Node> blockSupplier) {
