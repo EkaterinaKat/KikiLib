@@ -203,7 +203,7 @@ public class FxUtils {
         VBox vBox = new VBox();
         vBox.getChildren().addAll(getPaneWithHeight(vertical), node, getPaneWithHeight(vertical));
         HBox hBox = new HBox();
-        hBox.getChildren().addAll(getPaneWithWidth(horizontal), node, getPaneWithWidth(horizontal));
+        hBox.getChildren().addAll(getPaneWithWidth(horizontal), vBox, getPaneWithWidth(horizontal));
         return hBox;
     }
 }

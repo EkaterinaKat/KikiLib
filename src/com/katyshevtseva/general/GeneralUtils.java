@@ -92,4 +92,10 @@ public class GeneralUtils {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         clipboard.setContents(new StringSelection(s), null);
     }
+
+    public static String trim(String s) {
+        if (s == null)
+            return null;
+        return s.trim();
+    }
 }

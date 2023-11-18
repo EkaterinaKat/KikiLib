@@ -1,7 +1,9 @@
 package com.katyshevtseva.fx;
 
+import com.katyshevtseva.color.ColorUtils;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 
 public class Styler {
 
@@ -41,6 +43,13 @@ public class Styler {
         public String getText() {
             return text;
         }
+    }
+
+    public static void setBackgroundColorAndCorrectTextColor(Node node, Label label, String color) {
+        node.setStyle(getColorfullStyle(Styler.ThingToColor.BACKGROUND, color));
+
+        if (ColorUtils.isDark(color))
+            label.setStyle(Styler.getColorfullStyle(Styler.ThingToColor.TEXT, Styler.StandardColor.WHITE));
     }
 
     public static String getColorfullStyle(ThingToColor thingToColor, StandardColor standardColor) {

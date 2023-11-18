@@ -23,6 +23,10 @@ public class ReportCell {
         return new ReportCell(text, StandardColor.WHITE.getCode(), Type.HEAD_COLUMN, null);
     }
 
+    public static ReportCell columnHead(String text, int width) {
+        return new ReportCell(text, StandardColor.WHITE.getCode(), Type.HEAD_COLUMN, width);
+    }
+
     public static ReportCell filled(String text) {
         return new ReportCell(text, StandardColor.WHITE.getCode(), Type.REGULAR, null);
     }
@@ -33,6 +37,14 @@ public class ReportCell {
 
     public static ReportCell filled(String text, StandardColor color, int width) {
         return new ReportCell(text, color.getCode(), Type.REGULAR, width);
+    }
+
+    public static ReportCell filled(String text, String color, int width) {
+        return new ReportCell(text, color, Type.REGULAR, width);
+    }
+
+    public static ReportCell filled(String text, int width) {
+        return new ReportCell(text, StandardColor.WHITE.getCode(), Type.REGULAR, width);
     }
 
     public String getText() {

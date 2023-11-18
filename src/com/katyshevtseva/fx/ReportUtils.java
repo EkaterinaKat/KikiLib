@@ -1,5 +1,6 @@
 package com.katyshevtseva.fx;
 
+import com.katyshevtseva.general.GeneralUtils;
 import com.katyshevtseva.general.ReportCell;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -15,39 +16,49 @@ import java.util.List;
 
 public class ReportUtils {
 
-    public static void showReport(List<List<ReportCell>> report, GridPane table) {
+    public static void showReport(List<List<ReportCell>> report, GridPane table, boolean rotateHeadline) {
         table.getChildren().clear();
 
         for (int i = 0; i < report.size(); i++) {
             List<ReportCell> reportLine = report.get(i);
             for (int j = 0; j < reportLine.size(); j++) {
                 ReportCell reportCell = reportLine.get(j);
-                fillCell(table, reportCell, i, j);
+                fillCell(table, reportCell, i, j, rotateHeadline);
             }
         }
     }
 
-    private static void fillCell(GridPane table, ReportCell reportCell, int row, int column) {
+    private static void fillCell(GridPane table, ReportCell reportCell, int row, int column, boolean rotateHeadline) {
         StackPane cell = new StackPane();
-        cell.setStyle(" -fx-background-color: " + reportCell.getColor() + "; ");
+
         Label label = new Label(reportCell.getText());
+        label.setPadding(new Insets(5));
         label.setTooltip(new Tooltip(reportCell.getText()));
+        label.setStyle(Styler.getColorfullStyle(Styler.ThingToColor.TEXT, Styler.StandardColor.BLACK));
+
+        if (!GeneralUtils.isEmpty(reportCell.getColor())) {
+            Styler.setBackgroundColorAndCorrectTextColor(cell, label, reportCell.getColor());
+        }
 
         if (reportCell.isColumnHead()) {
             VBox vBox = new VBox(label);
-            vBox.setRotate(90);
+
             vBox.setPadding(new Insets(5, 5, 5, 5));
-            cell.setPrefHeight(170);
+            if (rotateHeadline) {
+                vBox.setRotate(90);
+                cell.setPrefHeight(170);
+            }
             cell.setPrefWidth(50);
             cell.getChildren().add(new Group(vBox));
         } else {
-            cell.setPrefHeight(30);
             cell.setPrefWidth(50);
             cell.getChildren().add(label);
         }
 
         if (reportCell.getWidth() != null) {
             cell.setPrefWidth(reportCell.getWidth());
+            label.setMaxWidth(reportCell.getWidth());
+            label.setWrapText(true);
         }
 
         HBox.setMargin(label, new Insets(8));

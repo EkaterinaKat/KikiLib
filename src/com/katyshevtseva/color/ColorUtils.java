@@ -11,4 +11,9 @@ public class ColorUtils {
         int a = ((int) Math.round(color.getOpacity() * 255));
         return String.format("#%08X", (r + g + b + a));
     }
+
+    public static boolean isDark(String hexString) {
+        java.awt.Color color = java.awt.Color.decode(hexString);
+        return color.getBlue() + color.getGreen() + color.getRed() < 200;
+    }
 }
