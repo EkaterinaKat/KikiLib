@@ -63,6 +63,12 @@ public class ReportUtils {
 
         HBox.setMargin(label, new Insets(8));
         StackPane.setAlignment(label, Pos.CENTER);
+
+        if (reportCell.getContextMenu() != null) {
+            cell.setOnContextMenuRequested(event -> reportCell.getContextMenu()
+                    .show(cell, event.getScreenX(), event.getScreenY()));
+        }
+
         table.add(cell, column, row);
     }
 }
