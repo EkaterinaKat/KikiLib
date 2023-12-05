@@ -10,11 +10,12 @@ public class DateUtils {
     public static DateFormat READABLE_TIME_FORMAT = new SimpleDateFormat("HH:mm");
     public static DateFormat READABLE_DATE_TIME_FORMAT = new SimpleDateFormat("dd.MM.yyyy HH:mm");
     public static DateFormat MONTH_YEAR_DATE_FORMAT = new SimpleDateFormat("MMM yyyy", new Locale("ru"));
+    public static DateFormat DAY_MONTH_DATE_FORMAT = new SimpleDateFormat("dd MMM", new Locale("ru"));
 
     public enum TimeUnit {
         DAY(Calendar.DATE), MONTH(Calendar.MONTH), YEAR(Calendar.YEAR);
 
-        private int intRepresentationForCalendar;
+        private final int intRepresentationForCalendar;
 
         TimeUnit(int intRepresentationForCalendar) {
             this.intRepresentationForCalendar = intRepresentationForCalendar;
@@ -115,6 +116,17 @@ public class DateUtils {
         calendar.set(Calendar.DATE, 1);
         Date start = calendar.getTime();
         Date end = shiftDate(shiftDate(start, TimeUnit.MONTH, 1), TimeUnit.DAY, -1);
+        return new Period(start, end);
+    }
+
+    public static Period getPeriodOfWeekDateBelongsTo(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        while (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
+            calendar.add(Calendar.DATE, -1);
+        }
+        Date start = calendar.getTime();
+        Date end = shiftDate(start, TimeUnit.DAY, 6);
         return new Period(start, end);
     }
 }

@@ -25,4 +25,22 @@ public class Period {
     public String toString() {
         return getStringRepresentationOfPeriod(this);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Period period = (Period) o;
+
+        if (!startDate.equals(period.startDate)) return false;
+        return endDate.equals(period.endDate);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = startDate.hashCode();
+        result = 31 * result + endDate.hashCode();
+        return result;
+    }
 }
