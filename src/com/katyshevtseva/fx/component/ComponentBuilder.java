@@ -31,8 +31,10 @@ public class ComponentBuilder {
         return this;
     }
 
-    public <E> Component<MultipleChoiceController<E>> getMultipleChoiceComponent(List<E> items) {
-        MultipleChoiceController<E> controller = new MultipleChoiceController<>(items, size);
+    public <E> Component<MultipleChoiceController<E>> getMultipleChoiceComponent(List<E> items,
+                                                                                 List<E> selectedItems,
+                                                                                 boolean emptyListIsForbidden) {
+        MultipleChoiceController<E> controller = new MultipleChoiceController<>(items, size, selectedItems, emptyListIsForbidden);
         return getComponent("multiple_choice.fxml", controller);
     }
 
