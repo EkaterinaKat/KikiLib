@@ -15,13 +15,16 @@ public class GeneralUtils {
         return index % columnNum;
     }
 
-    public static boolean isEmpty(String s) {
-        return s == null || s.equals("");
-    }
-
     public static boolean isEmpty(List list) {
         return list == null || list.isEmpty();
     }
+
+    public static void saveToClipBoard(String s) {
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(new StringSelection(s), null);
+    }
+
+    /////////////////////// BANNERS ///////////////////////
 
     public static String getSuccessBanner() {
         return getSuccessBanner("");
@@ -42,6 +45,26 @@ public class GeneralUtils {
     public static String getFailedBanner(String title) {
         return String.format("*************** %s FAILED (」°ロ°)」 ***************\n", title);
     }
+
+    /////////////////////// STRING ///////////////////////
+
+    public static String crop(String s, int length) {
+        if (s.length() <= length)
+            return s;
+        return s.substring(0, length) + "...";
+    }
+
+    public static boolean isEmpty(String s) {
+        return s == null || s.equals("");
+    }
+
+    public static String trim(String s) {
+        if (s == null)
+            return null;
+        return s.trim();
+    }
+
+    /////////////////////// WRAP STRING ///////////////////////
 
     public static String wrapText(String text, int lineLength) {
         StringBuilder result = new StringBuilder();
@@ -86,16 +109,5 @@ public class GeneralUtils {
             result.append(letter);
         }
         return result.toString();
-    }
-
-    public static void saveToClipBoard(String s) {
-        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        clipboard.setContents(new StringSelection(s), null);
-    }
-
-    public static String trim(String s) {
-        if (s == null)
-            return null;
-        return s.trim();
     }
 }

@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import lombok.Getter;
 
@@ -72,12 +73,15 @@ public class BlockGridController<E> implements FxController {
     private void fillGridPane() {
         gridPane.getChildren().clear();
 
+        int lastRow = 0;
         for (int i = 0; i < items.size(); i++) {
-            addBlockToGridPane(i);
+            lastRow = addBlockToGridPane(i);
         }
+        //чтобы ряд с содержимым не был последним, чтобы был отступ после него
+        gridPane.add(new HBox(), 0, lastRow + 1);
     }
 
-    private void addBlockToGridPane(int index) {
+    private int addBlockToGridPane(int index) {
         E item = items.get(index);
         Node node = blockSupplier.execute(item, blockWidth);
 
@@ -97,5 +101,7 @@ public class BlockGridController<E> implements FxController {
 
         GridPane.setHalignment(node, HPos.CENTER);
         GridPane.setValignment(node, VPos.CENTER);
+
+        return getRowByIndexAndColumnNum(index, columnNum);
     }
 }

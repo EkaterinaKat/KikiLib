@@ -3,6 +3,7 @@ package com.katyshevtseva.general;
 import javafx.scene.control.ContextMenu;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import static com.katyshevtseva.fx.Styler.StandardColor.WHITE;
 
@@ -16,7 +17,9 @@ public class ReportCell {
     @Builder.Default
     private Type type = Type.REGULAR;
     private Integer width;
+    @Setter
     private ContextMenu contextMenu;
+    private Object item;
 
     public boolean isColumnHead() {
         return type == Type.HEAD_COLUMN;
