@@ -14,6 +14,7 @@ public class ReportCell {
     private String text = "";
     @Builder.Default
     private String color = WHITE.getCode();
+    private String textColor;
     @Builder.Default
     private Type type = Type.REGULAR;
     private Integer width;

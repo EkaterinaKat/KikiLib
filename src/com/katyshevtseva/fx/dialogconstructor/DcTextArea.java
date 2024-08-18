@@ -13,10 +13,16 @@ public class DcTextArea implements DcElement {
     private final String initValue;
 
     public DcTextArea(boolean required, String initValue) {
+        this(required, initValue, null);
+    }
+
+    public DcTextArea(boolean required, String initValue, String hint) {
         this.required = required;
         textArea = new TextArea(initValue);
         textArea.setWrapText(true);
         this.initValue = initValue;
+        if (hint != null)
+            textArea.setPromptText(hint);
     }
 
     public String getValue() {

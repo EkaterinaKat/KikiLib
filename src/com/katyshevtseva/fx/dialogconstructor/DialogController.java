@@ -22,6 +22,7 @@ public class DialogController implements FxController {
     private final int controlsWidth;
     @FXML
     private VBox container;
+    private Button okButton;
 
     public DialogController(List<DcElement> elements, NoArgsKnob onConfirmHandler, Integer height) {
         this.elements = elements;
@@ -42,22 +43,31 @@ public class DialogController implements FxController {
     private void initialize() {
         container.getChildren().add(getPaneWithHeight(20));
         for (DcElement element : elements) {
-            element.getControls().forEach(control -> setWidth(control, controlsWidth));
-            element.getControls().forEach(control -> {
-                container.getChildren().add(control);
-                container.getChildren().add(getPaneWithHeight(10));
-            });
+            if (element.getNode() == null) {
+                element.getControls().forEach(control -> setWidth(control, controlsWidth));
+                element.getControls().forEach(control -> container.getChildren().addAll(control, getPaneWithHeight(10)));
+            } else {
+                container.getChildren().addAll(element.getNode(), getPaneWithHeight(10));
+            }
             element.setInitValue();
             element.getControls().forEach(control -> control.setDisable(element.isDisabled()));
         }
-        Button okButton = new Button("Ok");
+
+        initOkButton();
+        container.getChildren().add(okButton);
+        handleRequiredControls();
+    }
+
+    private void initOkButton() {
+        okButton = new Button("Ok");
         setWidth(okButton, controlsWidth);
         okButton.setOnAction(event -> {
             onConfirmHandler.execute();
             closeWindowThatContains(container);
         });
-        container.getChildren().add(okButton);
+    }
 
+    private void handleRequiredControls() {
         List<Control> requiredControls = elements.stream().filter(DcElement::isRequired)
                 .flatMap(dcElement -> dcElement.getControls().stream()).collect(Collectors.toList());
         if (!requiredControls.isEmpty()) {

@@ -13,9 +13,15 @@ public class DcTextField implements DcElement {
     private final String initValue;
 
     public DcTextField(boolean required, String initValue) {
+        this(required, initValue, null);
+    }
+
+    public DcTextField(boolean required, String initValue, String hint) {
         this.required = required;
         textField = new TextField(initValue);
         this.initValue = initValue;
+        if (hint != null)
+            textField.setPromptText(hint);
     }
 
     public String getValue() {

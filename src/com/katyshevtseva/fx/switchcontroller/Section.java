@@ -13,11 +13,21 @@ public class Section {
     private Node node;
     @Getter
     private final Button button;
+    @Getter
+    private final Boolean disabled;
 
-    public Section(String title, SectionController controller, OneInOneOutKnob<FxController, Node> nodeSupplier) {
+    public Section(String title,
+                   SectionController controller,
+                   OneInOneOutKnob<FxController, Node> nodeSupplier,
+                   boolean disabled) {
         this.controller = controller;
         this.nodeSupplier = nodeSupplier;
         button = new Button(title);
+        this.disabled = disabled;
+    }
+
+    public Section(String title, SectionController controller, OneInOneOutKnob<FxController, Node> nodeSupplier) {
+        this(title, controller, nodeSupplier, false);
     }
 
     public Node getNode() {

@@ -1,6 +1,5 @@
 package com.katyshevtseva.fx;
 
-import com.katyshevtseva.general.GeneralUtils;
 import com.katyshevtseva.general.ReportCell;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,6 +12,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.util.List;
+
+import static com.katyshevtseva.fx.Styler.getColorfullStyle;
 
 public class ReportUtils {
 
@@ -34,10 +35,14 @@ public class ReportUtils {
         Label label = new Label(reportCell.getText());
         label.setPadding(new Insets(5));
         label.setTooltip(new Tooltip(reportCell.getText()));
-        label.setStyle(Styler.getColorfullStyle(Styler.ThingToColor.TEXT, Styler.StandardColor.BLACK));
+        label.setStyle(getColorfullStyle(Styler.ThingToColor.TEXT, Styler.StandardColor.BLACK));
 
-        if (!GeneralUtils.isEmpty(reportCell.getColor())) {
-            Styler.setBackgroundColorAndCorrectTextColor(cell, label, reportCell.getColor());
+        cell.setStyle(getColorfullStyle(Styler.ThingToColor.BACKGROUND, reportCell.getColor()));
+
+        if (reportCell.getTextColor() == null) {
+            Styler.correctLabelColorIfNeeded(label, reportCell.getColor());
+        } else {
+            label.setStyle(Styler.getColorfullStyle(Styler.ThingToColor.TEXT, reportCell.getTextColor()));
         }
 
         if (reportCell.isColumnHead()) {

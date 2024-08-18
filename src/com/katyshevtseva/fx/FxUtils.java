@@ -4,13 +4,11 @@ import com.katyshevtseva.date.Period;
 import com.katyshevtseva.fx.FxImageCreationUtil.IconPicture;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
@@ -31,6 +29,14 @@ public class FxUtils {
     public static void disableNonNumericChars(TextField textField) {
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*")) {
+                textField.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+    }
+
+    public static void disableNonNumericCharsExeptDot(TextField textField) {
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*.?\\d*")) {
                 textField.setText(newValue.replaceAll("[^\\d]", ""));
             }
         });
@@ -144,13 +150,16 @@ public class FxUtils {
     }
 
     public static void setSize(Region region, Size size) {
-        setWidth(region, size.getWidth());
-        setHeight(region, size.getHeight());
+        setSize(region, size.getHeight(), size.getWidth());
+    }
+
+    public static void setSize(Region region, int height, int width) {
+        setWidth(region, width);
+        setHeight(region, height);
     }
 
     public static void setSize(Region region, int size) {
-        setWidth(region, size);
-        setHeight(region, size);
+        setSize(region, size, size);
     }
 
     public static void setWidth(Region region, int width) {
@@ -204,6 +213,15 @@ public class FxUtils {
         vBox.getChildren().addAll(getPaneWithHeight(vertical), node, getPaneWithHeight(vertical));
         HBox hBox = new HBox();
         hBox.getChildren().addAll(getPaneWithWidth(horizontal), vBox, getPaneWithWidth(horizontal));
+        hBox.setAlignment(Pos.CENTER);
         return hBox;
+    }
+
+    public static GridPane centerWithGridPane(Node node, int height, int width) {
+        GridPane gridPane = new GridPane();
+        gridPane.setAlignment(Pos.CENTER);
+        gridPane.add(node, 0, 0);
+        setSize(gridPane, height, width);
+        return gridPane;
     }
 }

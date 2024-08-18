@@ -1,6 +1,7 @@
 package com.katyshevtseva.date;
 
 import java.text.DateFormat;
+import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -58,12 +59,26 @@ public class DateUtils {
         return new Period(shiftDate(new Date(), TimeUnit.MONTH, -1), new Date());
     }
 
+    public static Period getPrevMonthPeriod() {
+        return getPeriodOfMonthDateBelongsTo(shiftDate(new Date(), TimeUnit.MONTH, -1));
+    }
+
+    public static Period getCurrentMonthPeriod() {
+        return getPeriodOfMonthDateBelongsTo(new Date());
+    }
+
     public static Date getNextMonthFirstDate(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.add(Calendar.MONTH, 1);
         calendar.set(Calendar.DATE, 1);
         return calendar.getTime();
+    }
+
+    public static int getWeekdayIndex(Date date) {
+        Calendar c = new GregorianCalendar();
+        c.setTime(date);
+        return c.get(Calendar.DAY_OF_WEEK);
     }
 
     ////////////////////////////// Get number of some time units between dates //////////////////////////////
@@ -88,6 +103,7 @@ public class DateUtils {
      */
     public static int getNumberOfDays(Date startDate, Date finishDate) {
         long diff = finishDate.getTime() - startDate.getTime();
+        System.out.println(diff);
         return (int) (diff / 86_400_000);
     }
 
@@ -100,17 +116,35 @@ public class DateUtils {
         return calendar.getTime();
     }
 
-    public static String getStringRepresentationOfPeriod(Period period) {
-        return String.format("%s-%s",
-                period.start() != null ? READABLE_DATE_FORMAT.format(period.start()) : "*",
-                period.end() != null ? READABLE_DATE_FORMAT.format(period.end()) : "*");
+    public static String getWeekdayName(Date date) {
+        DateFormatSymbols symbols = new DateFormatSymbols();
+        String[] dayNames = symbols.getShortWeekdays();
+        return dayNames[getWeekdayIndex(date)];
     }
 
     ////////////////////////////// String representation //////////////////////////////
 
+    public static String getStringRepresentationOfPeriod(Date start, Date end) {
+        return String.format("%s-%s",
+                start != null ? READABLE_DATE_FORMAT.format(start) : "*",
+                end != null ? READABLE_DATE_FORMAT.format(end) : "*");
+    }
+
     public static String getPeriodStringWithLengthIncludingBorders(Period period) {
         return getStringRepresentationOfPeriod(period) + " (" + (getNumberOfDays(period) + 1) + ")";
     }
+
+    public static String getStringRepresentationOfPeriod(Period period) {
+        return getStringRepresentationOfPeriod(period.start(), period.end());
+    }
+
+    public static Integer getYearDateBelongsTo(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.YEAR);
+    }
+
+    ////////////////////////////// Get year/month/week date belongs to //////////////////////////////
 
     public static Period getPeriodOfYearDateBelongsTo(Date date) {
         Calendar calendar = Calendar.getInstance();
@@ -120,8 +154,6 @@ public class DateUtils {
         Date end = shiftDate(shiftDate(start, TimeUnit.YEAR, 1), TimeUnit.DAY, -1);
         return new Period(start, end);
     }
-
-    ////////////////////////////// Get year/month/week date belongs to //////////////////////////////
 
     public enum TimeUnit {
         DAY(Calendar.DATE), MONTH(Calendar.MONTH), YEAR(Calendar.YEAR);

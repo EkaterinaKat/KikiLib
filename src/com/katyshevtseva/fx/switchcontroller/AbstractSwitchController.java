@@ -23,17 +23,23 @@ public abstract class AbstractSwitchController {
             section.getButton().setOnAction(event -> openSection(section));
             buttonArranger.execute(section.getButton());
         });
-        openSection(sections.get(0));
+        if (!sections.get(0).getDisabled()) {
+            openSection(sections.get(0));
+        }
     }
 
-    private void openSection(Section section) {
-        for (Section section1 : sections) {
-            section1.getButton().setDisable(false);
+    private void openSection(Section sectionToOpen) {
+        if (sectionToOpen.getDisabled()) {
+            throw new RuntimeException("SECTION IS DISABLED");
         }
-        section.getButton().setDisable(true);
+
+        for (Section section1 : sections) {
+            section1.getButton().setDisable(section1.getDisabled());
+        }
+        sectionToOpen.getButton().setDisable(true);
 
         pane.getChildren().clear();
-        pane.getChildren().add(section.getNode());
-        section.getController().update();
+        pane.getChildren().add(sectionToOpen.getNode());
+        sectionToOpen.getController().update();
     }
 }

@@ -45,10 +45,8 @@ public class Styler {
         }
     }
 
-    public static void setBackgroundColorAndCorrectTextColor(Node node, Label label, String color) {
-        node.setStyle(getColorfullStyle(Styler.ThingToColor.BACKGROUND, color));
-
-        if (ColorUtils.isDark(color))
+    public static void correctLabelColorIfNeeded(Label label, String backgroundColor) {
+        if (ColorUtils.isDark(backgroundColor))
             label.setStyle(Styler.getColorfullStyle(Styler.ThingToColor.TEXT, Styler.StandardColor.WHITE));
     }
 

@@ -1,10 +1,9 @@
 package com.katyshevtseva.fx;
 
 import com.katyshevtseva.general.OneArgKnob;
+import com.katyshevtseva.general.TwoArgKnob;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
+import javafx.scene.control.*;
 import javafx.util.Callback;
 
 public class TableUtils {
@@ -41,6 +40,23 @@ public class TableUtils {
                             setGraphic(null);
                         } else {
                             setGraphic(button);
+                        }
+                    }
+                };
+            }
+        });
+    }
+
+    public static <T> void adjustRows(TableView<T> table, TwoArgKnob<T, Control> adjuster) {
+        table.setRowFactory(new Callback<TableView<T>, TableRow<T>>() {
+            @Override
+            public TableRow<T> call(TableView<T> tableView) {
+                return new TableRow<T>() {
+                    @Override
+                    protected void updateItem(T t, boolean empty) {
+                        super.updateItem(t, empty);
+                        if (t != null) {
+                            adjuster.execute(t, this);
                         }
                     }
                 };
